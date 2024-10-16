@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>RYGTEK - Main Menu</title>
+</head>
+<body>
+    <div class="main-menu">
+        <header>
+            <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
+            <h1 class="menu-header">Reeving Calculator & Lifting Practices</h1>
+        </header>
+
+        <div class="menu-options">
+            <button class="menu-item" onclick="navigateTo('working-load-limit')">
+                <span class="icon">⚖️</span>
+                Working Load Limit
+                <p class="menu-description">Find the WLL / size of your sling</p>
+            </button>
+
+            <button class="menu-item" onclick="navigateTo('angle-dimensions')">
+                <span class="icon">📐</span>
+                Angle & Dimensions
+                <p class="menu-description">Find the dimensions and included angle of your sling</p>
+            </button>
+
+            <button class="menu-item" onclick="navigateTo('load-weight')">
+                <span class="icon">⚙️</span>
+                Load Weight
+                <p class="menu-description">Estimate the weight of your load by material type</p>
+            </button>
+
+            <button class="menu-item" onclick="navigateTo('crane-signals')">
+                <span class="icon">✋</span>
+                Crane Signals
+                <p class="menu-description">Review common crane signals</p>
+            </button>
+
+            <button class="menu-item" onclick="navigateTo('safety-alerts')">
+                <span class="icon">🔔</span>
+                Safety Alerts / Shop
+                <p class="menu-description">Stay up to date with safety news and Rygtek products</p>
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
