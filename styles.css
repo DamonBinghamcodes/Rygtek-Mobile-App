@@ -42,14 +42,36 @@ body, html {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
+    margin-bottom: 20px; /* Add space below the button */
 }
 
 .continue-btn:hover {
     background-color: #c2181e; /* Darker red for hover effect */
+}
+
+/* Styling for social links */
+.social-links {
+    display: flex;
+    justify-content: center; /* Center align the links */
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: #ffffff; /* White color for contrast */
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin: 0 15px; /* Space between links */
+}
+
+.social-links a i {
+    display: block; /* Ensures the icon and text are properly aligned */
+    font-size: 2rem; /* Size of the icon */
+}
+
+.social-links a:hover {
+    text-decoration: underline; /* Underline on hover for better visibility */
 }
 
 /* Disclaimer Screen Styles */

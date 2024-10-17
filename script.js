@@ -46,3 +46,4 @@ function navigateTo(page) {
             console.error('Page not found!');
     }
 }
+ 
