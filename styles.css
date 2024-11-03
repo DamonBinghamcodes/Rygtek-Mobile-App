@@ -161,6 +161,20 @@ header {
     gap: 15px;
     width: 100%;
     max-width: 600px;
+    box-shadow: #c2181e;
+}
+
+.menu-options i {
+    color: black;
+    border-radius: 20%;
+    background-color: #c2181e;
+    justify-content: center;
+    display: flex;
+    font-size: 40px;
+}
+
+.menu-options:hover {
+    box-shadow: 0 0 25px red;
 }
 
 .menu-item {
