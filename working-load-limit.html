@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Load Limit - RygtTek</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body id="working-load-limit">
+
+    <header>
+        <button class="menu-toggle">☰</button>
+        <img src="./Public/Rygtek Logo.png" alt="RygTek Logo" class="logo">
+        <h2>WLL / Size Of Your Sling</h2>
+        <p>Calculate the Working Load Limit or Chain/Rope size for your sling.</p>
+    </header>
+
+    <div class="input-container">
+        <label for="sling-type">Sling Type:</label>
+        <select id="sling-type">
+            <option value="chain">Chain Sling</option>
+            <option value="wire">Wire Rope</option>
+            <option value="synthetic">Synthetic Sling</option>
+        </select>
+    </div>
+
+    <div class="input-container">
+        <label for="configuration">Configuration:</label>
+        <select id="configuration">
+            <option value="straight">Straight Sling</option>
+            <option value="basket">Basket Hitch</option>
+            <option value="choker">Choker Hitch</option>
+        </select>
+    </div>
+
+    <div class="input-container">
+        <label for="chain-size">Chain Size (mm):</label>
+        <input type="number" id="chain-size" placeholder="Enter chain size in mm">
+    </div>
+
+    <div class="result-container">
+        <h3>Working Load Limit (t)</h3>
+        <p id="wll-result">0.0</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

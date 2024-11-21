@@ -214,3 +214,65 @@ header {
     font-size: 2rem;
     margin-right: 15px;
 }
+
+/* Working Load Limit Page CSS */
+#working-load-limit {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #555555;
+}
+
+.header-logo {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+input, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input-container, .result-container {
+    margin: 20px 0;
+}
+
+.result-container {
+    background-color: #444444;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#result {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #ffffff;
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}

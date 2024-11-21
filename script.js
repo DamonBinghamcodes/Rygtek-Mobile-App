@@ -46,4 +46,51 @@ function navigateTo(page) {
             console.error('Page not found!');
     }
 }
- 
+
+// Working Load Limit - Calculations 
+document.addEventListener('DOMContentLoaded', function () {
+    const slingType = document.getElementById('sling-type');
+    const configuration = document.getElementById('configuration');
+    const chainSize = document.getElementById('chain-size');
+    const wllResult = document.getElementById('wll-result');
+
+    function calculateWLL() {
+        let type = slingType.value;
+        let config = configuration.value;
+        let size = chainSize.value;
+
+        if (size === '') {
+            wllResult.innerText = '0.0';
+            return;
+        }
+
+        let wll = 0.0;
+
+        switch (type) {
+            case 'chain':
+                wll = size * 0.5; // Example calculation for Chain Sling
+                break;
+            case 'wire':
+                wll = size * 0.4; // Example calculation for Wire Rope
+                break;
+            case 'synthetic':
+                wll = size * 0.3; // Example calculation for Synthetic Sling
+                break;
+        }
+
+        switch (config) {
+            case 'basket':
+                wll *= 2; // Double WLL for Basket Hitch
+                break;
+            case 'choker':
+                wll *= 0.8; // Reduce WLL by 20% for Choker Hitch
+                break;
+        }
+
+        wllResult.innerText = wll.toFixed(1);
+    }
+
+    slingType.addEventListener('change', calculateWLL);
+    configuration.addEventListener('change', calculateWLL);
+    chainSize.addEventListener('input', calculateWLL);
+});
