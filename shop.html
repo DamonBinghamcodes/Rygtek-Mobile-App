@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - RYGTEK</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="Public/Rygtek Logo.png" alt="Rygtek Logo" class="logo">
+        <h2>PPE Store</h2>
+    </header>
+
+    <div class="shop-container">
+        <div class="product">
+            <img src="Public/helmet.png" alt="Helmet">
+            <h3>Heavy Duty Glove Clip</h3>
+            <p>$30.00</p>
+            <button class="add-to-cart" data-product="helmet">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="Public/gloves.png" alt="Gloves">
+            <h3>RYGTEK Riggers Gloves</h3>
+            <p>$35.00</p>
+            <button class="add-to-cart" data-product="gloves">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="Public/boots.png" alt="Boots">
+            <h3>RYGTEK Conference Polo</h3>
+            <p>$80.00</p>
+            <button class="add-to-cart" data-product="boots">Add to Cart</button>
+        </div>
+    </div>
+
+    <h3>Shopping Cart</h3>
+    <ul id="cart-list"></ul>
+    <button id="checkout">Checkout</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

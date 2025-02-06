@@ -42,6 +42,15 @@ function navigateTo(page) {
         case 'safety-alerts':
             window.location.href = 'safety-alerts.html';
             break;
+        case 'inspection-records':
+            window.location.href = 'inspection-records.html';
+            break;
+        case 'contact-page':
+            window.location.href = 'contact-page.html';
+            break;
+        case 'shop':
+            window.location.href = 'shop.html';
+            break;
         default:
             console.error('Page not found!');
     }
@@ -178,4 +187,88 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     addRecordButton.addEventListener('click', addRecord);
+});
+
+//Contact page
+document.addEventListener('DOMContentLoaded', function () {
+    const sendMessageButton = document.getElementById('send-message');
+
+    function sendMessage() {
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (name === '' || email === '' || message === '') {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        alert('Your message has been sent successfully!');
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('message').value = '';
+    }
+
+    sendMessageButton.addEventListener('click', sendMessage);
+});
+
+//Service Worker
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('Service Worker Registered', reg))
+        .catch(err => console.log('Service Worker Registration Failed', err));
+}
+
+
+//Safety Alerts
+document.addEventListener("DOMContentLoaded", function () {
+    const subscribeAlertsButton = document.getElementById("subscribe-alerts");
+
+    async function subscribeForAlerts() {
+        const email = document.getElementById("email-alerts").value.trim();
+        if (email === "") {
+            alert("Please enter a valid email.");
+            return;
+        }
+
+        alert("You have subscribed to safety alerts!");
+        document.getElementById("email-alerts").value = "";
+    }
+
+    subscribeAlertsButton.addEventListener("click", subscribeForAlerts);
+});
+
+//Shop
+document.addEventListener("DOMContentLoaded", function () {
+    const cart = [];
+    const cartList = document.getElementById("cart-list");
+    const checkoutButton = document.getElementById("checkout");
+
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const productName = this.getAttribute("data-product");
+            cart.push(productName);
+            updateCart();
+        });
+    });
+
+    function updateCart() {
+        cartList.innerHTML = "";
+        cart.forEach(item => {
+            const li = document.createElement("li");
+            li.innerText = item;
+            cartList.appendChild(li);
+        });
+    }
+
+    checkoutButton.addEventListener("click", function () {
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+        } else {
+            alert("Proceeding to checkout...");
+            cart.length = 0;
+            updateCart();
+        }
+    });
 });
