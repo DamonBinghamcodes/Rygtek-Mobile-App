@@ -40,10 +40,18 @@ body::before {
 }
 
 .logo {
-    width: 70%;
+    width: 100%;
     max-width: 220px;
     margin-bottom: 55px;
+    border-radius: 50%; /* Circular logo */
+    transition: transform 0.2s ease;
+    animation: pulse 2s infinite; /* Pulsing effect */
   }  
+
+  .logo:hover {
+    transform: scale(1.05); /* Slightly enlarge the logo on hover */
+    box-shadow: 0 0 50px red; /* Glow effect */
+}
 
 .tagline {
     font-size: .95rem;
@@ -112,7 +120,7 @@ body::before {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #1e1e1e; /* Dark grey to match the welcome screen */
+    background-color: #2e2e2e; /* Slightly lighter grey for a layered look */
     color: #ffffff; /* White text for readability */
     padding: 20px;
 }
@@ -120,12 +128,6 @@ body::before {
 .content {
     max-width: 500px;
     text-align: center;
-}
-
-.logo {
-    max-width: 50%;
-    height: auto;
-    margin-bottom: 20px;
 }
 
 .disclaimer-title {
@@ -160,7 +162,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #1e1e1e; /* Dark background to match theme */
+    background-color: #2e2e2e; /* Slightly lighter grey for a layered look */
     color: #ffffff;
 }
 
@@ -174,17 +176,6 @@ body {
 header {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.logo {
-    width: 50%;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 50%;
-}
-
-.logo:hover {
-    box-shadow: 0 0 25px red;
 }
 
 .menu-header {
