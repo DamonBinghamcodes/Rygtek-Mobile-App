@@ -10,6 +10,7 @@ body, html {
     height: 100%;
     background-color: #1e1e1e; /* Dark grey background color */
     overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 body::before {
@@ -21,7 +22,36 @@ body::before {
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: -1;
+    
   }
+
+  /* Sticky Top Bar */
+.sticky-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #121212;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+  
+  .sticky-header .hamburger-icon {
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .sticky-header .back-icon {
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 16px;
+  }
+  
   
 
 /* Welcome Screen Styles */
@@ -436,3 +466,14 @@ input-container, .result-container {
     left: 10px;
     top: 10px;
 }
+
+/* Signal Page CSS */
+.signal-img {
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid #333;
+  }
+  

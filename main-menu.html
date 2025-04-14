@@ -9,24 +9,52 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
   <link rel="stylesheet" href="styles.css" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
 </head>
 
 <div class="nav-wrapper">
     <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
   
     <nav class="hamburger-menu" id="hamburgerMenu">
-      <ul>
-        <li><a href="main-menu.html">Main Menu</a></li>
-        <li><a href="working-load-limit.html">WLL</a></li>
-        <li><a href="angle-dimensions.html">Angle</a></li>
-        <li><a href="load-weight.html">Load Estimator</a></li>
-        <li><a href="lifting-register.html">Lifting Register</a></li>
-        <li><a href="safety-alerts.html">Safety Alerts</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="contact-page.html">Contact</a></li>
-
-      </ul>
-    </nav>
+        <ul>
+          <li><a href="main-menu.html">
+            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
+          </a></li>
+          
+          <li><a href="working-load-limit.html">
+            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
+          </a></li>
+          
+          <li><a href="angle-dimensions.html">
+            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
+          </a></li>
+          
+          <li><a href="load-weight.html">
+            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
+          </a></li>
+          
+          <li><a href="lifting-register.html">
+            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
+          </a></li>
+          
+          <li><a href="safety-alerts.html">
+            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
+          </a></li>
+          
+          <li><a href="shop.html">
+            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
+          </a></li>
+          
+          <li><a href="contact-page.html">
+            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
+          </a></li>
+          
+          <li><a href="crane-signals.html">
+            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
+          </a></li>
+        </ul>
+      </nav>
   </div>
 
 <!-- This is the Main Menu Screen -->
@@ -98,6 +126,8 @@
           </div>
         </div>
       </div>
+      
+      
       <div class="menu-item-container" onclick="location.href='contact-page.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-envelope menu-icon"></i>
@@ -107,7 +137,15 @@
           </div>
         </div>
       </div>
-      
+      <div class="menu-item-container" onclick="location.href='crane-signals.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-person-rays menu-icon"></i>
+          <div>
+            <h3>Crane Signals</h3>
+            <p class="menu-description">Reference guide for hand signals</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

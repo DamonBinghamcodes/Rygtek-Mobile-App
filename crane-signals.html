@@ -1,31 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crane Signals - RYGTEK</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crane Signals - RYGTEK</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <script defer src="script.js"></script>
 </head>
-<body>
-    <header>
-        <img src="Public/Rygtek Logo.png" alt="Rygtek Logo" class="logo">
-        <h2>Crane Signals</h2>
-    </header>
+<body class="main-menu-screen">
+    <a href="main-menu.html" class="back-icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+  <!-- Hamburger Nav -->
+  <div class="nav-wrapper">
+    <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+  
+    <nav class="hamburger-menu" id="hamburgerMenu">
+        <ul>
+          <li><a href="main-menu.html">
+            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
+          </a></li>
+          
+          <li><a href="working-load-limit.html">
+            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
+          </a></li>
+          
+          <li><a href="angle-dimensions.html">
+            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
+          </a></li>
+          
+          <li><a href="load-weight.html">
+            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
+          </a></li>
+          
+          <li><a href="lifting-register.html">
+            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
+          </a></li>
+          
+          <li><a href="safety-alerts.html">
+            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
+          </a></li>
+          
+          <li><a href="shop.html">
+            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
+          </a></li>
+          
+          <li><a href="contact-page.html">
+            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
+          </a></li>
+          
+          <li><a href="crane-signals.html">
+            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
+          </a></li>
+        </ul>
+      </nav>
+      
+  </div>
 
-    <div class="signal-list">
-        <div class="signal">
-            <img src="Public/signal1.png" alt="Stop Signal">
-            <p>Stop</p>
-        </div>
-        <div class="signal">
-            <img src="Public/signal2.png" alt="Move Up Signal">
-            <p>Jib Up</p>
-        </div>
-        <div class="signal">
-            <img src="Public/signal3.png" alt="Move Down Signal">
-            <p>Jib Down</p>
-        </div>
+  <!-- Main Content -->
+  <div class="content" style="margin-top: 100px;">
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+    <h2 class="menu-header">Crane Signals</h2>
+    <p class="menu-description">Standard hand signals used during lifting operations</p>
+
+    <div class="menu-item-container">
+      <h3>Hoist</h3>
+      <img src="Public/signals/hoist.png" alt="Hoist Signal" class="signal-img" />
+      <p class="menu-description">Raise arm vertically with index finger pointing up.</p>
     </div>
 
+    <div class="menu-item-container">
+      <h3>Lower</h3>
+      <img src="Public/signals/lower.png" alt="Lower Signal" class="signal-img" />
+      <p class="menu-description">Arm extended downward, index finger pointing down, circular motion.</p>
+    </div>
+
+    <div class="menu-item-container">
+      <h3>Stop</h3>
+      <img src="Public/signals/stop.png" alt="Stop Signal" class="signal-img" />
+      <p class="menu-description">Arm extended, palm down, swing arm side to side.</p>
+    </div>
+
+    <div class="menu-item-container">
+      <h3>Swing</h3>
+      <img src="Public/signals/swing.png" alt="Swing Signal" class="signal-img" />
+      <p class="menu-description">Arm extended, point in direction of swing.</p>
+    </div>
+
+    <div class="menu-item-container">
+      <h3>Emergency Stop</h3>
+      <img src="Public/signals/emergency-stop.png" alt="Emergency Stop Signal" class="signal-img" />
+      <p class="menu-description">Extend both arms horizontally and swing back and forth.</p>
+    </div>
+  </div>
 </body>
 </html>
