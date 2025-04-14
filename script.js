@@ -183,24 +183,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //angle and dimensions
 document.addEventListener('DOMContentLoaded', function () {
+    const lengthInput = document.getElementById('length');
+    const heightInput = document.getElementById('height');
+    const angleResult = document.getElementById('angle-result');
+  
     function calculateAngle() {
-        const length = parseFloat(document.getElementById('length').value);
-        const height = parseFloat(document.getElementById('height').value);
-        const diagonal = parseFloat(document.getElementById('diagonal').value);
-        const angleResult = document.getElementById('angle-result');
-
-        if (!length || !height) {
-            angleResult.innerText = "0°";
-            return;
-        }
-
-        const angle = Math.atan(height / length) * (180 / Math.PI);
-        angleResult.innerText = angle.toFixed(2) + "°";
+      const length = parseFloat(lengthInput.value);
+      const height = parseFloat(heightInput.value);
+  
+      if (!length || !height) {
+        angleResult.innerText = "--";
+        return;
+      }
+  
+      const angle = Math.atan(height / length) * (180 / Math.PI);
+      angleResult.innerText = angle.toFixed(2) + "°";
     }
-
-    document.getElementById('length').addEventListener('input', calculateAngle);
-    document.getElementById('height').addEventListener('input', calculateAngle);
-});
+  
+    if (lengthInput && heightInput) {
+      lengthInput.addEventListener('input', calculateAngle);
+      heightInput.addEventListener('input', calculateAngle);
+    }
+  });
+  
 
 //load weight
 document.addEventListener('DOMContentLoaded', function () {
@@ -217,23 +222,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         let density;
-        if (material === 'steel') {
-            density = 7.85; // tons per cubic meter
-        } else if (material === 'aluminium') {
-            density = 2.7;
-        } else if (material === 'concrete') {
-            density = 2.4;
-        }
+        if (material === 'steel') density = 7.85;
+        else if (material === 'aluminium') density = 2.7;
+        else if (material === 'concrete') density = 2.4;
 
         const weight = width * height * length * density;
         weightResult.innerText = weight.toFixed(2);
     }
 
-    document.getElementById('width').addEventListener('input', calculateWeight);
-    document.getElementById('height').addEventListener('input', calculateWeight);
-    document.getElementById('length').addEventListener('input', calculateWeight);
+    ['width', 'height', 'length'].forEach(id => {
+        document.getElementById(id).addEventListener('input', calculateWeight);
+    });
     document.getElementById('material').addEventListener('change', calculateWeight);
 });
+
 
 //Inspection Records
 document.addEventListener('DOMContentLoaded', function () {
