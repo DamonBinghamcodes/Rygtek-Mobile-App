@@ -239,34 +239,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //Inspection Records
 document.addEventListener('DOMContentLoaded', function () {
-    const addRecordButton = document.getElementById('add-record');
-    const equipmentInput = document.getElementById('equipment');
-    const dateInput = document.getElementById('date');
-    const notesInput = document.getElementById('notes');
-    const recordsList = document.getElementById('records-list');
-
-    function addRecord() {
-        const equipment = equipmentInput.value.trim();
-        const date = dateInput.value;
-        const notes = notesInput.value.trim();
-
-        if (equipment === '' || date === '') {
-            alert('Please fill in all required fields.');
-            return;
+    const addBtn = document.getElementById('add-gear');
+    const nameInput = document.getElementById('gear-name');
+    const dateInput = document.getElementById('last-test-date');
+    const gearLog = document.getElementById('gear-log');
+  
+    if (addBtn) {
+      addBtn.addEventListener('click', function () {
+        const name = nameInput.value.trim();
+        const date = new Date(dateInput.value);
+        if (!name || isNaN(date)) {
+          alert("Please enter valid gear name and test date.");
+          return;
         }
-
-        const recordItem = document.createElement('li');
-        recordItem.innerHTML = `<strong>${equipment}</strong> - ${date} <p>${notes}</p>`;
-        recordsList.appendChild(recordItem);
-
-        // Clear inputs
-        equipmentInput.value = '';
+  
+        const next3Month = new Date(date);
+        next3Month.setMonth(date.getMonth() + 3);
+  
+        const nextAnnual = new Date(date);
+        nextAnnual.setFullYear(date.getFullYear() + 1);
+  
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <strong>${name}</strong><br>
+          Last Tested: ${date.toLocaleDateString()}<br>
+          Next RUGBY Tag: ${next3Month.toLocaleDateString()}<br>
+          Next Annual Test: ${nextAnnual.toLocaleDateString()}
+        `;
+        gearLog.appendChild(li);
+  
+        nameInput.value = '';
         dateInput.value = '';
-        notesInput.value = '';
+      });
     }
-
-    addRecordButton.addEventListener('click', addRecord);
-});
+  });
+  
 
 //Contact page
 document.addEventListener('DOMContentLoaded', function () {
@@ -303,20 +310,23 @@ if ('serviceWorker' in navigator) {
 //Safety Alerts
 document.addEventListener("DOMContentLoaded", function () {
     const subscribeAlertsButton = document.getElementById("subscribe-alerts");
-
-    async function subscribeForAlerts() {
-        const email = document.getElementById("email-alerts").value.trim();
-        if (email === "") {
-            alert("Please enter a valid email.");
-            return;
-        }
-
-        alert("You have subscribed to safety alerts!");
-        document.getElementById("email-alerts").value = "";
+  
+    function subscribeForAlerts() {
+      const email = document.getElementById("email-alerts").value.trim();
+      if (email === "") {
+        alert("Please enter a valid email.");
+        return;
+      }
+  
+      alert("You have subscribed to safety alerts!");
+      document.getElementById("email-alerts").value = "";
     }
-
-    subscribeAlertsButton.addEventListener("click", subscribeForAlerts);
-});
+  
+    if (subscribeAlertsButton) {
+      subscribeAlertsButton.addEventListener("click", subscribeForAlerts);
+    }
+  });
+  
 
 //Shop
 document.addEventListener("DOMContentLoaded", function () {

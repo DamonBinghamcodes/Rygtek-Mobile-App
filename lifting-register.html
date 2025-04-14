@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Safety Alerts - RYGTEK</title>
+  <title>Lifting Register - RYGTEK</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <script defer src="script.js"></script>
@@ -16,27 +16,36 @@
     <nav class="hamburger-menu" id="hamburgerMenu">
       <ul>
         <li><a href="main-menu.html">Main Menu</a></li>
+        <li><a href="lifting-register.html">Lifting Register</a></li>
         <li><a href="working-load-limit.html">WLL</a></li>
         <li><a href="angle-dimensions.html">Angle</a></li>
         <li><a href="load-weight.html">Load Estimator</a></li>
-        <li><a href="safety-alerts.html">Safety Alerts</a></li>
-        <li><a href="shop.html">Shop</a></li>
       </ul>
     </nav>
   </div>
 
   <div class="content">
     <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
-    <h2 class="menu-header">Safety Alerts</h2>
-    <p class="menu-description">Get notified when new safety updates go live</p>
+    <h2 class="menu-header">Lifting Register</h2>
+    <p class="menu-description">Track gear test history & next due dates</p>
 
     <div class="menu-item-container">
-      <label for="email-alerts">Email Address</label>
-      <input type="email" id="email-alerts" placeholder="Enter your email" class="styled-select" />
+      <label for="gear-name">Rigging Gear Description</label>
+      <input type="text" id="gear-name" placeholder="e.g. 2t Round Sling" class="styled-select">
     </div>
 
-    <div>
-      <button id="subscribe-alerts" class="continue-btn">Subscribe</button>
+    <div class="menu-item-container">
+      <label for="last-test-date">Last Test Date</label>
+      <input type="date" id="last-test-date" class="styled-select">
+    </div>
+
+    <div class="menu-item-container">
+      <button class="continue-btn" id="add-gear">Add to Register</button>
+    </div>
+
+    <div class="menu-item-container">
+      <h3>Registered Gear</h3>
+      <ul id="gear-log" class="menu-description"></ul>
     </div>
   </div>
 </body>
