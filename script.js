@@ -1,11 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Existing functionality for the "Continue" button on the welcome screen
-    const continueBtn = document.querySelector('.continue-btn');
-    if (continueBtn) {
-        continueBtn.addEventListener('click', function() {
-            window.location.href = 'disclaimer.html';
+document.addEventListener('DOMContentLoaded', function () {
+    const path = window.location.pathname;
+  
+    // ✅ Only run this on the welcome page (index.html or root)
+    if (path.includes('index.html') || path.endsWith('/')) {
+      const continueBtn = document.querySelector('.continue-btn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', function () {
+          window.location.href = 'disclaimer.html';
         });
+      }
     }
+  
+    // ✅ Your other page-specific logic can go below (like lifting register, WLL, etc.)
+  });
+  
+  
 
     // New functionality for the "Agree" button on the disclaimer screen
     const agreeBtn = document.querySelector('.agree-btn');
@@ -21,8 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         logo.addEventListener('click', function() {
             window.location.href = 'index.html';
         });
-    }
-});
+    };
 
 // Function to navigate to different pages (from main menu)
 function navigateTo(page) {
@@ -244,34 +252,71 @@ document.addEventListener('DOMContentLoaded', function () {
     const dateInput = document.getElementById('last-test-date');
     const gearLog = document.getElementById('gear-log');
   
-    if (addBtn) {
-      addBtn.addEventListener('click', function () {
-        const name = nameInput.value.trim();
-        const date = new Date(dateInput.value);
-        if (!name || isNaN(date)) {
-          alert("Please enter valid gear name and test date.");
-          return;
-        }
+    if (!addBtn || !gearLog) return;
   
-        const next3Month = new Date(date);
-        next3Month.setMonth(date.getMonth() + 3);
+    const savedRegister = JSON.parse(localStorage.getItem('liftingRegister')) || [];
   
-        const nextAnnual = new Date(date);
-        nextAnnual.setFullYear(date.getFullYear() + 1);
+    function getRugbyColor(date) {
+      const month = date.getMonth();
+      if (month < 3) return "Red";
+      if (month < 6) return "Green";
+      if (month < 9) return "Blue";
+      return "Yellow";
+    }
   
+    function renderRegister() {
+      gearLog.innerHTML = '';
+      savedRegister.forEach(entry => {
         const li = document.createElement('li');
         li.innerHTML = `
-          <strong>${name}</strong><br>
-          Last Tested: ${date.toLocaleDateString()}<br>
-          Next RUGBY Tag: ${next3Month.toLocaleDateString()}<br>
-          Next Annual Test: ${nextAnnual.toLocaleDateString()}
+          <strong>${entry.name}</strong><br>
+          Last Tested: ${entry.lastDate}<br>
+          RUGBY Tag Now: <span style="color:${entry.rugbyNow.toLowerCase()}">${entry.rugbyNow}</span><br>
+          Next RUGBY Tag: <span style="color:${entry.rugbyNext.toLowerCase()}">${entry.rugbyNext}</span><br>
+          Next Annual Test: ${entry.nextYear}
         `;
         gearLog.appendChild(li);
-  
-        nameInput.value = '';
-        dateInput.value = '';
       });
     }
+  
+    renderRegister();
+  
+    addBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+  
+      const name = nameInput.value.trim();
+      const dateVal = dateInput.value;
+      if (!name || !dateVal) {
+        alert("Please enter gear name and test date.");
+        return;
+      }
+  
+      const date = new Date(dateVal);
+      const next3Month = new Date(date);
+      next3Month.setMonth(date.getMonth() + 3);
+  
+      const nextAnnual = new Date(date);
+      nextAnnual.setFullYear(date.getFullYear() + 1);
+  
+      const rugbyNow = getRugbyColor(date);
+      const rugbyNext = getRugbyColor(next3Month);
+  
+      const entry = {
+        name: name,
+        lastDate: date.toLocaleDateString(),
+        next3: next3Month.toLocaleDateString(),
+        nextYear: nextAnnual.toLocaleDateString(),
+        rugbyNow: rugbyNow,
+        rugbyNext: rugbyNext
+      };
+  
+      savedRegister.push(entry);
+      localStorage.setItem('liftingRegister', JSON.stringify(savedRegister));
+      renderRegister();
+  
+      nameInput.value = '';
+      dateInput.value = '';
+    });
   });
   
 
@@ -333,31 +378,35 @@ document.addEventListener("DOMContentLoaded", function () {
     const cart = [];
     const cartList = document.getElementById("cart-list");
     const checkoutButton = document.getElementById("checkout");
-
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-        button.addEventListener("click", function () {
-            const productName = this.getAttribute("data-product");
-            cart.push(productName);
-            updateCart();
-        });
+  
+    const addToCartButtons = document.querySelectorAll(".add-to-cart");
+    if (!addToCartButtons.length || !cartList || !checkoutButton) return;
+  
+    addToCartButtons.forEach(button => {
+      button.addEventListener("click", function () {
+        const productName = this.getAttribute("data-product");
+        cart.push(productName);
+        updateCart();
+      });
     });
-
+  
     function updateCart() {
-        cartList.innerHTML = "";
-        cart.forEach(item => {
-            const li = document.createElement("li");
-            li.innerText = item;
-            cartList.appendChild(li);
-        });
+      cartList.innerHTML = "";
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        cartList.appendChild(li);
+      });
     }
-
+  
     checkoutButton.addEventListener("click", function () {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-        } else {
-            alert("Proceeding to checkout...");
-            cart.length = 0;
-            updateCart();
-        }
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+      } else {
+        alert("Thank you for your order!");
+        cart.length = 0;
+        updateCart();
+      }
     });
-});
+  });
+  

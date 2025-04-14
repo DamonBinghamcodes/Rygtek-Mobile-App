@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - RYGTEK</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - RYGTEK</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <script defer src="script.js"></script>
 </head>
-<body>
-    <header>
-        <img src="Public/Rygtek Logo.png" alt="Rygtek Logo" class="logo">
-        <h2>Contact Us</h2>
-    </header>
+<body class="main-menu-screen">
+    <a href="main-menu.html" class="back-icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+    <div class="nav-wrapper">
+        <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+      
+        <nav class="hamburger-menu" id="hamburgerMenu">
+          <ul>
+            <li><a href="main-menu.html">Main Menu</a></li>
+            <li><a href="working-load-limit.html">WLL</a></li>
+            <li><a href="angle-dimensions.html">Angle</a></li>
+            <li><a href="load-weight.html">Load Estimator</a></li>
+            <li><a href="lifting-register.html">Lifting Register</a></li>
+            <li><a href="safety-alerts.html">Safety Alerts</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="contact-page.html">Contact</a></li>
+    
+          </ul>
+        </nav>
+      </div>
 
-    <div class="contact-container">
-        <div class="input-container">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="Your Name">
-        </div>
-        <div class="input-container">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Your Email">
-        </div>
-        <div class="input-container">
-            <label for="message">Message:</label>
-            <textarea id="message" placeholder="Your Message"></textarea>
-        </div>
-        <button id="send-message">Send</button>
+  <div class="content">
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+    <h2 class="menu-header">Contact Us</h2>
+    <p class="menu-description">Send us a message or inquiry</p>
+
+    <div class="menu-item-container">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" placeholder="John Smith" class="styled-select" />
     </div>
 
-    <script src="script.js"></script>
+    <div class="menu-item-container">
+      <label for="email">Your Email</label>
+      <input type="email" id="email" placeholder="example@email.com" class="styled-select" />
+    </div>
+
+    <div class="menu-item-container">
+      <label for="message">Message</label>
+      <textarea id="message" placeholder="Your message..." class="styled-select" style="height: 100px;"></textarea>
+    </div>
+
+    <div>
+      <button id="send-message" class="continue-btn">Send Message</button>
+    </div>
+  </div>
 </body>
 </html>

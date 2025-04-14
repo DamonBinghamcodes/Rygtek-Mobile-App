@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - RYGTEK</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RYGTEK Shop</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <script defer src="script.js"></script>
 </head>
-<body>
-    <header>
-        <img src="Public/Rygtek Logo.png" alt="Rygtek Logo" class="logo">
-        <h2>PPE Store</h2>
-    </header>
+<body class="main-menu-screen">
+    <a href="main-menu.html" class="back-icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+  <div class="nav-wrapper">
+    <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+  
+    <nav class="hamburger-menu" id="hamburgerMenu">
+      <ul>
+        <li><a href="main-menu.html">Main Menu</a></li>
+        <li><a href="working-load-limit.html">WLL</a></li>
+        <li><a href="angle-dimensions.html">Angle</a></li>
+        <li><a href="load-weight.html">Load Estimator</a></li>
+        <li><a href="lifting-register.html">Lifting Register</a></li>
+        <li><a href="safety-alerts.html">Safety Alerts</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact-page.html">Contact</a></li>
 
-    <div class="shop-container">
-        <div class="product">
-            <img src="Public/helmet.png" alt="Helmet">
-            <h3>Heavy Duty Glove Clip</h3>
-            <p>$30.00</p>
-            <button class="add-to-cart" data-product="helmet">Add to Cart</button>
-        </div>
+      </ul>
+    </nav>
+  </div>
 
-        <div class="product">
-            <img src="Public/gloves.png" alt="Gloves">
-            <h3>RYGTEK Riggers Gloves</h3>
-            <p>$35.00</p>
-            <button class="add-to-cart" data-product="gloves">Add to Cart</button>
-        </div>
+  <div class="content">
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+    <h2 class="menu-header">RYGTEK Shop</h2>
+    <p class="menu-description">PPE gear & branded merch</p>
 
-        <div class="product">
-            <img src="Public/boots.png" alt="Boots">
-            <h3>RYGTEK Conference Polo</h3>
-            <p>$80.00</p>
-            <button class="add-to-cart" data-product="boots">Add to Cart</button>
-        </div>
+    <div class="menu-item-container">
+      <h3>Gloves</h3>
+      <button class="add-to-cart styled-select" data-product="RYGTEK Gloves">Add to Cart</button>
     </div>
 
-    <h3>Shopping Cart</h3>
-    <ul id="cart-list"></ul>
-    <button id="checkout">Checkout</button>
+    <div class="menu-item-container">
+      <h3>Helmet</h3>
+      <button class="add-to-cart styled-select" data-product="Hard Hat Helmet">Add to Cart</button>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="menu-item-container">
+      <h3>Cart</h3>
+      <ul id="cart-list" class="menu-description"></ul>
+      <button id="checkout" class="continue-btn">Checkout</button>
+    </div>
+  </div>
 </body>
 </html>

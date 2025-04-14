@@ -6,7 +6,7 @@
   <title>Lifting Register - RYGTEK</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-  <script defer src="script.js"></script>
+  <script defer src="script.js?v=2"></script>
 </head>
 <body class="main-menu-screen">
     <a href="main-menu.html" class="back-icon">
@@ -15,13 +15,18 @@
   <!-- Hamburger Nav -->
   <div class="nav-wrapper">
     <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+  
     <nav class="hamburger-menu" id="hamburgerMenu">
       <ul>
         <li><a href="main-menu.html">Main Menu</a></li>
-        <li><a href="lifting-register.html">Lifting Register</a></li>
         <li><a href="working-load-limit.html">WLL</a></li>
         <li><a href="angle-dimensions.html">Angle</a></li>
         <li><a href="load-weight.html">Load Estimator</a></li>
+        <li><a href="lifting-register.html">Lifting Register</a></li>
+        <li><a href="safety-alerts.html">Safety Alerts</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact-page.html">Contact</a></li>
+
       </ul>
     </nav>
   </div>
@@ -30,21 +35,21 @@
     <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
     <h2 class="menu-header">Lifting Register</h2>
     <p class="menu-description">Track gear test history & next due dates</p>
-
+  
     <div class="menu-item-container">
       <label for="gear-name">Rigging Gear Description</label>
-      <input type="text" id="gear-name" placeholder="e.g. 2t Round Sling" class="styled-select">
+      <input type="text" id="gear-name" placeholder="e.g. 2t Round Sling" class="styled-select" />
     </div>
-
+  
     <div class="menu-item-container">
       <label for="last-test-date">Last Test Date</label>
-      <input type="date" id="last-test-date" class="styled-select">
+      <input type="date" id="last-test-date" class="styled-select" />
     </div>
-
+  
     <div class="menu-item-container">
-      <button class="continue-btn" id="add-gear">Add to Register</button>
+        <button id="add-gear" class="register-btn">Add to Register</button>
     </div>
-
+  
     <div class="menu-item-container">
       <h3>Registered Gear</h3>
       <ul id="gear-log" class="menu-description"></ul>
