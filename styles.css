@@ -43,7 +43,7 @@ body::before {
 .logo {
     width: 100%;
     max-width: 220px;
-    margin-top: 100px;
+    margin-top: 90px;
     margin-bottom: 55px;
     border-radius: 50%; /* Circular logo */
     animation: pulse 2s infinite; /* Pulsing effect */
@@ -189,7 +189,7 @@ body::before {
   /* Hamburger Menu Styles */
   .nav-wrapper {
     position: absolute;
-    top: 20px;
+    top: 50px;
     right: 20px;
     z-index: 100;
   }
@@ -259,8 +259,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     padding: 20px;
+    flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
   }
 
 header {
@@ -303,6 +305,9 @@ header {
     width: 100%;
     max-width: 350px;
     margin-bottom: 20px;
+    text-align: left;
+  display: flex;
+  flex-direction: column;
   }
 
   .menu-item-container:hover {
