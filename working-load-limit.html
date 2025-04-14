@@ -1,50 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Working Load Limit - RygtTek</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Working Load Limit - RYGTEK</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <script defer src="script.js"></script>
 </head>
-<body id="working-load-limit">
+<body class="main-menu-screen">
 
-    <header>
-        <button class="menu-toggle">☰</button>
-        <img src="./Public/Rygtek Logo.png" alt="RygTek Logo" class="logo">
-        <h2>WLL / Size Of Your Sling</h2>
-        <p>Calculate the Working Load Limit or Chain/Rope size for your sling.</p>
-    </header>
-
-    <h3>Calculations are incorrect and for demo only</h3>
-
-    <div class="input-container">
-        <label for="sling-type">Sling Type:</label>
-        <select id="sling-type">
-            <option value="chain">Chain Sling</option>
-            <option value="wire">Wire Rope</option>
-            <option value="synthetic">Synthetic Sling</option>
+    <!-- Hamburger Nav -->
+    <div class="nav-wrapper">
+      <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+      <nav class="hamburger-menu" id="hamburgerMenu">
+        <ul>
+          <li><a href="main-menu.html">Main Menu</a></li>
+          <li><a href="working-load-limit.html">WLL</a></li>
+          <li><a href="angle-dimensions.html">Angle</a></li>
+          <li><a href="load-weight.html">Load Estimator</a></li>
+          <li><a href="safety-alerts.html">Safety Alerts</a></li>
+          <li><a href="shop.html">Shop</a></li>
+        </ul>
+      </nav>
+    </div>
+  
+    <div class="content">
+      <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+      <h2 class="menu-header">Sling WLL / Size</h2>
+      <p class="menu-description">Calculate the Working Load Limit for your sling</p>
+  
+      <div class="menu-item-container">
+        <label for="sling-type">Sling Type</label>
+        <select id="sling-type" class="styled-select">
+          <option value="">-- Select Sling Type --</option>
+          <option value="chain">Chain Sling</option>
+          <option value="wire">Wire Rope Sling</option>
+          <option value="round">Round / Webbing Sling</option>
         </select>
-    </div>
-
-    <div class="input-container">
-        <label for="configuration">Configuration:</label>
-        <select id="configuration">
-            <option value="straight">Straight Sling</option>
-            <option value="basket">Basket Hitch</option>
-            <option value="choker">Choker Hitch</option>
+      </div>
+  
+      <div class="menu-item-container">
+        <label for="configuration">Configuration</label>
+        <select id="configuration" class="styled-select" disabled>
+          <option value="">-- Select Configuration --</option>
         </select>
+      </div>
+  
+      <div class="menu-item-container">
+        <label for="chain-size">Size (mm or Colour)</label>
+        <select id="chain-size" class="styled-select" disabled>
+          <option value="">-- Select Size --</option>
+        </select>
+      </div>
+  
+      <div class="menu-item-container">
+        <h3>Working Load Limit (t):</h3>
+        <p id="wll-output" class="menu-description">Select options above</p>
+      </div>
     </div>
-
-    <div class="input-container">
-        <label for="chain-size">Chain Size (mm):</label>
-        <input type="number" id="chain-size" placeholder="Enter chain size in mm">
-    </div>
-
-    <div class="result-container">
-        <h3>Working Load Limit (t)</h3>
-        <p id="wll-result">0.0</p>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+  </body>
 </html>
