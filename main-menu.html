@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Main Menu - RYGTEK</title>
 
-    <title>RYGTEK - Main Menu</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-    <div class="main-menu">
-        <header>
-            <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" href="index.html">
-            <h1 class="tagline">THE RIGGER IN YOUR POCKET</h1>
-            <h1 class="menu-header">Reeving Calculator & Lifting Practices</h1>
-        </header>
+<body class="main-menu-screen">
+  <div class="content">
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+    <h2 class="menu-header">Main Menu</h2>
 
-        <div class="menu-options">
-            <button class="menu-item" onclick="navigateTo('working-load-limit')">
-                <span class="icon"><i class='bx bxs-calculator' ></i></span>
-                <h3>Working Load Limit</h3>
-                <p class="menu-description">Find the WLL / size of your sling</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('angle-dimensions')">
-                <span class="icon"><i class='bx bx-shape-triangle'></i></span>
-                <h3>Angle & Dimensions</h3>
-                <p class="menu-description">Find the dimensions and included angle of your sling</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('load-weight')">
-                <span class="icon"><i class='bx bxs-truck'></i></span>
-                <h3> Weight</h3>
-                <p class="menu-description">Estimate the weight of your load by material type</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('crane-signals')">
-                <span class="icon"><i class='bx bxs-hand' ></i></span>
-                <h3>Crane Signals</h3>
-                <p class="menu-description">Review common crane signals</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('safety-alerts')">
-                <span class="icon"><i class='bx bxs-bell-ring' ></i></span>
-                <h3>Safety Alerts</h3>
-                <p class="menu-description">Stay up to date with safety news and Rygtek products</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('inspection-records')">
-                <span class="icon"><i class='bx bxs-calendar'></i></span>
-                <h3>Inspection Records</h3>
-                <p class="menu-description">Record your lifting gear test dates and scheduled inspections</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('shop')">
-                <span class="icon"><i class='bx bx-store-alt' ></i></span>
-                <h3>Shop</h3>
-                <p class="menu-description">RYGTEK Gloves available now</p>
-            </button>
-
-            <button class="menu-item" onclick="navigateTo('contact-page')">
-                <span class="icon"><i class='bx bx-send' ></i></span>
-                <h3>Contact</h3>
-                <p class="menu-description">Contact us today</p>
-            </button>
+    <div class="menu-options">
+      <div class="menu-item-container" onclick="location.href='working-load-limit.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-weight-hanging menu-icon"></i>
+          <div>
+            <h3>Working Load Limit</h3>
+            <p class="menu-description">Calculate chain or sling WLL</p>
+          </div>
         </div>
+      </div>
+
+      <div class="menu-item-container" onclick="location.href='angle-dimensions.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-ruler-combined menu-icon"></i>
+          <div>
+            <h3>Angle & Dimensions</h3>
+            <p class="menu-description">Determine angle based on sling leg</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item-container" onclick="location.href='load-weight.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-boxes-stacked menu-icon"></i>
+          <div>
+            <h3>Load Weight Estimator</h3>
+            <p class="menu-description">Estimate load by material & size</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item-container" onclick="location.href='safety-alerts.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-triangle-exclamation menu-icon"></i>
+          <div>
+            <h3>Safety Alerts</h3>
+            <p class="menu-description">Access industry alerts (Premium)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item-container" onclick="location.href='shop.html'">
+        <div class="menu-item-content">
+          <i class="fa-solid fa-cart-shopping menu-icon"></i>
+          <div>
+            <h3>RYGTEK Shop</h3>
+            <p class="menu-description">PPE gear & branded merch</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
- 

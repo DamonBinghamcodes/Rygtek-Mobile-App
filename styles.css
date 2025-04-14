@@ -29,7 +29,7 @@ body::before {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #2e2e2e; /* Slightly lighter grey for a layered look */
+    background-color: #121212;
     flex-direction: column;
     text-align: center;
 }
@@ -44,13 +44,13 @@ body::before {
     max-width: 220px;
     margin-bottom: 55px;
     border-radius: 50%; /* Circular logo */
-    transition: transform 0.2s ease;
     animation: pulse 2s infinite; /* Pulsing effect */
+    box-shadow: 0 0 50px red; /* Glow effect */
   }  
 
   .logo:hover {
     transform: scale(1.05); /* Slightly enlarge the logo on hover */
-    box-shadow: 0 0 50px red; /* Glow effect */
+    
 }
 
 .tagline {
@@ -119,27 +119,40 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #121212;
+    color: white;
     height: 100vh;
-    background-color: #2e2e2e; /* Slightly lighter grey for a layered look */
-    color: #ffffff; /* White text for readability */
     padding: 20px;
-}
-
-.content {
-    max-width: 500px;
     text-align: center;
-}
-
-.disclaimer-title {
-    font-size: 1.8rem;
+  }
+  
+  .content {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .disclaimer-container {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    margin: 20px 0;
+  }
+  
+  .disclaimer-title {
+    font-size: 1.4rem;
     margin-bottom: 15px;
-}
-
-.disclaimer-text {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 30px;
-}
+    color: #e31e24;
+  }
+  
+  .disclaimer-text {
+    font-size: .95rem;
+    line-height: 1.6;
+    color: #ccc;
+  }
 
 .agree-btn {
     background-color: #e31e24; /* Bright red to match brand color */
@@ -162,16 +175,18 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #2e2e2e; /* Slightly lighter grey for a layered look */
+    background-color: #121212; /* Slightly lighter grey for a layered look */
     color: #ffffff;
 }
 
-.main-menu {
+.main-menu-screen {
+    background-color: #121212;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
     padding: 20px;
-}
+  }
 
 header {
     text-align: center;
@@ -179,64 +194,54 @@ header {
 }
 
 .menu-header {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+    font-size: 1.4rem;
+    color: #e31e24;
+    margin: 20px 0;
+  }
 
-.menu-options {
+  .menu-options {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     width: 100%;
-    max-width: 600px;
-}
+    max-width: 400px;
+  }
 
-.menu-options i {
-    color: black;
-    border-radius: 30%;
-    background-color: #e31e24;
-    justify-content: center;
-    display: flex;
-    font-size: 40px;
-}
-
-.menu-options:hover {
-    box-shadow: 0 0 25px red;
-}
-
-.menu-options:hover .bx bxs-calculator{
-    background-color: transparent;
-}
-
-.menu-item {
-    background-color: #333333;
-    color: #ffffff;
-    border: none;
-    padding: 20px;
-    text-align: left;
-    font-size: 1.2rem;
-    border-radius: 8px;
+  .menu-item-container {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease;
     cursor: pointer;
+  }
+
+  .menu-item-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 5px #c2181e;
+  }
+
+  .menu-item-container h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  .menu-description {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+
+  .menu-item-content {
     display: flex;
     align-items: center;
-    transition: background-color 0.3s ease;
-    gap: 10px;
-}
-
-.menu-item:hover {
-    background-color: #e31e24; /* Bright red on hover */
-}
-
-.menu-description {
-    font-size: 0.9rem;
-    margin-top: 5px;
-    color: #b0b0b0;
-}
-
-.icon {
-    font-size: 2rem;
-    margin-right: 15px;
-}
+    gap: 16px;
+  }
+  
+  .menu-icon {
+    font-size: 1.8rem;
+    color: #e31e24;
+    min-width: 30px;
+  }
 
 /* Working Load Limit Page CSS */
 #working-load-limit {
