@@ -193,25 +193,43 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', function () {
     const lengthInput = document.getElementById('length');
     const heightInput = document.getElementById('height');
+    const diagonalInput = document.getElementById('diagonal');
     const angleResult = document.getElementById('angle-result');
   
-    function calculateAngle() {
-      const length = parseFloat(lengthInput.value);
-      const height = parseFloat(heightInput.value);
+    function updateAll() {
+      let length = parseFloat(lengthInput.value);
+      let height = parseFloat(heightInput.value);
+      let diagonal = parseFloat(diagonalInput.value);
   
-      if (!length || !height) {
-        angleResult.innerText = "--";
-        return;
+      // 🔁 Auto-calculate third value using Pythagorean theorem
+      if (!isNaN(length) && !isNaN(height) && isNaN(diagonal)) {
+        const calc = Math.sqrt((length / 2) ** 2 + height ** 2);
+        diagonalInput.value = calc.toFixed(2);
+        diagonal = calc;
+      } else if (!isNaN(diagonal) && !isNaN(height) && isNaN(length)) {
+        const calc = 2 * Math.sqrt(diagonal ** 2 - height ** 2);
+        lengthInput.value = calc.toFixed(2);
+        length = calc;
+      } else if (!isNaN(diagonal) && !isNaN(length) && isNaN(height)) {
+        const calc = Math.sqrt(diagonal ** 2 - (length / 2) ** 2);
+        heightInput.value = calc.toFixed(2);
+        height = calc;
       }
   
-      const angle = Math.atan(height / length) * (180 / Math.PI);
-      angleResult.innerText = angle.toFixed(2) + "°";
+      // ✅ Calculate Included Angle Between Slings
+      if (!isNaN(length) && !isNaN(height)) {
+        const halfBase = length / 2;
+        const angleRad = Math.atan(halfBase / height);
+        const includedAngle = 2 * (angleRad * 180 / Math.PI);
+        angleResult.innerText = `${includedAngle.toFixed(2)}°`;
+      } else {
+        angleResult.innerText = '--';
+      }
     }
   
-    if (lengthInput && heightInput) {
-      lengthInput.addEventListener('input', calculateAngle);
-      heightInput.addEventListener('input', calculateAngle);
-    }
+    [lengthInput, heightInput, diagonalInput].forEach(input =>
+      input.addEventListener('input', updateAll)
+    );
   });
   
 
