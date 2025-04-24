@@ -376,7 +376,9 @@ header {
   }
 
   .menu-item-container {
-    background-color: #1e1e1e;
+    background: rgba(30, 30, 30, 0.80); /* Semi-transparent background */
+    backdrop-filter: blur(6px); /* Blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for contrast */
     border-radius: 12px;
     padding: 16px 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -386,8 +388,8 @@ header {
     max-width: 350px;
     margin-bottom: 20px;
     text-align: center;
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
   }
 
   .menu-item-container:hover {
