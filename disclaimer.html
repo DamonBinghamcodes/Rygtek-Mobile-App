@@ -9,26 +9,36 @@
   <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
 </head>
 
 <!-- This is the Disclaimer Screen -->
 <body class="disclaimer-screen">
-    <a href="index.html" class="back-icon">
+    <a href="index.html" class="back-icon" data-aos="fade-right" data-aos-delay="100">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
   <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="200" />
 
-    <div class="disclaimer-container">
+    <div class="disclaimer-container" data-aos="fade-up" data-aos-delay="400">
       <h2 class="disclaimer-title">Disclaimer</h2>
       <p class="disclaimer-text">
         The RYGTEK app provides general guidance based on industry best practices and safety guidelines. It is the user's responsibility to verify and apply proper lifting techniques based on current workplace procedures, environmental conditions, and official site safety policies. Always refer to your company’s SOPs and certified lifting personnel for final approval.
       </p>
     </div>
 
-    <button class="agree-btn">I AGREE</button>
+    <button class="agree-btn" data-aos="fade-up" data-aos-delay="600">I AGREE</button>
   </div>
 
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+
 </body>
 </html>
