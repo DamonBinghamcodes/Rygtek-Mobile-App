@@ -25,6 +25,14 @@ body::before {
     
   }
 
+  /*Pulse animation for RYGTEK logo*/
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px red; }
+    50% { transform: scale(1.05); box-shadow: 0 0 40px red; }
+    100% { transform: scale(1); box-shadow: 0 0 20px red; }
+  }
+  
+
   /* Sticky Top Bar */
 .sticky-header {
     position: fixed;
@@ -72,11 +80,11 @@ body::before {
 
 .logo {
     width: 100%;
-    max-width: 220px;
+    max-width: 150px;
     margin-top: 20px;
     margin-bottom: 55px;
     border-radius: 50%; /* Circular logo */
-    animation: pulse 2s infinite; /* Pulsing effect */
+    animation: pulse 3s infinite; /* Pulsing effect */
     box-shadow: 0 0 50px red; /* Glow effect */
   }  
 

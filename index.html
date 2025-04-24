@@ -9,14 +9,17 @@
     <title>RYGTEK - Welcome Screen</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
+    <!-- AOS Animation Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
 </head>
 <body>
     <div class="welcome-screen">
         <div class="content">
-          <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
-          <h1 class="tagline">THE RIGGER IN YOUR POCKET</h1>
-          <button class="continue-btn">CONTINUE</button>
-          <div class="social-links">
+          <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="100">
+          <h1 class="tagline" data-aos="fade-up" data-aos-delay="300">THE RIGGER IN YOUR POCKET</h1>
+          <button class="continue-btn" data-aos="fade-up" data-aos-delay="500">CONTINUE</button>
+          <div class="social-links" data-aos="fade-up" data-aos-delay="700">
             <a href="https://www.instagram.com/rygtek/" target="_blank" class="instagram-link">
               <i class="fab fa-instagram"></i>
             </a>
@@ -27,5 +30,14 @@
         </div>      
     </div>
     <script src="script.js"></script>
+    <!-- AOS Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+
 </body>
 </html>
