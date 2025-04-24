@@ -65,10 +65,10 @@
         <i class="fa-solid fa-arrow-left"></i>
       </a>
   <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
-    <h2 class="menu-header">Main Menu</h2>
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay=300"/>
+    <h2 class="menu-header" data-aos="fade-up" data-aos-delay="200">Main Menu</h2>
 
-    <div class="menu-options">
+    <div class="menu-options" data-aos="fade-up" data-aos-delay="400">
       <div class="menu-item-container" onclick="location.href='working-load-limit.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-weight-hanging menu-icon"></i>
@@ -152,7 +152,14 @@
   </div>
 
   <script src="script.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+
 
 </body>
 </html>
