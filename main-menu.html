@@ -15,7 +15,10 @@
 
 </head>
 
-<div class="nav-wrapper">
+<!-- This is the Main Menu Screen -->
+<body class="main-menu-screen">
+  <!-- Hamburger Nav -->
+  <div class="nav-wrapper">
     <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
   
     <nav class="hamburger-menu" id="hamburgerMenu">
@@ -58,18 +61,15 @@
         </ul>
       </nav>
   </div>
-
-<!-- This is the Main Menu Screen -->
-<body class="main-menu-screen">
     <a href="index.html" class="back-icon">
         <i class="fa-solid fa-arrow-left"></i>
       </a>
   <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay=300"/>
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="300"/>
     <h2 class="menu-header" data-aos="fade-up" data-aos-delay="200">Main Menu</h2>
 
-    <div class="menu-options" data-aos="fade-up" data-aos-delay="400">
-      <div class="menu-item-container" onclick="location.href='working-load-limit.html'">
+    <div class="menu-options">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="400" onclick="location.href='working-load-limit.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-weight-hanging menu-icon"></i>
           <div>
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="menu-item-container" onclick="location.href='angle-dimensions.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="500" onclick="location.href='angle-dimensions.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-ruler-combined menu-icon"></i>
           <div>
@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <div class="menu-item-container" onclick="location.href='load-weight.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="600" onclick="location.href='load-weight.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-boxes-stacked menu-icon"></i>
           <div>
@@ -99,7 +99,7 @@
         </div>
       </div>
 
-      <div class="menu-item-container" onclick="location.href='lifting-register.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="700" onclick="location.href='lifting-register.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-clipboard-list menu-icon"></i>
           <div>
@@ -109,7 +109,7 @@
         </div>
       </div>      
 
-      <div class="menu-item-container" onclick="location.href='safety-alerts.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="800" onclick="location.href='safety-alerts.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-triangle-exclamation menu-icon"></i>
           <div>
@@ -119,7 +119,7 @@
         </div>
       </div>
 
-      <div class="menu-item-container" onclick="location.href='shop.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="900" onclick="location.href='shop.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-cart-shopping menu-icon"></i>
           <div>
@@ -130,7 +130,7 @@
       </div>
       
       
-      <div class="menu-item-container" onclick="location.href='contact-page.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="1000" onclick="location.href='contact-page.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-envelope menu-icon"></i>
           <div>
@@ -139,7 +139,7 @@
           </div>
         </div>
       </div>
-      <div class="menu-item-container" onclick="location.href='crane-signals.html'">
+      <div class="menu-item-container" data-aos="fade-up" data-aos-delay="1100" onclick="location.href='crane-signals.html'">
         <div class="menu-item-content">
           <i class="fa-solid fa-person-rays menu-icon"></i>
           <div>
@@ -159,7 +159,6 @@
     once: true
   });
 </script>
-
 
 </body>
 </html>
