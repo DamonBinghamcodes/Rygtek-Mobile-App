@@ -12,7 +12,7 @@ body, html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  height: 100%;
+  height: auto;
   min-height: 100vh;
 }
 
@@ -84,6 +84,9 @@ body{
 .content {
     text-align: center;
     color: #ffffff; /* White text for contrast */
+    flex-grow: 1; /* Allow content to grow and fill space */
+    min-height: 100vh; /* Ensure it takes at least full viewport height */
+    padding-bottom: 150px; /* Space for the button at the bottom */
 }
 
 .logo {
