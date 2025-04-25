@@ -20,7 +20,7 @@ body, html {
 
 body{
     height: 100%;
-    background-color: #121212; /* Dark grey background color */
+    background-color: #0f0f0f; /* Dark grey background color */
     overflow-y: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -73,7 +73,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100dvh;
-    background-color: #121212;
+    background-color: #0f0f0f;
     flex-direction: column;
     text-align: center;
     padding: 20px;
@@ -164,7 +164,7 @@ body{
 
 /* Disclaimer Screen Styles */
 .disclaimer-screen {
-  background-color: #121212;
+  background-color: #0f0f0f;
   color: white;
   min-height: 100vh;
   padding: 20px;
@@ -331,7 +331,7 @@ body{
 /* Main Menu Styles */
 
 .main-menu-screen {
-    background-color: #121212;
+    background-color: #0f0f0f;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -466,7 +466,7 @@ header {
   }
 
 #working-load-limit {
-    background-color: #2d2d2d;
+    background-color: #0f0f0f;
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
     padding: 20px;
