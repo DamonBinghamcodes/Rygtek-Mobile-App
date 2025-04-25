@@ -248,7 +248,6 @@ body{
 
   /* Hamburger Menu Styles */
   .nav-wrapper {
-    position: absolute;
     top: 50px;
     right: 20px;
   }
