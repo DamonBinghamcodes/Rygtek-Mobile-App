@@ -544,14 +544,62 @@ input-container, .result-container {
 }
 
 /* Signal Page CSS */
+.signal-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+  padding-bottom: 40px; /* Add breathing room at the bottom */
+}
+
+.signal-card {
+  background: rgba(30, 30, 30, 0.95); /* Dark semi-transparent */
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  animation: fadeUp 0.8s ease both;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .signal-img {
-    width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
-    display: block;
-    border-radius: 10px;
-    border: 1px solid #333;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto 15px auto;
+  border-radius: 10px;
+  object-fit: contain;
+  box-shadow: 0 0 10px rgba(227, 30, 36, 0.5); /* Soft red glow around image */
+}
+
+.signal-info h3 {
+  color: #e31e24;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.signal-info p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+/* Smooth fade animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
   /*Media Queries*/
   @media (max-width: 430px) {

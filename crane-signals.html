@@ -1,92 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crane Signals - RYGTEK</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
 </head>
+
 <body class="main-menu-screen">
-    <a href="main-menu.html" class="back-icon">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-  <!-- Hamburger Nav -->
+  <!-- Navigation (sticky back and hamburger already exists in your project) -->
   <div class="nav-wrapper">
     <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
-  
     <nav class="hamburger-menu" id="hamburgerMenu">
-        <ul>
-          <li><a href="main-menu.html">
-            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
-          </a></li>
-          
-          <li><a href="working-load-limit.html">
-            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
-          </a></li>
-          
-          <li><a href="angle-dimensions.html">
-            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
-          </a></li>
-          
-          <li><a href="load-weight.html">
-            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
-          </a></li>
-          
-          <li><a href="lifting-register.html">
-            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
-          </a></li>
-          
-          <li><a href="safety-alerts.html">
-            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
-          </a></li>
-          
-          <li><a href="shop.html">
-            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
-          </a></li>
-          
-          <li><a href="contact-page.html">
-            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
-          </a></li>
-          
-          <li><a href="crane-signals.html">
-            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
-          </a></li>
-        </ul>
-      </nav>
-      
+      <!-- Menu items already loaded here -->
+    </nav>
+  </div>
+  <a href="main-menu.html" class="back-icon">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+
+  <div class="content">
+    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" />
+    <h2 class="menu-header" data-aos="fade-up">Crane Signals</h2>
+    <p class="menu-description" data-aos="fade-up" data-aos-delay="100">Reference guide for standard crane hand signals and whistle commands.</p>
+
+    <div class="signal-cards-container">
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="200">
+  <img src="Public/hoisting-up.png" alt="Hoisting Up Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Hoisting Up / Raise</h3>
+    <p><strong>Hand Signal:</strong> Arm raised, index finger pointing upward, small circle motion</p>
+    <p><strong>Whistle/Buzzer:</strong> 2 Short Blasts</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="300">
+  <img src="Public/luffing-boom-up.png" alt="Luffing Boom Up Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Luffing Boom Up</h3>
+    <p><strong>Hand Signal:</strong> Thumb upward motion</p>
+    <p><strong>Whistle/Buzzer:</strong> 3 Short Blasts</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="400">
+  <img src="Public/slewing-right.png" alt="Slewing Right Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Slewing Right</h3>
+    <p><strong>Hand Signal:</strong> Arm outstretched, pointing right</p>
+    <p><strong>Whistle/Buzzer:</strong> 1 Long, 2 Short</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="500">
+  <img src="Public/slewing-left.png" alt="Slewing Left Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Slewing Left</h3>
+    <p><strong>Hand Signal:</strong> Arm outstretched, pointing left</p>
+    <p><strong>Whistle/Buzzer:</strong> 1 Long, 1 Short</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="600">
+  <img src="Public/jib-trolley-out.png" alt="Jib-Trolley Out Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Jib-Trolley Out (Telescoping Boom Extended)</h3>
+    <p><strong>Hand Signal:</strong> Both hands pushing outward</p>
+    <p><strong>Whistle/Buzzer:</strong> 1 Long, 3 Short</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="700">
+  <img src="Public/jib-trolley-in.png" alt="Jib-Trolley In Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Jib-Trolley In (Telescoping Boom Retract)</h3>
+    <p><strong>Hand Signal:</strong> Both hands pulling inward</p>
+    <p><strong>Whistle/Buzzer:</strong> 1 Long, 4 Short</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="800">
+  <img src="Public/travel-traverse.png" alt="Travel and Traverse Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>Travel and Traverse</h3>
+    <p><strong>Hand Signal:</strong> Arm swinging horizontally</p>
+    <p><strong>Whistle/Buzzer:</strong> Not Applicable</p>
+  </div>
+</section>
+
+<section class="signal-card" data-aos="fade-up" data-aos-delay="900">
+  <img src="Public/stop.png" alt="Stop Signal" class="signal-img" />
+  <div class="signal-info">
+    <h3>STOP</h3>
+    <p><strong>Hand Signal:</strong> Arm raised, palm open facing crane</p>
+    <p><strong>Whistle/Buzzer:</strong> 1 Short Blast</p>
+  </div>
+</section>
+
+    </div>
   </div>
 
-  <!-- Main Content -->
-  <div class="content" style="margin-top: 100px;">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
-    <h2 class="menu-header">Crane Signals</h2>
-    <p class="menu-description">Standard hand signals used during lifting operations</p>
-
-    <div class="menu-item-container">
-      <h3>Rope Up</h3>
-      <img src="Public/signals/hoist.png" alt="Hoist Signal" class="signal-img" />
-      <p class="menu-description">Raise hand in a circular motion, speed of rotation indicates hoist speed.</p>
-    </div>
-
-    <div class="menu-item-container">
-      <h3>Rope Down</h3>
-      <img src="Public/signals/lower.png" alt="Lower Signal" class="signal-img" />
-      <p class="menu-description">Arm extended downward, hand pointing down, circular motion.</p>
-    </div>
-
-    <div class="menu-item-container">
-      <h3>Stop</h3>
-      <img src="Public/signals/stop.png" alt="Stop Signal" class="signal-img" />
-      <p class="menu-description">Palm or first raised towards the operator.</p>
-    </div>
-
-    <div class="menu-item-container">
-      <h3>Slew left or right</h3>
-      <img src="Public/signals/swing.png" alt="Swing Signal" class="signal-img" />
-      <p class="menu-description">Arm extended, point in direction of slew.</p>
-    </div>
-  </div>
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  </script>
 </body>
 </html>
