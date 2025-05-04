@@ -14,6 +14,8 @@
 
 </head>
 <body>
+  <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe>
+
     <div class="welcome-screen">
         <div class="content">
           <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="100">
@@ -29,15 +31,24 @@
           </div>
         </div>      
     </div>
-    <script src="script.js"></script>
-    <!-- AOS Script -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    once: true
-  });
-</script>
 
+    <!-- Global Audio Player 
+    <div id="globalAudioPlayer" class="audio-player">
+      <img id="vinylIcon" src="Public/vinyl.png" alt="Spinning Vinyl Record Icon" />
+      <button id="audioToggle" style="background: none; border: none; cursor: pointer;">
+        <img id="playPauseBtn" src="Public/play.png" alt="Play or Pause" />
+      </button>
+      <audio id="globalAudio" src="Public/I Want You, Mrs. Officer - olea blend.mp3" loop></audio>
+    </div> -->
+
+    <!--animate on scroll-->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 800,
+        once: true
+      });
+    </script>
 </body>
 </html>

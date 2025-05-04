@@ -1,22 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const path = window.location.pathname;
-  
+
     // ✅ Only run this on the welcome page (index.html or root)
     if (path.includes('index.html') || path.endsWith('/')) {
-      const continueBtn = document.querySelector('.continue-btn');
-      if (continueBtn) {
-        continueBtn.addEventListener('click', function () {
-          window.location.href = 'disclaimer.html';
-        });
-      }
+        const continueBtn = document.querySelector('.continue-btn');
+        if (continueBtn) {
+            continueBtn.addEventListener('click', function () {
+                window.location.href = 'disclaimer.html';
+            });
+        }
     }
-  
-    // ✅ Your other page-specific logic can go below (like lifting register, WLL, etc.)
-  });
-  
-  
 
-    // New functionality for the "Agree" button on the disclaimer screen
+    // ✅ New functionality for the "Agree" button on the disclaimer screen
     const agreeBtn = document.querySelector('.agree-btn');
     if (agreeBtn) {
         agreeBtn.addEventListener('click', function() {
@@ -24,13 +19,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // New functionality for the logo to go back to the welcome screen
-    const logo = document.querySelector('.logo');
-    if (logo) {
-        logo.addEventListener('click', function() {
-            window.location.href = 'index.html';
-        });
-    };
+    // ✅ Your other page-specific logic can go below (like lifting register, WLL, etc.)
+});
+
+
+// New functionality for the logo to go back to the welcome screen
+const logo = document.querySelector('.logo');
+if (logo) {
+    logo.addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+};
 
 // Function to navigate to different pages (from main menu)
 function navigateTo(page) {
@@ -428,3 +427,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
   
+
+
+// Global Audio Player (persistent with localStorage)
+document.addEventListener('DOMContentLoaded', function () {
+  const audio = document.getElementById('globalAudio');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const vinylIcon = document.getElementById('vinylIcon');
+
+  if (audio && playPauseBtn && vinylIcon) {
+    const savedState = localStorage.getItem('audioPlaying') === 'true';
+    if (savedState) {
+      audio.play().catch(() => {});
+      vinylIcon.classList.add('spinning');
+      playPauseBtn.src = 'Public/pause.png';
+    } else {
+      playPauseBtn.src = 'Public/play.png';
+    }
+
+    playPauseBtn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play();
+        vinylIcon.classList.add('spinning');
+        playPauseBtn.src = 'Public/pause.png';
+        localStorage.setItem('audioPlaying', 'true');
+      } else {
+        audio.pause();
+        vinylIcon.classList.remove('spinning');
+        playPauseBtn.src = 'Public/play.png';
+        localStorage.setItem('audioPlaying', 'false');
+      }
+    });
+  }
+});

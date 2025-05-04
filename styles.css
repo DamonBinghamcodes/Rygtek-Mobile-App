@@ -216,6 +216,7 @@ body{
     cursor: pointer;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
+    z-index: 1001;
 }
 
 .agree-btn:hover {
@@ -639,3 +640,86 @@ input-container, .result-container {
     
   }
   
+/* Global Audio Player Vinyl Icon */
+
+.audio-player-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: none;
+    padding: 8px 10px;
+    border-radius: 50px;
+    z-index: 1;
+    width: 0;
+    height: 0;
+}
+
+#globalAudioPlayer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: none;
+  padding: 8px 10px;
+  border-radius: 50px;
+  z-index: 999;
+}
+
+.audio-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+  background: none;
+  border: none;
+}
+
+#vinylIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: spin 4s linear infinite;
+  filter: drop-shadow(0 0 4px red);
+}
+
+#vinylIcon.paused {
+  animation-play-state: paused;
+  opacity: 0.7;
+}
+
+#audioToggle {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+#playPauseBtn {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 3px white);
+  transition: transform 0.2s ease;
+}
+
+#playPauseBtn:active {
+  transform: scale(0.95);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
