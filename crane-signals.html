@@ -7,21 +7,57 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <script defer src="script.js"></script>
 </head>
 
 <body class="main-menu-screen">
-  <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe>
-  <!-- Navigation (sticky back and hamburger already exists in your project) -->
   <div class="nav-wrapper">
     <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
+  
     <nav class="hamburger-menu" id="hamburgerMenu">
-      <!-- Menu items already loaded here -->
-    </nav>
+        <ul>
+          <li><a href="main-menu.html">
+            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
+          </a></li>
+          
+          <li><a href="working-load-limit.html">
+            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
+          </a></li>
+          
+          <li><a href="angle-dimensions.html">
+            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
+          </a></li>
+          
+          <li><a href="load-weight.html">
+            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
+          </a></li>
+          
+          <li><a href="lifting-register.html">
+            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
+          </a></li>
+          
+          <li><a href="safety-alerts.html">
+            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
+          </a></li>
+          
+          <li><a href="shop.html">
+            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
+          </a></li>
+          
+          <li><a href="contact-page.html">
+            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
+          </a></li>
+          
+          <li><a href="crane-signals.html">
+            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
+          </a></li>
+        </ul>
+      </nav>
   </div>
-  <a href="main-menu.html" class="back-icon">
-    <i class="fa-solid fa-arrow-left"></i>
-  </a>
-
+    <a href="index.html" class="back-icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      
   <div class="content">
     <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" />
     <h2 class="menu-header" data-aos="fade-up">Crane Signals</h2>
@@ -104,7 +140,6 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
     AOS.init({
