@@ -1,165 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Main Menu - RYGTEK</title>
-
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Main Menu - RYGTEK</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
 </head>
-
-<!-- This is the Main Menu Screen -->
 <body class="main-menu-screen">
-  <!-- <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe> -->
-  <!-- Hamburger Nav -->
-  <div class="nav-wrapper">
-    <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
-  
-    <nav class="hamburger-menu" id="hamburgerMenu">
-        <ul>
-          <li><a href="main-menu.html">
-            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
-          </a></li>
-          
-          <li><a href="working-load-limit.html">
-            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
-          </a></li>
-          
-          <li><a href="angle-dimensions.html">
-            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
-          </a></li>
-          
-          <li><a href="load-weight.html">
-            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
-          </a></li>
-          
-          <li><a href="lifting-register.html">
-            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
-          </a></li>
-          
-          <li><a href="safety-alerts.html">
-            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
-          </a></li>
-          
-          <li><a href="shop.html">
-            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
-          </a></li>
-          
-          <li><a href="contact-page.html">
-            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
-          </a></li>
-          
-          <li><a href="crane-signals.html">
-            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
-          </a></li>
-        </ul>
-      </nav>
-  </div>
-    <a href="index.html" class="back-icon">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-  <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="300"/>
-    <h2 class="menu-header" data-aos="fade-up" data-aos-delay="200">Main Menu</h2>
-
-    <div class="menu-options" data-aos="fade-right" data-aos-delay="300">
-      <div class="menu-item-container"  onclick="location.href='working-load-limit.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-weight-hanging menu-icon"></i>
-          <div>
-            <h3>Working Load Limit</h3>
-            <p class="menu-description">Calculate chain or sling WLL</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-item-container" onclick="location.href='angle-dimensions.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-ruler-combined menu-icon"></i>
-          <div>
-            <h3>Angle & Dimensions</h3>
-            <p class="menu-description">Determine angle based on sling leg</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-item-container" onclick="location.href='load-weight.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-boxes-stacked menu-icon"></i>
-          <div>
-            <h3>Load Weight Estimator</h3>
-            <p class="menu-description">Estimate load by material & size</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-item-container" onclick="location.href='lifting-register.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-clipboard-list menu-icon"></i>
-          <div>
-            <h3>Lifting Register</h3>
-            <p class="menu-description">Record rigging gear & test dates</p>
-          </div>
-        </div>
-      </div>      
-
-      <div class="menu-item-container" onclick="location.href='safety-alerts.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-triangle-exclamation menu-icon"></i>
-          <div>
-            <h3>Safety Alerts</h3>
-            <p class="menu-description">Access industry alerts (Premium)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-item-container" onclick="location.href='shop.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-cart-shopping menu-icon"></i>
-          <div>
-            <h3>RYGTEK Shop</h3>
-            <p class="menu-description">PPE gear & branded merch</p>
-          </div>
-        </div>
-      </div>
-      
-      
-      <div class="menu-item-container" onclick="location.href='contact-page.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-envelope menu-icon"></i>
-          <div>
-            <h3>Contact</h3>
-            <p class="menu-description">Send us a message. We value your feedback!</p>
-          </div>
-        </div>
-      </div>
-      <div class="menu-item-container" onclick="location.href='crane-signals.html'">
-        <div class="menu-item-content">
-          <i class="fa-solid fa-person-rays menu-icon"></i>
-          <div>
-            <h3>Crane Signals</h3>
-            <p class="menu-description">Reference guide for hand signals</p>
-          </div>
-        </div>
-      </div>
+    <!-- Apple-style navigation header -->
+    <div class="navigation-header" data-aos="fade-down" data-aos-delay="100">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-chevron-left"></i>
+            <span>Back</span>
+        </button>
+        
+        <!-- Hamburger menu button -->
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    once: true
-  });
-</script>
+    <!-- Hamburger menu overlay -->
+    <nav class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-header">
+            <h3>Navigation</h3>
+            <button class="close-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="menu-list">
+            <li><a href="main-menu.html" class="active"><i class="fas fa-home"></i>Main Menu</a></li>
+            <li><a href="working-load-limit.html"><i class="fas fa-weight-hanging"></i>Working Load Limit</a></li>
+            <li><a href="angle-dimensions.html"><i class="fas fa-ruler-combined"></i>Angle & Dimensions</a></li>
+            <li><a href="load-weight.html"><i class="fas fa-boxes-stacked"></i>Load Estimator</a></li>
+            <li><a href="lifting-register.html"><i class="fas fa-clipboard-list"></i>Lifting Register</a></li>
+            <li><a href="safety-alerts.html"><i class="fas fa-triangle-exclamation"></i>Safety Alerts</a></li>
+            <li><a href="shop.html"><i class="fas fa-cart-shopping"></i>Shop</a></li>
+            <li><a href="contact-page.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            <li><a href="crane-signals.html"><i class="fas fa-person-rays"></i>Crane Signals</a></li>
+        </ul>
+    </nav>
 
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header section -->
+        <div class="header-section" data-aos="fade-up" data-aos-delay="200">
+            <div class="logo-container">
+                <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" onclick="goHome()">
+            </div>
+            <h1 class="page-title">Main Menu</h1>
+            <p class="page-subtitle">Professional rigging tools at your fingertips</p>
+        </div>
+
+        <!-- Feature cards grid -->
+        <div class="features-grid" data-aos="fade-up" data-aos-delay="400">
+            
+            <!-- Working Load Limit Card -->
+            <div class="feature-card" onclick="navigateTo('working-load-limit.html')" data-aos="fade-up" data-aos-delay="500">
+                <div class="card-icon">
+                    <i class="fas fa-weight-hanging"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Working Load Limit</h3>
+                    <p>Calculate chain or sling WLL based on configuration and size</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Angle & Dimensions Card -->
+            <div class="feature-card" onclick="navigateTo('angle-dimensions.html')" data-aos="fade-up" data-aos-delay="600">
+                <div class="card-icon">
+                    <i class="fas fa-ruler-combined"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Angle & Dimensions</h3>
+                    <p>Determine sling angles and calculate missing dimensions</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Load Weight Estimator Card -->
+            <div class="feature-card" onclick="navigateTo('load-weight.html')" data-aos="fade-up" data-aos-delay="700">
+                <div class="card-icon">
+                    <i class="fas fa-boxes-stacked"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Load Weight Estimator</h3>
+                    <p>Estimate load weight by material type and dimensions</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Lifting Register Card -->
+            <div class="feature-card" onclick="navigateTo('lifting-register.html')" data-aos="fade-up" data-aos-delay="800">
+                <div class="card-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Lifting Register</h3>
+                    <p>Track rigging gear test history and due dates</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Safety Alerts Card -->
+            <div class="feature-card premium" onclick="navigateTo('safety-alerts.html')" data-aos="fade-up" data-aos-delay="900">
+                <div class="premium-badge">
+                    <span>Premium</span>
+                </div>
+                <div class="card-icon">
+                    <i class="fas fa-triangle-exclamation"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Safety Alerts</h3>
+                    <p>Access industry safety alerts and notifications</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Crane Signals Card -->
+            <div class="feature-card" onclick="navigateTo('crane-signals.html')" data-aos="fade-up" data-aos-delay="1000">
+                <div class="card-icon">
+                    <i class="fas fa-person-rays"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Crane Signals</h3>
+                    <p>Reference guide for standard crane hand signals</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Shop Card -->
+            <div class="feature-card secondary" onclick="navigateTo('shop.html')" data-aos="fade-up" data-aos-delay="1100">
+                <div class="card-icon">
+                    <i class="fas fa-cart-shopping"></i>
+                </div>
+                <div class="card-content">
+                    <h3>RYGTEK Shop</h3>
+                    <p>PPE gear and branded merchandise</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="feature-card secondary" onclick="navigateTo('contact-page.html')" data-aos="fade-up" data-aos-delay="1200">
+                <div class="card-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Contact</h3>
+                    <p>Send feedback or get support from our team</p>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer section -->
+        <div class="footer-section" data-aos="fade-up" data-aos-delay="1300">
+            <p class="version-text">Version 2.0</p>
+            <p class="footer-text">Stay safe. Calculate smart.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+    </script>
 </body>
 </html>

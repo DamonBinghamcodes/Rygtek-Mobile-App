@@ -1,52 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0 viewport-fit=cover"/>
-  <title>Disclaimer - RYGTEK</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Disclaimer - RYGTEK</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
 </head>
-
-<!-- This is the Disclaimer Screen -->
 <body class="disclaimer-screen">
-    <a href="index.html" class="back-icon" data-aos="fade-right" data-aos-delay="100">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-  <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="200" />
-
-    <div class="disclaimer-container" data-aos="fade-up" data-aos-delay="400">
-      <h2 class="disclaimer-title">Disclaimer</h2>
-      <p class="disclaimer-text">
-        The RYGTEK app provides general guidance based on industry best practices and safety guidelines. It is the user's responsibility to verify and apply proper lifting techniques based on current workplace procedures, environmental conditions, and official site safety policies. Always refer to your company’s SOPs and certified lifting personnel for final approval.
-      </p>
+    <!-- Apple-style back button -->
+    <div class="navigation-header" data-aos="fade-down" data-aos-delay="100">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-chevron-left"></i>
+            <span>Back</span>
+        </button>
     </div>
 
-    <button class="agree-btn">I AGREE</button>
-  </div>
+    <!-- Main disclaimer content -->
+    <div class="disclaimer-container">
+        <!-- Logo with consistent sizing -->
+        <div class="logo-container" data-aos="zoom-in" data-aos-delay="200">
+            <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
+        </div>
 
-  <script src="script.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 800,
-    once: true
-  });
-</script>
-<!-- <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe> -->
-<!-- Global Audio Player 
-<div id="globalAudioPlayer">
-  <img id="vinylIcon" src="Public/vinyl.png" alt="Vinyl"/>
-  <button id="audioToggle" style="background: none; border: none; cursor: pointer;">
-    <img id="playPauseBtn" src="Public/play.png" alt="Play/Pause Button" />
-  </button>
-  <audio id="globalAudio" src="Public/I Want You, Mrs. Officer - olea blend.mp3" loop></audio> 
-</div> -->
+        <!-- Disclaimer title -->
+        <h1 class="disclaimer-title" data-aos="fade-up" data-aos-delay="300">
+            Important Disclaimer
+        </h1>
+
+        <!-- Disclaimer content card -->
+        <div class="disclaimer-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="disclaimer-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            
+            <div class="disclaimer-content">
+                <h2>Safety First</h2>
+                <p class="disclaimer-text">
+                    The RYGTEK app provides general guidance based on industry best practices and safety guidelines. It is the user's responsibility to verify and apply proper lifting techniques based on current workplace procedures, environmental conditions, and official site safety policies.
+                </p>
+                
+                <p class="disclaimer-text">
+                    Always refer to your company's Standard Operating Procedures (SOPs) and consult with certified lifting personnel for final approval before any lifting operation.
+                </p>
+                
+                <div class="safety-note">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Never compromise on safety protocols</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apple-style agreement buttons -->
+        <div class="button-container" data-aos="fade-up" data-aos-delay="600">
+            <button class="disagree-btn" onclick="goBack()">
+                Cancel
+            </button>
+            <button class="agree-btn" onclick="proceedToApp()">
+                I Understand & Agree
+            </button>
+        </div>
+
+        <!-- Footer text -->
+        <p class="footer-text" data-aos="fade-up" data-aos-delay="800">
+            By continuing, you acknowledge that you understand these safety requirements.
+        </p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+    </script>
 </body>
 </html>

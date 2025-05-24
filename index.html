@@ -1,54 +1,66 @@
-<!--This is the Welcome Screen-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0. viewport-fit=cover">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>RYGTEK - Welcome</title>
     <link rel="stylesheet" href="styles.css">
-    <title>RYGTEK - Welcome Screen</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <!-- AOS Animation Library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
 </head>
-<body>
-  <!-- <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe> -->
-
-    <div class="welcome-screen">
-        <div class="content">
-          <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" data-aos="zoom-in" data-aos-delay="100">
-          <h1 class="tagline" data-aos="fade-up" data-aos-delay="300">THE RIGGER IN YOUR POCKET</h1>
-          <button class="continue-btn" data-aos="fade-up" data-aos-delay="500">CONTINUE</button>
-          <div class="social-links">
-            <a href="https://www.instagram.com/rygtek/" target="_blank" class="instagram-link">
-              <i class="fab fa-instagram"></i>
+<body class="welcome-screen">
+    <!-- Main welcome content container -->
+    <div class="welcome-container">
+        <!-- Logo with consistent sizing and subtle border -->
+        <div class="logo-container" data-aos="zoom-in" data-aos-delay="200">
+            <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
+        </div>
+        
+        <!-- Main tagline with Apple-style typography -->
+        <h1 class="tagline" data-aos="fade-up" data-aos-delay="400">
+            THE RIGGER IN YOUR POCKET
+        </h1>
+        
+        <!-- Subtitle with Apple's secondary text style -->
+        <p class="subtitle" data-aos="fade-up" data-aos-delay="600">
+            Professional rigging calculations and safety tools
+        </p>
+        
+        <!-- Apple-style primary button -->
+        <button class="get-started-btn" data-aos="fade-up" data-aos-delay="800">
+            GET STARTED
+        </button>
+        
+        <!-- Social links with Apple-inspired design -->
+        <div class="social-links" data-aos="fade-up" data-aos-delay="1000">
+            <a href="https://www.instagram.com/rygtek/" target="_blank" class="social-link">
+                <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="linkedin-link">
-              <i class="fab fa-linkedin"></i>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link">
+                <i class="fab fa-linkedin"></i>
             </a>
-          </div>
-        </div>      
+        </div>
+        
+        <!-- Version number like Apple apps -->
+        <p class="version-text" data-aos="fade-up" data-aos-delay="1200">
+            Version 2.0
+        </p>
     </div>
-
-    <!-- Global Audio Player 
-    <div id="globalAudioPlayer" class="audio-player">
-      <img id="vinylIcon" src="Public/vinyl.png" alt="Spinning Vinyl Record Icon" />
-      <button id="audioToggle" style="background: none; border: none; cursor: pointer;">
-        <img id="playPauseBtn" src="Public/play.png" alt="Play or Pause" />
-      </button>
-      <audio id="globalAudio" src="Public/I Want You, Mrs. Officer - olea blend.mp3" loop></audio>
-    </div> -->
-
-    <!--animate on scroll-->
+    
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-      AOS.init({
-        duration: 800,
-        once: true
-      });
+        // Initialize animations with Apple-like timing
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' // Apple's preferred easing
+        });
     </script>
 </body>
 </html>
