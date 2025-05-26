@@ -193,25 +193,42 @@ document.addEventListener('keydown', function(event) {
 
 // Working Load Limit Calculator functionality
 document.addEventListener('DOMContentLoaded', function () {
-  // Only run WLL logic on the WLL page
-  if (window.location.pathname.includes('working-load-limit.html')) {
-      initializeWLLCalculator();
-  }
-});
+    if (window.location.pathname.includes('working-load-limit.html')) {
+        initializeWLLCalculator(); // Make sure this matches the function name below
+    }
+  });
+  
+  function initializeWLLCalculator() {
+    console.log('🚀 Initializing WLL calculator');
+    
+    // Populate tips first
+    populateQuickTips(); // Updated function name
+    
+    const slingType = document.getElementById('sling-type');
+    const config = document.getElementById('configuration');
+    const size = document.getElementById('chain-size');
+    const output = document.getElementById('wll-output');
+  
+    // Check if all elements exist
+    if (!slingType || !config || !size || !output) {
+        console.error('❌ WLL elements missing:', {
+            slingType: !!slingType,
+            config: !!config,
+            size: !!size,
+            output: !!output
+        });
+        return;
+    }
+  
+    console.log('✅ All WLL elements found');
 
-function initializeWLLCalculator() {
-  const slingType = document.getElementById('sling-type');
-  const config = document.getElementById('configuration');
-  const size = document.getElementById('chain-size');
-  const output = document.getElementById('wll-output');
-
-  // Configuration options for each sling type
-  const configOptions = {
-      chainGrade80: ['Straight Sling', 'Adjustable Sling', 'Reeved Sling', '2-Leg @ 60°', '2-Leg @ 90°', '2-Leg @ 120°', 'Reeved Sling Max 60°', 'Basket 1 Leg Max 60°', 'Basket 2 Leg Max 60°'],
-      chainGrade100: ['Straight Sling', 'Adjustable Sling', 'Reeved Sling', '2-Leg @ 60°', '2-Leg @ 90°', '2-Leg @ 120°', 'Reeved Sling Max 60°', 'Basket 1 Leg Max 60°', 'Basket 2 Leg Max 60°'],
-      wire: ['Straight', 'Choke', 'Basket'],
-      round: ['Vertical', 'Choke', 'Basket', '30°', '60°', '90°', '120°', '60° 2-Leg', '60° Choke']
-  };
+// Configuration options for each sling type
+const configOptions = {
+    chainGrade80: ['Straight Sling', 'Adjustable Sling', 'Reeved Sling', '2-Leg @ 60°', '2-Leg @ 90°', '2-Leg @ 120°', 'Reeved Sling Max 60°', 'Basket 1 Leg Max 60°', 'Basket 2 Leg Max 60°'],
+    chainGrade100: ['Straight Sling', 'Adjustable Sling', 'Reeved Sling', '2-Leg @ 60°', '2-Leg @ 90°', '2-Leg @ 120°', 'Reeved Sling Max 60°', 'Basket 1 Leg Max 60°', 'Basket 2 Leg Max 60°'],
+    wire: ['Straight', 'Choke', 'Basket'],
+    round: ['Vertical', 'Choke', 'Basket', '30°', '60°', '90°', '120°', '60° 2-Leg', '60° Choke']
+};
 
   // Complete WLL data from your industry charts
   const wllData = {
@@ -269,32 +286,32 @@ function initializeWLLCalculator() {
       }
   };
 
-  // Event listeners for the dropdowns
+  // Event listeners
   slingType.addEventListener('change', function() {
-      resetDownstream(config, size, output);
-      const type = this.value;
-
-      if (configOptions[type]) {
-          populateDropdown(config, configOptions[type]);
-          config.disabled = false;
-      }
-  });
-
-  config.addEventListener('change', function() {
-      resetDownstream(size, output);
-      const type = slingType.value;
-      const typeData = wllData[type];
-
-      if (typeData) {
-          const sizeOptions = Object.keys(typeData);
-          populateDropdown(size, sizeOptions, type === 'round');
-          size.disabled = false;
-      }
-  });
-
-  size.addEventListener('change', function() {
-      calculateWLL();
-  });
+    const selectedType = this.value;
+    console.log('🔧 Sling type selected:', selectedType);
+    
+    // Clear and reset downstream elements
+    config.innerHTML = '<option value="">-- Select Configuration --</option>';
+    size.innerHTML = '<option value="">-- Select Size --</option>';
+    output.textContent = 'Select options above';
+    
+    if (configOptions[selectedType]) {
+        config.disabled = false;
+        configOptions[selectedType].forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            config.appendChild(opt);
+        });
+        console.log('✅ Configuration options populated');
+    } else {
+        config.disabled = true;
+        console.log('❌ No config options for:', selectedType);
+    }
+    
+    size.disabled = true;
+});
 
   // Helper functions
   function resetDownstream(...elements) {
@@ -362,6 +379,66 @@ function goBack() {
 function goHome() {
   window.location.href = 'index.html';
 }
+
+// Quick tips specifically for WLL page
+function populateQuickTips() {
+    const referenceGrid = document.querySelector('.quick-reference .reference-grid');
+    if (!referenceGrid) {
+        console.log('❌ Reference grid not found on WLL page');
+        return;
+    }
+    
+    // Get random tips from your existing tips array
+    const selectedTips = getRandomTips();
+    console.log('🔧 Populating WLL tips:', selectedTips);
+    
+    // Clear existing content
+    referenceGrid.innerHTML = '';
+    
+    // Add new tips
+    selectedTips.forEach((tip, index) => {
+        const tipElement = document.createElement('div');
+        tipElement.className = 'reference-item';
+        tipElement.innerHTML = `
+            <strong>${tip.title}</strong>
+            <span>${tip.content}</span>
+        `;
+        referenceGrid.appendChild(tipElement);
+    });
+    
+    // Add refresh button
+    addWLLRefreshButton();
+    console.log('✅ WLL tips populated');
+  }
+  
+  function addWLLRefreshButton() {
+    const quickRefContainer = document.querySelector('.quick-reference');
+    if (!quickRefContainer) return;
+    
+    // Remove existing button
+    const existingButton = quickRefContainer.querySelector('.refresh-btn');
+    if (existingButton) existingButton.remove();
+    
+    const refreshButton = document.createElement('button');
+    refreshButton.className = 'refresh-btn';
+    refreshButton.innerHTML = `
+        <i class="fas fa-sync-alt"></i>
+        Show Different Tips
+    `;
+    
+    refreshButton.addEventListener('click', () => {
+        console.log('🔄 Refresh button clicked');
+        const icon = refreshButton.querySelector('i');
+        icon.style.animation = 'spin 0.6s ease';
+        
+        setTimeout(() => {
+            populateQuickTips();
+            icon.style.animation = '';
+        }, 300);
+    });
+    
+    quickRefContainer.appendChild(refreshButton);
+  }
 
 // AU/NZ Rigging Standards Tips - Fixed Randomization
 const quickReferenceTips = [
@@ -480,18 +557,6 @@ function addRefreshButton() {
   });
   
   quickRefContainer.appendChild(refreshButton);
-}
-
-// Initialize tips when WLL calculator loads
-function initializeWLLCalculator() {
-  console.log('Initializing WLL calculator with tips'); // Debug log
-  
-  // Populate tips first
-  populateQuickReference();
-  
-  // Your existing WLL calculator code here...
-  const slingType = document.getElementById('sling-type');
-  // ... rest of your existing code
 }
 
 // Angle & Dimensions Calculator functionality
