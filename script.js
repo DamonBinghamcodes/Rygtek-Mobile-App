@@ -493,3 +493,241 @@ function initializeWLLCalculator() {
   const slingType = document.getElementById('sling-type');
   // ... rest of your existing code
 }
+
+// Angle & Dimensions Calculator functionality
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('angle-dimensions.html')) {
+      initializeAngleCalculator();
+  }
+});
+
+function initializeAngleCalculator() {
+  console.log('Initializing Angle & Dimensions calculator');
+  
+  const lengthInput = document.getElementById('length');
+  const heightInput = document.getElementById('height');
+  const diagonalInput = document.getElementById('diagonal');
+  const angleResult = document.getElementById('angle-result');
+  const loadFactorResult = document.getElementById('load-factor');
+  const angleSafety = document.getElementById('angle-safety');
+
+  // Track which field the user is currently editing
+  let activeField = null;
+  let isCalculating = false;
+
+  // Add focus/blur listeners to track active field
+  [lengthInput, heightInput, diagonalInput].forEach(input => {
+      input.addEventListener('focus', () => {
+          activeField = input.id;
+      });
+      
+      input.addEventListener('blur', () => {
+          activeField = null;
+      });
+      
+      // Use 'input' event for real-time updates, but be smart about it
+      input.addEventListener('input', debounce(calculateAnglesAndDimensions, 300));
+      
+      // Use 'change' event for when user finishes editing
+      input.addEventListener('change', calculateAnglesAndDimensions);
+  });
+
+  // Debounce function to prevent too frequent calculations
+  function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+          const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+      };
+  }
+
+  function calculateAnglesAndDimensions() {
+      // Prevent recursive calculations
+      if (isCalculating) return;
+      isCalculating = true;
+
+      // Get current values - only use non-empty values
+      let length = lengthInput.value !== '' ? parseFloat(lengthInput.value) : null;
+      let height = heightInput.value !== '' ? parseFloat(heightInput.value) : null;
+      let diagonal = diagonalInput.value !== '' ? parseFloat(diagonalInput.value) : null;
+
+      // Count non-null values
+      const validValues = [length, height, diagonal].filter(val => val !== null && val > 0).length;
+
+      // Need at least 2 values to calculate
+      if (validValues < 2) {
+          resetResults();
+          isCalculating = false;
+          return;
+      }
+
+      // Only auto-calculate the missing field if user isn't actively editing it
+      // and if we have exactly 2 values
+      if (validValues === 2) {
+          
+          if (length !== null && height !== null && (diagonal === null || activeField !== 'diagonal')) {
+              // Calculate diagonal (sling length) from length and height
+              const halfBase = length / 2;
+              const calculatedDiagonal = Math.sqrt((halfBase * halfBase) + (height * height));
+              
+              // Only update if user isn't editing diagonal field
+              if (activeField !== 'diagonal') {
+                  diagonalInput.value = calculatedDiagonal.toFixed(2);
+                  diagonal = calculatedDiagonal;
+              }
+              
+          } else if (diagonal !== null && height !== null && (length === null || activeField !== 'length')) {
+              // Calculate length from diagonal and height
+              if (diagonal > height) { // Validation: diagonal must be longer than height
+                  const halfBase = Math.sqrt((diagonal * diagonal) - (height * height));
+                  const calculatedLength = halfBase * 2;
+                  
+                  // Only update if user isn't editing length field
+                  if (activeField !== 'length') {
+                      lengthInput.value = calculatedLength.toFixed(2);
+                      length = calculatedLength;
+                  }
+              }
+              
+          } else if (diagonal !== null && length !== null && (height === null || activeField !== 'height')) {
+              // Calculate height from diagonal and length
+              const halfBase = length / 2;
+              if (diagonal > halfBase) { // Validation: diagonal must be longer than half base
+                  const calculatedHeight = Math.sqrt((diagonal * diagonal) - (halfBase * halfBase));
+                  
+                  // Only update if user isn't editing height field
+                  if (activeField !== 'height') {
+                      heightInput.value = calculatedHeight.toFixed(2);
+                      height = calculatedHeight;
+                  }
+              }
+          }
+      }
+
+      // Calculate angles and load factors if we have length and height
+      if (length !== null && length > 0 && height !== null && height > 0) {
+          const halfBase = length / 2;
+          
+          // Calculate the angle from vertical for each sling leg
+          const angleFromVerticalRad = Math.atan(halfBase / height);
+          
+          // The included angle between the two slings
+          const includedAngleRad = 2 * angleFromVerticalRad;
+          const includedAngleDeg = includedAngleRad * (180 / Math.PI);
+          
+          // Display the angle
+          angleResult.textContent = includedAngleDeg.toFixed(1);
+          
+          // Calculate load factor based on angle
+          const loadFactor = calculateLoadFactor(includedAngleDeg);
+          loadFactorResult.textContent = loadFactor.toFixed(2);
+          
+          // Update safety indicator
+          updateSafetyIndicator(includedAngleDeg);
+          
+          // Add animation effect
+          if (activeField === null) { // Only animate when not actively typing
+              angleResult.style.transform = 'scale(1.1)';
+              setTimeout(() => {
+                  angleResult.style.transform = 'scale(1)';
+              }, 200);
+          }
+          
+      } else {
+          resetResults();
+      }
+
+      isCalculating = false;
+  }
+
+  function calculateLoadFactor(angleDegrees) {
+      // Load factor calculation based on sling angle
+      const angleRad = angleDegrees * (Math.PI / 180);
+      const halfAngleRad = angleRad / 2;
+      
+      // Load factor = 1 / cos(half angle from vertical)
+      const loadFactor = 1 / Math.cos(halfAngleRad);
+      
+      return loadFactor;
+  }
+
+  function updateSafetyIndicator(angleDegrees) {
+      const safetyElement = document.getElementById('angle-safety');
+      
+      // Clear existing classes
+      safetyElement.className = 'angle-safety';
+      
+      if (angleDegrees >= 60 && angleDegrees <= 90) {
+          safetyElement.classList.add('safe');
+          safetyElement.innerHTML = '<i class="fas fa-check-circle"></i> SAFE - Optimal angle range';
+      } else if (angleDegrees >= 45 && angleDegrees < 60) {
+          safetyElement.classList.add('caution');
+          safetyElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> CAUTION - Higher sling loads';
+      } else if (angleDegrees >= 30 && angleDegrees < 45) {
+          safetyElement.classList.add('warning');
+          safetyElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> WARNING - Very high sling loads';
+      } else if (angleDegrees < 30 && angleDegrees > 0) {
+          safetyElement.classList.add('danger');
+          safetyElement.innerHTML = '<i class="fas fa-times-circle"></i> DANGER - Never use below 30°';
+      } else if (angleDegrees > 120) {
+          safetyElement.classList.add('warning');
+          safetyElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> WARNING - Angle too wide';
+      } else {
+          safetyElement.classList.remove('safe', 'caution', 'warning', 'danger');
+          safetyElement.innerHTML = '<span class="safety-indicator">Enter values to check safety</span>';
+      }
+  }
+
+  function resetResults() {
+      angleResult.textContent = '--';
+      loadFactorResult.textContent = '--';
+      
+      const safetyElement = document.getElementById('angle-safety');
+      safetyElement.className = 'angle-safety';
+      safetyElement.innerHTML = '<span class="safety-indicator">Enter values to check safety</span>';
+  }
+
+  // Enhanced clear button
+  function addClearButton() {
+      const calculatorContainer = document.querySelector('.calculator-container');
+      if (!calculatorContainer || calculatorContainer.querySelector('.clear-btn')) return;
+
+      const clearButton = document.createElement('button');
+      clearButton.className = 'clear-btn';
+      clearButton.innerHTML = '<i class="fas fa-eraser"></i> Clear All';
+      
+      clearButton.addEventListener('click', () => {
+          // Clear all inputs
+          lengthInput.value = '';
+          heightInput.value = '';
+          diagonalInput.value = '';
+          
+          // Reset active field tracking
+          activeField = null;
+          
+          // Reset results
+          resetResults();
+          
+          // Focus on first input
+          lengthInput.focus();
+      });
+
+      calculatorContainer.appendChild(clearButton);
+  }
+
+  // Add clear button
+  addClearButton();
+
+  // Add keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+      // Clear all with Ctrl+R or Cmd+R (prevent default page refresh)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'r' && window.location.pathname.includes('angle-dimensions.html')) {
+          e.preventDefault();
+          document.querySelector('.clear-btn').click();
+      }
+  });
+}
