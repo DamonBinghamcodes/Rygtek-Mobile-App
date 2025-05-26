@@ -1,88 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lifting Register - RYGTEK</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-  <script defer src="script.js?v=2"></script>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Lifting Register - RYGTEK</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
 </head>
-<body class="main-menu-screen">
-  <!-- <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe> -->
-    <a href="main-menu.html" class="back-icon">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-  <!-- Hamburger Nav -->
-  <div class="nav-wrapper">
-    <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
-  
-    <nav class="hamburger-menu" id="hamburgerMenu">
-      <ul>
-        <li><a href="main-menu.html">
-          <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
-        </a></li>
+<body class="calculator-screen">
+    <!-- Consistent navigation header -->
+    <div class="navigation-header" data-aos="fade-down" data-aos-delay="100">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-chevron-left"></i>
+            <span>Back</span>
+        </button>
         
-        <li><a href="working-load-limit.html">
-          <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
-        </a></li>
-        
-        <li><a href="angle-dimensions.html">
-          <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
-        </a></li>
-        
-        <li><a href="load-weight.html">
-          <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
-        </a></li>
-        
-        <li><a href="lifting-register.html">
-          <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
-        </a></li>
-        
-        <li><a href="safety-alerts.html">
-          <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
-        </a></li>
-        
-        <li><a href="shop.html">
-          <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
-        </a></li>
-        
-        <li><a href="contact-page.html">
-          <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
-        </a></li>
-        
-        <li><a href="crane-signals.html">
-          <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
-        </a></li>
-      </ul>
-    </nav>
-  </div>
+        <!-- Hamburger menu button -->
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
 
-  <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
-    <h2 class="menu-header">Lifting Register</h2>
-    <p class="menu-description">Track gear test history & next due dates</p>
-  
-    <div class="menu-item-container">
-      <label for="gear-name">Rigging Gear Description</label>
-      <input type="text" id="gear-name" placeholder="e.g. 2t Round Sling" class="styled-select" />
+    <!-- Consistent hamburger menu -->
+    <nav class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-header">
+            <h3>Navigation</h3>
+            <button class="close-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="menu-list">
+            <li><a href="main-menu.html"><i class="fas fa-home"></i>Main Menu</a></li>
+            <li><a href="working-load-limit.html"><i class="fas fa-weight-hanging"></i>Working Load Limit</a></li>
+            <li><a href="angle-dimensions.html"><i class="fas fa-ruler-combined"></i>Angle & Dimensions</a></li>
+            <li><a href="load-weight.html"><i class="fas fa-boxes-stacked"></i>Load Estimator</a></li>
+            <li><a href="lifting-register.html" class="active"><i class="fas fa-clipboard-list"></i>Lifting Register</a></li>
+            <li><a href="safety-alerts.html"><i class="fas fa-triangle-exclamation"></i>Safety Alerts</a></li>
+            <li><a href="shop.html"><i class="fas fa-cart-shopping"></i>Shop</a></li>
+            <li><a href="contact-page.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            <li><a href="crane-signals.html"><i class="fas fa-person-rays"></i>Crane Signals</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header section -->
+        <div class="header-section" data-aos="fade-up" data-aos-delay="200">
+            <div class="logo-container">
+                <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" onclick="goHome()">
+            </div>
+            <h1 class="page-title">Lifting Register</h1>
+            <p class="page-subtitle">Track lifting gear inspections and compliance (AS 2550)</p>
+        </div>
+
+        <!-- Register container -->
+        <div class="register-container" data-aos="fade-up" data-aos-delay="400">
+            
+            <!-- Add New Equipment Form -->
+            <div class="add-equipment-section" data-aos="fade-up" data-aos-delay="500">
+                <div class="section-header">
+                    <h3><i class="fas fa-plus-circle"></i>Add New Equipment</h3>
+                    <p>Register new lifting equipment for inspection tracking</p>
+                </div>
+
+                <div class="equipment-form">
+                    <!-- Equipment Type -->
+                    <div class="input-group">
+                        <label for="equipment-type" class="input-label">
+                            <i class="fas fa-tag"></i>
+                            Equipment Type
+                        </label>
+                        <select id="equipment-type" class="apple-select">
+                            <option value="">Select Equipment Type</option>
+                            <optgroup label="Chain Slings">
+                                <option value="chain-grade80">Chain Sling (Grade 80)</option>
+                                <option value="chain-grade100">Chain Sling (Grade 100)</option>
+                                <option value="chain-adjustable">Adjustable Chain Sling</option>
+                            </optgroup>
+                            <optgroup label="Wire Rope">
+                                <option value="wire-sling">Wire Rope Sling</option>
+                                <option value="wire-strop">Wire Rope Strop</option>
+                                <option value="wire-endless">Endless Wire Sling</option>
+                            </optgroup>
+                            <optgroup label="Synthetic Slings">
+                                <option value="round-sling">Round Sling</option>
+                                <option value="webbing-sling">Webbing Sling</option>
+                                <option value="endless-sling">Endless Synthetic Sling</option>
+                            </optgroup>
+                            <optgroup label="Hardware">
+                                <option value="shackle">Shackle</option>
+                                <option value="hook">Lifting Hook</option>
+                                <option value="eyebolt">Eyebolt</option>
+                                <option value="spreader-beam">Spreader Beam</option>
+                                <option value="lifting-beam">Lifting Beam</option>
+                            </optgroup>
+                            <optgroup label="Crane Equipment">
+                                <option value="crane-block">Crane Block</option>
+                                <option value="load-block">Load Block</option>
+                                <option value="crane-hook">Crane Hook</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <!-- Equipment Details Grid -->
+                    <div class="details-grid">
+                        <div class="input-group">
+                            <label for="equipment-id" class="input-label">
+                                <i class="fas fa-barcode"></i>
+                                Equipment ID/Serial
+                            </label>
+                            <input type="text" 
+                                   id="equipment-id" 
+                                   class="apple-input" 
+                                   placeholder="e.g. CS-001, WR-2024-15"
+                                   maxlength="20">
+                            <small class="input-hint">Unique identifier for this equipment</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="wll-capacity" class="input-label">
+                                <i class="fas fa-weight-hanging"></i>
+                                WLL / Capacity (t)
+                            </label>
+                            <input type="number" 
+                                   id="wll-capacity" 
+                                   class="apple-input" 
+                                   placeholder="e.g. 2.0"
+                                   step="0.1" 
+                                   min="0">
+                            <small class="input-hint">Working Load Limit in tonnes</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="manufacturer" class="input-label">
+                                <i class="fas fa-industry"></i>
+                                Manufacturer
+                            </label>
+                            <input type="text" 
+                                   id="manufacturer" 
+                                   class="apple-input" 
+                                   placeholder="e.g. Nobles, Lift-It"
+                                   maxlength="30">
+                            <small class="input-hint">Equipment manufacturer</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="size-spec" class="input-label">
+                                <i class="fas fa-ruler"></i>
+                                Size/Specification
+                            </label>
+                            <input type="text" 
+                                   id="size-spec" 
+                                   class="apple-input" 
+                                   placeholder="e.g. 13mm, 2m long"
+                                   maxlength="30">
+                            <small class="input-hint">Size, length, or key specifications</small>
+                        </div>
+                    </div>
+
+                    <!-- Test Dates -->
+                    <div class="dates-grid">
+                        <div class="input-group">
+                            <label for="last-test-date" class="input-label">
+                                <i class="fas fa-calendar-check"></i>
+                                Last Test Date
+                            </label>
+                            <input type="date" 
+                                   id="last-test-date" 
+                                   class="apple-input">
+                            <small class="input-hint">Date of most recent inspection/test</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="test-authority" class="input-label">
+                                <i class="fas fa-certificate"></i>
+                                Test Authority
+                            </label>
+                            <input type="text" 
+                                   id="test-authority" 
+                                   class="apple-input" 
+                                   placeholder="e.g. NATA Lab, Competent Person"
+                                   maxlength="40">
+                            <small class="input-hint">Who performed the test/inspection</small>
+                        </div>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="input-group">
+                        <label for="equipment-notes" class="input-label">
+                            <i class="fas fa-sticky-note"></i>
+                            Notes (Optional)
+                        </label>
+                        <textarea id="equipment-notes" 
+                                  class="apple-textarea" 
+                                  placeholder="Additional notes, location, special requirements..."
+                                  rows="3"
+                                  maxlength="200"></textarea>
+                        <small class="input-hint">Any additional information about this equipment</small>
+                    </div>
+
+                    <!-- Add Button -->
+                    <button id="add-equipment-btn" class="add-equipment-btn">
+                        <i class="fas fa-plus"></i>
+                        Add to Register
+                    </button>
+                </div>
+            </div>
+
+            <!-- Equipment Register Display -->
+            <div class="register-display-section" data-aos="fade-up" data-aos-delay="600">
+                <div class="section-header">
+                    <h3><i class="fas fa-list-ul"></i>Equipment Register</h3>
+                    <div class="register-controls">
+                        <button class="filter-btn" id="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            Filter
+                        </button>
+                        <button class="export-btn" id="export-btn">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel" id="filter-panel" style="display: none;">
+                    <div class="filter-options">
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <div class="filter-buttons">
+                                <button class="filter-tag active" data-filter="all">All</button>
+                                <button class="filter-tag" data-filter="current">Current</button>
+                                <button class="filter-tag" data-filter="due-soon">Due Soon</button>
+                                <button class="filter-tag" data-filter="overdue">Overdue</button>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Type:</label>
+                            <select class="filter-select" id="type-filter">
+                                <option value="all">All Types</option>
+                                <option value="chain">Chain Slings</option>
+                                <option value="wire">Wire Rope</option>
+                                <option value="synthetic">Synthetic</option>
+                                <option value="hardware">Hardware</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment List -->
+                <div class="equipment-list" id="equipment-list">
+                    <!-- Equipment items will be populated by JavaScript -->
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h4>No Equipment Registered</h4>
+                        <p>Add your first piece of lifting equipment to start tracking inspections and compliance.</p>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-container" id="pagination-container" style="display: none;">
+                    <div class="pagination-info">
+                        <span id="pagination-info">Showing 1-10 of 25 items</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="prev-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="page-numbers" id="page-numbers">
+                            <!-- Page numbers populated by JS -->
+                        </div>
+                        <button class="pagination-btn" id="next-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Summary -->
+            <div class="compliance-summary" data-aos="fade-up" data-aos-delay="700">
+                <div class="section-header">
+                    <h3><i class="fas fa-chart-pie"></i>Compliance Summary</h3>
+                    <p>Overview of your equipment inspection status</p>
+                </div>
+                
+                <div class="summary-grid">
+                    <div class="summary-card current">
+                        <div class="summary-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-number" id="current-count">0</div>
+                            <div class="summary-label">Current</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card due-soon">
+                        <div class="summary-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-number" id="due-soon-count">0</div>
+                            <div class="summary-label">Due Soon</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card overdue">
+                        <div class="summary-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-number" id="overdue-count">0</div>
+                            <div class="summary-label">Overdue</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-card total">
+                        <div class="summary-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-number" id="total-count">0</div>
+                            <div class="summary-label">Total Items</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-  
-    <div class="menu-item-container">
-      <label for="last-test-date">Last Test Date</label>
-      <input type="date" id="last-test-date" class="styled-select" />
-    </div>
-  
-    <div class="menu-item-container">
-        <button id="add-gear" class="register-btn">Add to Register</button>
-    </div>
-  
-    <div class="menu-item-container">
-      <h3>Registered Gear</h3>
-      <ul id="gear-log" class="menu-description"></ul>
-    </div>
-  </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+    </script>
 </body>
 </html>

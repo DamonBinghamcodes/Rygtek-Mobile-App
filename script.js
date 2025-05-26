@@ -1225,3 +1225,1166 @@ function goBack() {
 function goHome() {
   window.location.href = 'index.html';
 }
+
+// Lifting Register functionality
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('lifting-register.html')) {
+      initializeLiftingRegister();
+  }
+});
+
+function initializeLiftingRegister() {
+  console.log('Initializing Lifting Register');
+  
+  // Get form elements
+  const addBtn = document.getElementById('add-equipment-btn');
+  const equipmentList = document.getElementById('equipment-list');
+  const filterBtn = document.getElementById('filter-btn');
+  const filterPanel = document.getElementById('filter-panel');
+  const exportBtn = document.getElementById('export-btn');
+  
+  // Equipment storage key
+  const STORAGE_KEY = 'rygtek_lifting_register';
+  
+  // Load existing equipment
+  let equipmentData = loadEquipmentData();
+  
+  // Set up event listeners
+  setupEventListeners();
+  
+  // Initial render
+  renderEquipmentList();
+  updateComplianceSummary();
+
+  function setupEventListeners() {
+      // Add equipment button
+      addBtn.addEventListener('click', addEquipment);
+      
+      // Filter controls
+      filterBtn.addEventListener('click', toggleFilterPanel);
+      
+      // Filter buttons
+      document.querySelectorAll('.filter-tag').forEach(btn => {
+          btn.addEventListener('click', handleFilterClick);
+      });
+      
+      // Type filter
+      document.getElementById('type-filter').addEventListener('change', applyFilters);
+      
+      // Export button
+      exportBtn.addEventListener('click', exportRegister);
+      
+      // Form validation
+      setupFormValidation();
+  }
+
+  function setupFormValidation() {
+      const requiredFields = ['equipment-type', 'equipment-id', 'wll-capacity', 'last-test-date'];
+      
+      requiredFields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (field) {
+              field.addEventListener('blur', validateField);
+              field.addEventListener('input', clearFieldError);
+          }
+      });
+  }
+
+  function validateField(event) {
+      const field = event.target;
+      const value = field.value.trim();
+      
+      if (!value) {
+          showFieldError(field, 'This field is required');
+          return false;
+      }
+      
+      // Specific validations
+      if (field.id === 'wll-capacity' && (isNaN(value) || parseFloat(value) <= 0)) {
+          showFieldError(field, 'Enter a valid capacity greater than 0');
+          return false;
+      }
+      
+      if (field.id === 'equipment-id' && equipmentData.some(item => item.id === value)) {
+          showFieldError(field, 'Equipment ID already exists');
+          return false;
+      }
+      
+      clearFieldError(field);
+      return true;
+  }
+
+  function showFieldError(field, message) {
+      clearFieldError(field);
+      
+      field.style.borderColor = '#FF3B30';
+      
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'field-error';
+      errorDiv.textContent = message;
+      errorDiv.style.cssText = `
+          color: #FF3B30;
+          font-size: 0.8rem;
+          margin-top: 4px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+      `;
+      errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i>${message}`;
+      
+      field.parentNode.appendChild(errorDiv);
+  }
+
+  function clearFieldError(field) {
+      field.style.borderColor = '';
+      const error = field.parentNode.querySelector('.field-error');
+      if (error) error.remove();
+  }
+
+  function addEquipment() {
+      // Validate all required fields
+      const requiredFields = ['equipment-type', 'equipment-id', 'wll-capacity', 'last-test-date'];
+      let isValid = true;
+      
+      requiredFields.forEach(fieldId => {
+          const field = document.getElementById(fieldId);
+          if (!validateField({ target: field })) {
+              isValid = false;
+          }
+      });
+      
+      if (!isValid) {
+          showNotification('Please fix the errors above', 'error');
+          return;
+      }
+      
+      // Get form data
+      const equipment = {
+          id: document.getElementById('equipment-id').value.trim(),
+          type: document.getElementById('equipment-type').value,
+          wll: parseFloat(document.getElementById('wll-capacity').value),
+          manufacturer: document.getElementById('manufacturer').value.trim(),
+          size: document.getElementById('size-spec').value.trim(),
+          lastTestDate: document.getElementById('last-test-date').value,
+          testAuthority: document.getElementById('test-authority').value.trim(),
+          notes: document.getElementById('equipment-notes').value.trim(),
+          dateAdded: new Date().toISOString().split('T')[0],
+          status: 'active'
+      };
+      
+      // Calculate next test dates
+      const testDates = calculateTestDates(equipment.lastTestDate, equipment.type);
+      equipment.nextQuarterlyDate = testDates.quarterly;
+      equipment.nextAnnualDate = testDates.annual;
+      equipment.rugbyTag = testDates.rugbyTag;
+      equipment.nextRugbyTag = testDates.nextRugbyTag;
+      
+      // Add to data
+      equipmentData.push(equipment);
+      
+      // Save and refresh
+      saveEquipmentData();
+      renderEquipmentList();
+      updateComplianceSummary();
+      clearForm();
+      
+      showNotification(`Equipment ${equipment.id} added successfully`, 'success');
+  }
+
+  function calculateTestDates(lastTestDate, equipmentType) {
+      const lastDate = new Date(lastTestDate);
+      
+      // Quarterly inspection (3 months)
+      const quarterly = new Date(lastDate);
+      quarterly.setMonth(quarterly.getMonth() + 3);
+      
+      // Annual test (12 months)
+      const annual = new Date(lastDate);
+      annual.setFullYear(annual.getFullYear() + 1);
+      
+      // Rugby tag system (quarterly color coding)
+      const rugbyColors = ['Red', 'Green', 'Blue', 'Yellow'];
+      const quarter = Math.floor(lastDate.getMonth() / 3);
+      const currentRugby = rugbyColors[quarter];
+      const nextQuarter = (quarter + 1) % 4;
+      const nextRugby = rugbyColors[nextQuarter];
+      
+      return {
+          quarterly: quarterly.toISOString().split('T')[0],
+          annual: annual.toISOString().split('T')[0],
+          rugbyTag: currentRugby,
+          nextRugbyTag: nextRugby
+      };
+  }
+
+  function renderEquipmentList() {
+      const container = document.getElementById('equipment-list');
+      
+      if (equipmentData.length === 0) {
+          container.innerHTML = `
+              <div class="empty-state">
+                  <i class="fas fa-clipboard-list"></i>
+                  <h4>No Equipment Registered</h4>
+                  <p>Add your first piece of lifting equipment to start tracking inspections and compliance.</p>
+              </div>
+          `;
+          return;
+      }
+      
+      const equipmentHtml = equipmentData.map(equipment => {
+          const status = getEquipmentStatus(equipment);
+          const statusClass = status.class;
+          const statusText = status.text;
+          const statusIcon = status.icon;
+          
+          return `
+              <div class="equipment-item ${statusClass}" data-id="${equipment.id}">
+                  <div class="equipment-header">
+                      <div class="equipment-title">
+                          <h4>${equipment.id}</h4>
+                          <span class="equipment-type">${getEquipmentTypeName(equipment.type)}</span>
+                      </div>
+                      <div class="equipment-status">
+                          <span class="status-badge ${statusClass}">
+                              <i class="${statusIcon}"></i>
+                              ${statusText}
+                          </span>
+                      </div>
+                  </div>
+                  
+                  <div class="equipment-details">
+                      <div class="detail-row">
+                          <div class="detail-item">
+                              <span class="detail-label">WLL:</span>
+                              <span class="detail-value">${equipment.wll}t</span>
+                          </div>
+                          <div class="detail-item">
+                              <span class="detail-label">Manufacturer:</span>
+                              <span class="detail-value">${equipment.manufacturer || 'Not specified'}</span>
+                          </div>
+                          <div class="detail-item">
+                              <span class="detail-label">Size:</span>
+                              <span class="detail-value">${equipment.size || 'Not specified'}</span>
+                          </div>
+                      </div>
+                      
+                      <div class="detail-row">
+                          <div class="detail-item">
+                              <span class="detail-label">Last Test:</span>
+                              <span class="detail-value">${formatDate(equipment.lastTestDate)}</span>
+                          </div>
+                          <div class="detail-item">
+                              <span class="detail-label">Next Quarterly:</span>
+                              <span class="detail-value">${formatDate(equipment.nextQuarterlyDate)}</span>
+                          </div>
+                          <div class="detail-item">
+                              <span class="detail-label">Next Annual:</span>
+                              <span class="detail-value">${formatDate(equipment.nextAnnualDate)}</span>
+                          </div>
+                      </div>
+                      
+                      <div class="detail-row">
+                          <div class="detail-item">
+                              <span class="detail-label">Rugby Tag:</span>
+                              <span class="detail-value rugby-tag ${equipment.rugbyTag.toLowerCase()}">${equipment.rugbyTag}</span>
+                          </div>
+                          <div class="detail-item">
+                              <span class="detail-label">Test Authority:</span>
+                              <span class="detail-value">${equipment.testAuthority || 'Not specified'}</span>
+                          </div>
+                      </div>
+                      
+                      ${equipment.notes ? `
+                          <div class="equipment-notes">
+                              <span class="detail-label">Notes:</span>
+                              <span class="detail-value">${equipment.notes}</span>
+                          </div>
+                      ` : ''}
+                  </div>
+                  
+                  <div class="equipment-actions">
+                      <button class="action-btn edit-btn" onclick="editEquipment('${equipment.id}')">
+                          <i class="fas fa-edit"></i>
+                          Edit
+                      </button>
+                      <button class="action-btn test-btn" onclick="recordTest('${equipment.id}')">
+                          <i class="fas fa-clipboard-check"></i>
+                          Record Test
+                      </button>
+                      <button class="action-btn delete-btn" onclick="deleteEquipment('${equipment.id}')">
+                          <i class="fas fa-trash"></i>
+                          Delete
+                      </button>
+                  </div>
+              </div>
+          `;
+      }).join('');
+      
+      container.innerHTML = equipmentHtml;
+  }
+
+  function getEquipmentStatus(equipment) {
+      const today = new Date();
+      const nextQuarterly = new Date(equipment.nextQuarterlyDate);
+      const nextAnnual = new Date(equipment.nextAnnualDate);
+      const daysDiff = Math.ceil((nextQuarterly - today) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff < 0) {
+          return { class: 'overdue', text: 'Overdue', icon: 'fas fa-exclamation-triangle' };
+      } else if (daysDiff <= 30) {
+          return { class: 'due-soon', text: 'Due Soon', icon: 'fas fa-clock' };
+      } else {
+          return { class: 'current', text: 'Current', icon: 'fas fa-check-circle' };
+      }
+  }
+
+  function getEquipmentTypeName(type) {
+      const typeNames = {
+          'chain-grade80': 'Chain Sling (Grade 80)',
+          'chain-grade100': 'Chain Sling (Grade 100)',
+          'chain-adjustable': 'Adjustable Chain Sling',
+          'wire-sling': 'Wire Rope Sling',
+          'wire-strop': 'Wire Rope Strop',
+          'wire-endless': 'Endless Wire Sling',
+          'round-sling': 'Round Sling',
+          'webbing-sling': 'Webbing Sling',
+          'endless-sling': 'Endless Synthetic Sling',
+          'shackle': 'Shackle',
+          'hook': 'Lifting Hook',
+          'eyebolt': 'Eyebolt',
+          'spreader-beam': 'Spreader Beam',
+          'lifting-beam': 'Lifting Beam',
+          'crane-block': 'Crane Block',
+          'load-block': 'Load Block',
+          'crane-hook': 'Crane Hook'
+      };
+      return typeNames[type] || type;
+  }
+
+  function updateComplianceSummary() {
+      const currentCount = equipmentData.filter(eq => getEquipmentStatus(eq).class === 'current').length;
+      const dueSoonCount = equipmentData.filter(eq => getEquipmentStatus(eq).class === 'due-soon').length;
+      const overdueCount = equipmentData.filter(eq => getEquipmentStatus(eq).class === 'overdue').length;
+      const totalCount = equipmentData.length;
+      
+      document.getElementById('current-count').textContent = currentCount;
+      document.getElementById('due-soon-count').textContent = dueSoonCount;
+      document.getElementById('overdue-count').textContent = overdueCount;
+      document.getElementById('total-count').textContent = totalCount;
+  }
+
+  function toggleFilterPanel() {
+      const panel = document.getElementById('filter-panel');
+      const isVisible = panel.style.display === 'block';
+      panel.style.display = isVisible ? 'none' : 'block';
+  }
+
+  function handleFilterClick(event) {
+      const button = event.target;
+      const filter = button.dataset.filter;
+      
+      // Update active state
+      document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      
+      // Apply filter
+      applyFilters();
+  }
+
+  function applyFilters() {
+      // Implementation for filtering would go here
+      // For now, just log the filter action
+      console.log('Applying filters');
+  }
+
+  function exportRegister() {
+      if (equipmentData.length === 0) {
+          showNotification('No equipment data to export', 'warning');
+          return;
+      }
+      
+      // Create CSV content
+      const headers = ['ID', 'Type', 'WLL', 'Manufacturer', 'Size', 'Last Test', 'Next Quarterly', 'Next Annual', 'Status', 'Rugby Tag', 'Test Authority', 'Notes'];
+      const csvContent = [
+          headers.join(','),
+          ...equipmentData.map(eq => [
+              eq.id,
+              getEquipmentTypeName(eq.type),
+              eq.wll,
+               eq.manufacturer || '',
+               eq.size || '',
+               eq.lastTestDate,
+               eq.nextQuarterlyDate,
+               eq.nextAnnualDate,
+               getEquipmentStatus(eq).text,
+               eq.rugbyTag,
+               eq.testAuthority || '',
+               (eq.notes || '').replace(/,/g, ';') // Replace commas to avoid CSV issues
+           ].join(','))
+       ].join('\n');
+       
+       // Create and download file
+       const blob = new Blob([csvContent], { type: 'text/csv' });
+       const url = window.URL.createObjectURL(blob);
+       const a = document.createElement('a');
+       a.href = url;
+       a.download = `lifting_register_${new Date().toISOString().split('T')[0]}.csv`;
+       document.body.appendChild(a);
+       a.click();
+       document.body.removeChild(a);
+       window.URL.revokeObjectURL(url);
+       
+       showNotification('Register exported successfully', 'success');
+   }
+
+   function clearForm() {
+       const formInputs = [
+           'equipment-type', 'equipment-id', 'wll-capacity', 'manufacturer',
+           'size-spec', 'last-test-date', 'test-authority', 'equipment-notes'
+       ];
+       
+       formInputs.forEach(id => {
+           const element = document.getElementById(id);
+           if (element) {
+               element.value = '';
+               clearFieldError(element);
+           }
+       });
+   }
+
+   function formatDate(dateString) {
+       const date = new Date(dateString);
+       return date.toLocaleDateString('en-AU', { 
+           day: '2-digit', 
+           month: '2-digit', 
+           year: 'numeric' 
+       });
+   }
+
+   function loadEquipmentData() {
+       try {
+           const data = localStorage.getItem(STORAGE_KEY);
+           return data ? JSON.parse(data) : [];
+       } catch (error) {
+           console.error('Error loading equipment data:', error);
+           return [];
+       }
+   }
+
+   function saveEquipmentData() {
+       try {
+           localStorage.setItem(STORAGE_KEY, JSON.stringify(equipmentData));
+       } catch (error) {
+           console.error('Error saving equipment data:', error);
+           showNotification('Error saving data', 'error');
+       }
+   }
+
+   function showNotification(message, type = 'info') {
+       // Remove existing notifications
+       const existingNotification = document.querySelector('.notification');
+       if (existingNotification) {
+           existingNotification.remove();
+       }
+       
+       const notification = document.createElement('div');
+       notification.className = `notification ${type}`;
+       notification.innerHTML = `
+           <div class="notification-content">
+               <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                  type === 'error' ? 'exclamation-circle' : 
+                                  type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+               <span>${message}</span>
+           </div>
+       `;
+       
+       // Style the notification
+       notification.style.cssText = `
+           position: fixed;
+           top: 100px;
+           right: 20px;
+           z-index: 1000;
+           background: ${type === 'success' ? 'rgba(52, 199, 89, 0.9)' : 
+                       type === 'error' ? 'rgba(255, 59, 48, 0.9)' : 
+                       type === 'warning' ? 'rgba(255, 204, 0, 0.9)' : 'rgba(0, 122, 255, 0.9)'};
+           color: white;
+           padding: 16px 20px;
+           border-radius: 8px;
+           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+           transform: translateX(100%);
+           transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+       `;
+       
+       document.body.appendChild(notification);
+       
+       // Animate in
+       setTimeout(() => {
+           notification.style.transform = 'translateX(0)';
+       }, 100);
+       
+       // Auto remove after 4 seconds
+       setTimeout(() => {
+           notification.style.transform = 'translateX(100%)';
+           setTimeout(() => notification.remove(), 300);
+       }, 4000);
+   }
+
+   // Global functions for equipment actions (called from HTML)
+   window.editEquipment = function(equipmentId) {
+       const equipment = equipmentData.find(eq => eq.id === equipmentId);
+       if (!equipment) return;
+       
+       // Populate form with equipment data
+       document.getElementById('equipment-type').value = equipment.type;
+       document.getElementById('equipment-id').value = equipment.id;
+       document.getElementById('wll-capacity').value = equipment.wll;
+       document.getElementById('manufacturer').value = equipment.manufacturer || '';
+       document.getElementById('size-spec').value = equipment.size || '';
+       document.getElementById('last-test-date').value = equipment.lastTestDate;
+       document.getElementById('test-authority').value = equipment.testAuthority || '';
+       document.getElementById('equipment-notes').value = equipment.notes || '';
+       
+       // Change button to update mode
+       const addBtn = document.getElementById('add-equipment-btn');
+       addBtn.innerHTML = '<i class="fas fa-save"></i>Update Equipment';
+       addBtn.onclick = () => updateEquipment(equipmentId);
+       
+       // Scroll to form
+       document.querySelector('.add-equipment-section').scrollIntoView({ behavior: 'smooth' });
+       
+       showNotification(`Editing ${equipmentId}`, 'info');
+   };
+
+   window.updateEquipment = function(equipmentId) {
+       const index = equipmentData.findIndex(eq => eq.id === equipmentId);
+       if (index === -1) return;
+       
+       // Validate form
+       const requiredFields = ['equipment-type', 'equipment-id', 'wll-capacity', 'last-test-date'];
+       let isValid = true;
+       
+       requiredFields.forEach(fieldId => {
+           const field = document.getElementById(fieldId);
+           if (!validateField({ target: field })) {
+               isValid = false;
+           }
+       });
+       
+       if (!isValid) {
+           showNotification('Please fix the errors above', 'error');
+           return;
+       }
+       
+       // Update equipment data
+       const updatedEquipment = {
+           ...equipmentData[index],
+           type: document.getElementById('equipment-type').value,
+           id: document.getElementById('equipment-id').value.trim(),
+           wll: parseFloat(document.getElementById('wll-capacity').value),
+           manufacturer: document.getElementById('manufacturer').value.trim(),
+           size: document.getElementById('size-spec').value.trim(),
+           lastTestDate: document.getElementById('last-test-date').value,
+           testAuthority: document.getElementById('test-authority').value.trim(),
+           notes: document.getElementById('equipment-notes').value.trim()
+       };
+       
+       // Recalculate test dates
+       const testDates = calculateTestDates(updatedEquipment.lastTestDate, updatedEquipment.type);
+       updatedEquipment.nextQuarterlyDate = testDates.quarterly;
+       updatedEquipment.nextAnnualDate = testDates.annual;
+       updatedEquipment.rugbyTag = testDates.rugbyTag;
+       updatedEquipment.nextRugbyTag = testDates.nextRugbyTag;
+       
+       equipmentData[index] = updatedEquipment;
+       
+       // Save and refresh
+       saveEquipmentData();
+       renderEquipmentList();
+       updateComplianceSummary();
+       clearForm();
+       
+       // Reset button
+       const addBtn = document.getElementById('add-equipment-btn');
+       addBtn.innerHTML = '<i class="fas fa-plus"></i>Add to Register';
+       addBtn.onclick = addEquipment;
+       
+       showNotification(`${updatedEquipment.id} updated successfully`, 'success');
+   };
+
+   window.recordTest = function(equipmentId) {
+       const equipment = equipmentData.find(eq => eq.id === equipmentId);
+       if (!equipment) return;
+       
+       // Create modal for recording test
+       const modal = document.createElement('div');
+       modal.className = 'test-modal';
+       modal.innerHTML = `
+           <div class="modal-overlay">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h3>Record Test - ${equipment.id}</h3>
+                       <button class="modal-close" onclick="this.closest('.test-modal').remove()">
+                           <i class="fas fa-times"></i>
+                       </button>
+                   </div>
+                   <div class="modal-body">
+                       <div class="input-group">
+                           <label>Test Date:</label>
+                           <input type="date" id="new-test-date" class="apple-input" value="${new Date().toISOString().split('T')[0]}">
+                       </div>
+                       <div class="input-group">
+                           <label>Test Authority:</label>
+                           <input type="text" id="new-test-authority" class="apple-input" value="${equipment.testAuthority || ''}" placeholder="e.g. NATA Lab, Competent Person">
+                       </div>
+                       <div class="input-group">
+                           <label>Test Result:</label>
+                           <select id="test-result" class="apple-select">
+                               <option value="pass">PASS</option>
+                               <option value="fail">FAIL</option>
+                               <option value="conditional">CONDITIONAL PASS</option>
+                           </select>
+                       </div>
+                       <div class="input-group">
+                           <label>Notes:</label>
+                           <textarea id="test-notes" class="apple-textarea" rows="3" placeholder="Test notes, observations, or conditions..."></textarea>
+                       </div>
+                   </div>
+                   <div class="modal-actions">
+                       <button class="modal-btn cancel" onclick="this.closest('.test-modal').remove()">Cancel</button>
+                       <button class="modal-btn primary" onclick="saveTestRecord('${equipmentId}')">Save Test</button>
+                   </div>
+               </div>
+           </div>
+       `;
+       
+       // Style the modal
+       modal.style.cssText = `
+           position: fixed;
+           top: 0;
+           left: 0;
+           right: 0;
+           bottom: 0;
+           z-index: 2000;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           padding: 20px;
+       `;
+       
+       document.body.appendChild(modal);
+   };
+
+   window.saveTestRecord = function(equipmentId) {
+       const equipment = equipmentData.find(eq => eq.id === equipmentId);
+       if (!equipment) return;
+       
+       const testDate = document.getElementById('new-test-date').value;
+       const testAuthority = document.getElementById('new-test-authority').value;
+       const testResult = document.getElementById('test-result').value;
+       const testNotes = document.getElementById('test-notes').value;
+       
+       if (!testDate) {
+           showNotification('Test date is required', 'error');
+           return;
+       }
+       
+       // Update equipment with new test data
+       equipment.lastTestDate = testDate;
+       equipment.testAuthority = testAuthority;
+       
+       // Recalculate dates
+       const testDates = calculateTestDates(testDate, equipment.type);
+       equipment.nextQuarterlyDate = testDates.quarterly;
+       equipment.nextAnnualDate = testDates.annual;
+       equipment.rugbyTag = testDates.rugbyTag;
+       equipment.nextRugbyTag = testDates.nextRugbyTag;
+       
+       // Add test record to history
+       if (!equipment.testHistory) equipment.testHistory = [];
+       equipment.testHistory.push({
+           date: testDate,
+           authority: testAuthority,
+           result: testResult,
+           notes: testNotes,
+           recordedBy: 'User', // Could be enhanced with user system
+           recordedDate: new Date().toISOString()
+       });
+       
+       // Save and refresh
+       saveEquipmentData();
+       renderEquipmentList();
+       updateComplianceSummary();
+       
+       // Close modal
+       document.querySelector('.test-modal').remove();
+       
+       showNotification(`Test recorded for ${equipmentId}`, 'success');
+   };
+
+   window.deleteEquipment = function(equipmentId) {
+       if (!confirm(`Are you sure you want to delete equipment ${equipmentId}? This action cannot be undone.`)) {
+           return;
+       }
+       
+       const index = equipmentData.findIndex(eq => eq.id === equipmentId);
+       if (index !== -1) {
+           equipmentData.splice(index, 1);
+           saveEquipmentData();
+           renderEquipmentList();
+           updateComplianceSummary();
+           showNotification(`${equipmentId} deleted`, 'success');
+       }
+   };
+}
+
+// Navigation functions
+function goBack() {
+   window.location.href = 'main-menu.html';
+}
+
+function goHome() {
+   window.location.href = 'index.html';
+}
+
+// Safety Alerts functionality
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('safety-alerts.html')) {
+      initializeSafetyAlerts();
+  }
+});
+
+function initializeSafetyAlerts() {
+  console.log('Initializing Safety Alerts');
+  
+  // Sample safety alerts data (in a real app, this would come from an API)
+  const safetyAlertsData = [
+      {
+          id: 'SA2025001',
+          type: 'critical',
+          title: 'Chain Sling Recall - Brand X Grade 100',
+          summary: 'Immediate recall of Brand X Grade 100 chain slings manufactured between Jan-Mar 2024 due to heat treatment defects.',
+          content: 'WorkSafe has issued an immediate recall notice for Brand X Grade 100 chain slings with serial numbers starting with "BX24". Affected slings may have inadequate heat treatment leading to premature failure. Stop use immediately and contact supplier.',
+          date: '2025-01-15',
+          source: 'WorkSafe Australia',
+          category: 'Equipment Recall',
+          affectedEquipment: ['Chain Slings'],
+          actions: ['Stop Use', 'Contact Supplier', 'Return Equipment']
+      },
+      {
+          id: 'SA2025002',
+          type: 'warning',
+          title: 'Updated AS 2550 - Crane Safety Standards',
+          summary: 'New amendments to AS 2550 crane safety standards effective March 2025, including updated inspection frequencies.',
+          content: 'Standards Australia has published amendments to AS 2550 series covering crane safety. Key changes include quarterly inspections for high-use equipment and updated competency requirements for crane operators.',
+          date: '2025-01-10',
+          source: 'Standards Australia',
+          category: 'Regulatory Update',
+          affectedEquipment: ['Cranes', 'Mobile Cranes'],
+          actions: ['Review Procedures', 'Train Personnel', 'Update Documentation']
+      },
+      {
+          id: 'SA2025003',
+          type: 'warning',
+          title: 'Synthetic Sling Temperature Limits',
+          summary: 'Recent failures of synthetic slings in high-temperature applications. Review temperature limits before use.',
+          content: 'Multiple incidents reported of synthetic round slings failing in applications exceeding 60°C. Ensure proper selection and inspection of synthetic slings for temperature-critical applications.',
+          date: '2025-01-08',
+          source: 'Industry Report',
+          category: 'Equipment Safety',
+          affectedEquipment: ['Round Slings', 'Webbing Slings'],
+          actions: ['Check Temperature Ratings', 'Inspect Equipment', 'Review Procedures']
+      },
+      {
+          id: 'SA2025004',
+          type: 'info',
+          title: 'Rugby Tag System Quarterly Update',
+          summary: 'Q1 2025 rugby tag color is RED. Ensure all lifting equipment displays current quarterly inspection tags.',
+          content: 'Reminder that Q1 2025 (January-March) rugby tag color is RED. All lifting equipment must display current red tags indicating quarterly inspection completion.',
+          date: '2025-01-01',
+          source: 'RYGTEK Safety Team',
+          category: 'Inspection Reminder',
+          affectedEquipment: ['All Lifting Equipment'],
+          actions: ['Update Tags', 'Complete Inspections']
+      },
+      {
+          id: 'SA2024058',
+          type: 'info',
+          title: 'New NATA Testing Facilities',
+          summary: 'Additional NATA-approved testing facilities now available in regional areas for lifting equipment certification.',
+          content: 'Three new NATA-approved testing facilities have opened in regional Queensland and NSW, reducing travel requirements for annual lifting equipment testing and certification.',
+          date: '2024-12-20',
+          source: 'NATA',
+          category: 'Service Update',
+          affectedEquipment: ['All Testing Required'],
+          actions: ['Update Records', 'Consider Options']
+      }
+  ];
+
+  // Daily safety tips database
+  const dailySafetyTips = [
+      // Equipment Tips
+      [
+          { title: "Pre-Use Inspection", tip: "Always inspect lifting gear before each use for damage, wear, or defects" },
+          { title: "Weight Verification", tip: "Confirm actual load weight before lifting - estimates can be deadly" },
+          { title: "Sling Angle Check", tip: "Never use sling angles less than 30° - load factors increase exponentially" },
+          { title: "Sharp Edge Protection", tip: "Use padding or sleeves to protect slings from sharp edges and corners" }
+      ],
+      // Environmental Tips
+      [
+          { title: "Weather Awareness", tip: "Wind speed over 15km/h can affect lifting operations - check conditions" },
+          { title: "Ground Conditions", tip: "Ensure stable, level ground for crane outriggers and blocking" },
+          { title: "Overhead Hazards", tip: "Always check for powerlines, structures, and other overhead obstacles" },
+          { title: "Visibility Check", tip: "Stop operations in poor visibility - safety depends on clear communication" }
+      ],
+      // Communication Tips
+      [
+          { title: "Hand Signals", tip: "Use standard crane signals - ensure all team members know them" },
+          { title: "Radio Protocol", tip: "Use clear, concise radio communication - repeat critical information" },
+          { title: "Stop Authority", tip: "Anyone can stop a lift for safety reasons - encourage open communication" },
+          { title: "Lifting Plan", tip: "Discuss the lift plan with all team members before starting operations" }
+      ],
+      // Personal Safety Tips
+      [
+          { title: "PPE Compliance", tip: "Hard hats, safety boots, and high-vis clothing are mandatory on site" },
+          { title: "Exclusion Zones", tip: "Never stand under suspended loads - maintain safe distances" },
+          { title: "Fatigue Management", tip: "Take regular breaks - tired workers make dangerous mistakes" },
+          { title: "Training Currency", tip: "Ensure your lifting qualifications and training are current" }
+      ]
+  ];
+
+  // Initialize the page
+  setupEventListeners();
+  renderSafetyAlerts(safetyAlertsData);
+  renderSafetyTips();
+
+  function setupEventListeners() {
+      // Subscribe button
+      const subscribeBtn = document.getElementById('subscribe-btn');
+      subscribeBtn.addEventListener('click', handleSubscription);
+
+      // Alert filters
+      document.querySelectorAll('.filter-tag').forEach(btn => {
+          btn.addEventListener('click', handleAlertFilter);
+      });
+
+      // Email input enter key
+      document.getElementById('email-alerts').addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+              handleSubscription();
+          }
+      });
+  }
+
+  function handleSubscription() {
+      const emailInput = document.getElementById('email-alerts');
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+          showNotification('Please enter your email address', 'warning');
+          return;
+      }
+      
+      if (!isValidEmail(email)) {
+          showNotification('Please enter a valid email address', 'error');
+          return;
+      }
+
+      // Simulate subscription process
+      const subscribeBtn = document.getElementById('subscribe-btn');
+      const originalContent = subscribeBtn.innerHTML;
+      
+      subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+      subscribeBtn.disabled = true;
+
+      setTimeout(() => {
+          subscribeBtn.innerHTML = '<i class="fas fa-check"></i> Subscribed!';
+          emailInput.value = '';
+          showNotification('Successfully subscribed to safety alerts', 'success');
+          
+          setTimeout(() => {
+              subscribeBtn.innerHTML = originalContent;
+              subscribeBtn.disabled = false;
+          }, 2000);
+      }, 1500);
+  }
+
+  function handleAlertFilter(event) {
+      const filterType = event.target.dataset.filter;
+      
+      // Update active filter
+      document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Filter alerts
+      const filteredAlerts = filterType === 'all' 
+          ? safetyAlertsData 
+          : safetyAlertsData.filter(alert => alert.type === filterType);
+      
+      renderSafetyAlerts(filteredAlerts);
+  }
+
+  function renderSafetyAlerts(alerts) {
+      const alertsList = document.getElementById('alerts-list');
+      
+      if (alerts.length === 0) {
+          alertsList.innerHTML = `
+              <div class="no-alerts">
+                  <i class="fas fa-check-circle"></i>
+                  <h4>No Alerts</h4>
+                  <p>No safety alerts match the current filter.</p>
+              </div>
+          `;
+          return;
+      }
+
+      const alertsHtml = alerts.map(alert => {
+          const alertTypeClass = alert.type;
+          const alertIcon = {
+              'critical': 'fas fa-exclamation-triangle',
+              'warning': 'fas fa-exclamation-circle',
+              'info': 'fas fa-info-circle'
+          }[alert.type];
+
+          return `
+              <div class="alert-card ${alertTypeClass}" data-alert-id="${alert.id}">
+                  <div class="alert-header">
+                      <div class="alert-badge ${alertTypeClass}">
+                          <i class="${alertIcon}"></i>
+                          <span>${alert.type.toUpperCase()}</span>
+                      </div>
+                      <div class="alert-date">${formatAlertDate(alert.date)}</div>
+                  </div>
+                  
+                  <div class="alert-content">
+                      <h4 class="alert-title">${alert.title}</h4>
+                      <p class="alert-summary">${alert.summary}</p>
+                      
+                      <div class="alert-details" style="display: none;">
+                          <div class="alert-full-content">
+                              <p>${alert.content}</p>
+                          </div>
+                          
+                          <div class="alert-metadata">
+                              <div class="metadata-item">
+                                  <strong>Source:</strong> ${alert.source}
+                              </div>
+                              <div class="metadata-item">
+                                  <strong>Category:</strong> ${alert.category}
+                              </div>
+                              <div class="metadata-item">
+                                  <strong>Affected Equipment:</strong> ${alert.affectedEquipment.join(', ')}
+                              </div>
+                          </div>
+                          
+                          <div class="alert-actions">
+                              <strong>Required Actions:</strong>
+                              <ul>
+                                  ${alert.actions.map(action => `<li>${action}</li>`).join('')}
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="alert-footer">
+                      <button class="alert-toggle" onclick="toggleAlertDetails('${alert.id}')">
+                          <span class="toggle-text">View Details</span>
+                          <i class="fas fa-chevron-down toggle-icon"></i>
+                      </button>
+                      <button class="alert-share" onclick="shareAlert('${alert.id}')">
+                          <i class="fas fa-share-alt"></i>
+                          Share
+                      </button>
+                  </div>
+              </div>
+          `;
+      }).join('');
+
+      alertsList.innerHTML = alertsHtml;
+  }
+
+  function renderSafetyTips() {
+      const randomTipSet = dailySafetyTips[Math.floor(Math.random() * dailySafetyTips.length)];
+      const tipsGrid = document.getElementById('safety-tips-grid');
+      
+      const tipsHtml = randomTipSet.map(tip => `
+          <div class="safety-tip-card">
+              <h5>${tip.title}</h5>
+              <p>${tip.tip}</p>
+          </div>
+      `).join('');
+      
+      tipsGrid.innerHTML = tipsHtml;
+  }
+
+  function formatAlertDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-AU', { 
+          day: 'numeric', 
+          month: 'short', 
+          year: 'numeric' 
+      });
+  }
+
+  function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function showNotification(message, type = 'info') {
+      // Remove existing notifications
+      const existingNotification = document.querySelector('.notification');
+      if (existingNotification) {
+          existingNotification.remove();
+      }
+      
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = `
+          <div class="notification-content">
+              <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                 type === 'error' ? 'exclamation-circle' : 
+                                 type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+              <span>${message}</span>
+          </div>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Animate in
+      setTimeout(() => notification.classList.add('show'), 100);
+      
+      // Auto remove
+      setTimeout(() => {
+          notification.classList.remove('show');
+          setTimeout(() => notification.remove(), 300);
+      }, 4000);
+  }
+
+  // Global functions for button interactions
+  window.toggleAlertDetails = function(alertId) {
+      const alertCard = document.querySelector(`[data-alert-id="${alertId}"]`);
+      const details = alertCard.querySelector('.alert-details');
+      const toggleBtn = alertCard.querySelector('.alert-toggle');
+      const toggleText = toggleBtn.querySelector('.toggle-text');
+      const toggleIcon = toggleBtn.querySelector('.toggle-icon');
+      
+      if (details.style.display === 'none') {
+          details.style.display = 'block';
+          toggleText.textContent = 'Hide Details';
+          toggleIcon.style.transform = 'rotate(180deg)';
+      } else {
+          details.style.display = 'none';
+          toggleText.textContent = 'View Details';
+          toggleIcon.style.transform = 'rotate(0deg)';
+      }
+  };
+
+  window.shareAlert = function(alertId) {
+      const alert = safetyAlertsData.find(a => a.id === alertId);
+      if (!alert) return;
+      
+      const shareText = `Safety Alert: ${alert.title}\n\n${alert.summary}\n\nSource: ${alert.source}`;
+      
+      if (navigator.share) {
+          navigator.share({
+              title: alert.title,
+              text: shareText,
+              url: window.location.href
+          });
+      } else {
+          // Fallback: copy to clipboard
+          navigator.clipboard.writeText(shareText).then(() => {
+              showNotification('Alert details copied to clipboard', 'success');
+          });
+      }
+  };
+
+  window.refreshSafetyTips = function() {
+      const refreshBtn = document.querySelector('.refresh-tips-btn');
+      const icon = refreshBtn.querySelector('i');
+      
+      icon.style.animation = 'spin 0.6s ease';
+      
+      setTimeout(() => {
+          renderSafetyTips();
+          icon.style.animation = '';
+      }, 600);
+  };
+
+  window.openResource = function(resourceType) {
+      const resources = {
+          'worksafe-au': 'https://www.safeworkaustralia.gov.au/',
+          'standards-au': 'https://www.standards.org.au/',
+          'lifting-manual': '#', // Would link to actual manual download
+          'emergency-contacts': '#' // Would open emergency contacts modal
+      };
+      
+      if (resourceType === 'lifting-manual') {
+          showNotification('Lifting Safety Manual download would start here', 'info');
+      } else if (resourceType === 'emergency-contacts') {
+          openEmergencyContacts();
+      } else {
+          window.open(resources[resourceType], '_blank');
+      }
+  };
+
+  window.openIncidentForm = function() {
+      showNotification('Incident reporting form would open here', 'info');
+      // In a real app, this would open a comprehensive incident reporting form
+  };
+
+  function openEmergencyContacts() {
+      const modal = document.createElement('div');
+      modal.className = 'emergency-modal';
+      modal.innerHTML = `
+          <div class="modal-overlay">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h3>Emergency Contacts</h3>
+                      <button class="modal-close" onclick="this.closest('.emergency-modal').remove()">
+                          <i class="fas fa-times"></i>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="emergency-section">
+                          <h4>Emergency Services</h4>
+                          <div class="contact-item emergency">
+                              <strong>000</strong> - Police, Fire, Ambulance
+                          </div>
+                      </div>
+                      
+                      <div class="emergency-section">
+                          <h4>WorkSafe</h4>
+                          <div class="contact-item">
+                              <strong>13 10 50</strong> - WorkSafe Australia
+                          </div>
+                          <div class="contact-item">
+                              <strong>1800 136 089</strong> - WorkSafe NSW
+                          </div>
+                      </div>
+                      
+                      <div class="emergency-section">
+                          <h4>Industry Support</h4>
+                          <div class="contact-item">
+                              <strong>NATA:</strong> 1800 621 666
+                          </div>
+                          <div class="contact-item">
+                              <strong>Standards Australia:</strong> 1800 035 822
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+      
+      document.body.appendChild(modal);
+  };
+}
+
+// Navigation functions
+function goBack() {
+  window.location.href = 'main-menu.html';
+}
+
+function goHome() {
+  window.location.href = 'index.html';
+}
