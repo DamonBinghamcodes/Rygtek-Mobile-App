@@ -1607,3 +1607,300 @@
 /* ========================================
  END ANGLE & DIMENSIONS STYLES
  ======================================== */
+
+ /* ========================================
+   LOAD WEIGHT ESTIMATOR PAGE STYLES
+   ======================================== */
+
+/* Unit selector styling */
+.unit-selector {
+  margin-bottom: 32px;
+}
+
+.unit-tabs {
+  display: flex;
+  background: rgba(28, 28, 30, 0.8);
+  border-radius: 12px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.unit-tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: var(--apple-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-align: center;
+}
+
+.unit-tab:hover {
+  color: var(--apple-text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.unit-tab.active {
+  background: var(--rygtek-red);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(227, 30, 36, 0.3);
+}
+
+/* Dimensions grid layout */
+.dimensions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .dimensions-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+  }
+}
+
+/* Enhanced input styling for load weight */
+.apple-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background: rgba(44, 44, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--apple-text-primary);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Remove number input spinners */
+  -moz-appearance: textfield;
+}
+
+.apple-input::-webkit-outer-spin-button,
+.apple-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.apple-input:focus {
+  outline: none;
+  border-color: var(--rygtek-red);
+  background: rgba(50, 50, 52, 0.9);
+  box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
+}
+
+.apple-input::placeholder {
+  color: var(--apple-gray);
+}
+
+.apple-input:valid:not(:placeholder-shown) {
+  border-color: rgba(52, 199, 89, 0.3);
+}
+
+/* Enhanced select styling */
+.apple-select {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  background: rgba(44, 44, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--apple-text-primary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Custom dropdown styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFFFFF'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 20px;
+  padding-right: 50px;
+}
+
+.apple-select:focus {
+  outline: none;
+  border-color: var(--rygtek-red);
+  background: rgba(50, 50, 52, 0.9);
+  box-shadow: 0 0 0 3px rgba(227, 30, 36, 0.1);
+}
+
+.apple-select option {
+  background: #2C2C2E;
+  color: var(--apple-text-primary);
+  padding: 12px;
+}
+
+.apple-select optgroup {
+  background: #1C1C1E;
+  color: var(--apple-primary);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* Weight result container */
+.weight-result-container {
+  background: rgba(44, 44, 46, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin: 32px 0;
+  text-align: center;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.result-header i {
+  color: var(--rygtek-red);
+  font-size: 1.3rem;
+}
+
+.result-header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Main weight display */
+.weight-display {
+  margin-bottom: 24px;
+}
+
+.weight-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.weight-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--rygtek-red);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.weight-unit {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+  margin-bottom: 8px;
+}
+
+/* Weight conversions */
+.weight-conversions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+@media (min-width: 600px) {
+  .weight-conversions {
+      grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.conversion-item {
+  background: rgba(28, 28, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.conversion-label {
+  font-size: 0.8rem;
+  color: var(--apple-text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.conversion-value {
+  font-size: 1rem;
+  color: var(--apple-text-primary);
+  font-weight: 600;
+}
+
+/* Weight disclaimer */
+.weight-disclaimer {
+  background: rgba(255, 149, 0, 0.1);
+  border: 1px solid rgba(255, 149, 0, 0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+}
+
+.weight-disclaimer i {
+  color: #FF9500;
+  font-size: 1.1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.weight-disclaimer p {
+  font-size: 0.9rem;
+  color: var(--apple-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Material information panel */
+.material-info-panel {
+  background: rgba(28, 28, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 24px;
+  transition: opacity 0.3s ease;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-header i {
+  color: var(--apple-primary);
+  font-size: 1.2rem;
+}
+
+.info-header h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--apple-text-prima

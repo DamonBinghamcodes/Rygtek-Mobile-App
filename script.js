@@ -731,3 +731,497 @@ function initializeAngleCalculator() {
       }
   });
 }
+
+// Load Weight Calculator functionality
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname.includes('load-weight.html')) {
+      initializeLoadWeightCalculator();
+  }
+});
+
+function initializeLoadWeightCalculator() {
+  console.log('Initializing Load Weight calculator');
+  
+  const widthInput = document.getElementById('width');
+  const heightInput = document.getElementById('height');
+  const lengthInput = document.getElementById('length');
+  const materialSelect = document.getElementById('material');
+  const weightResult = document.getElementById('weight-result');
+  const weightKg = document.getElementById('weight-kg');
+  const volumeResult = document.getElementById('volume-result');
+  const densityDisplay = document.getElementById('density-display');
+  const materialInfo = document.getElementById('materialInfo');
+  
+  let currentUnit = 'm'; // Default unit
+
+  // Material density database (kg/m³)
+  const materialDatabase = {
+      // Metals
+      'steel-mild': {
+          density: 7850,
+          name: 'Mild Steel',
+          properties: 'High strength, magnetic, corrosive',
+          notes: 'Most common structural steel. Check for sharp edges and coating.'
+      },
+      'steel-stainless': {
+          density: 8000,
+          name: 'Stainless Steel 316',
+          properties: 'Corrosion resistant, non-magnetic',
+          notes: 'Heavier than mild steel. Often used in marine/food applications.'
+      },
+      'aluminium': {
+          density: 2700,
+          name: 'Aluminium',
+          properties: 'Lightweight, corrosion resistant',
+          notes: 'Light but can be brittle. Check for sharp edges from machining.'
+      },
+      'copper': {
+          density: 8960,
+          name: 'Copper',
+          properties: 'Excellent conductor, malleable',
+          notes: 'Very heavy. Often in coils or sheets that can shift during lift.'
+      },
+      'brass': {
+          density: 8500,
+          name: 'Brass',
+          properties: 'Corrosion resistant, malleable',
+          notes: 'Heavy alloy. Check for lead content in older brass items.'
+      },
+      'bronze': {
+          density: 8800,
+          name: 'Bronze',
+          properties: 'Strong, corrosion resistant',
+          notes: 'Dense material. Often used for bushings and marine hardware.'
+      },
+      'cast-iron': {
+          density: 7200,
+          name: 'Cast Iron',
+          properties: 'Brittle, good compression strength',
+          notes: 'Can crack under shock loads. Use soft slings to prevent damage.'
+      },
+      'lead': {
+          density: 11340,
+          name: 'Lead',
+          properties: 'Very heavy, soft, toxic',
+          notes: 'Extremely heavy! Requires special handling. Health hazard - use PPE.'
+      },
+      'zinc': {
+          density: 7140,
+          name: 'Zinc',
+          properties: 'Corrosion resistant, brittle',
+          notes: 'Moderate weight. Often used for galvanizing or die casting.'
+      },
+      'titanium': {
+          density: 4500,
+          name: 'Titanium',
+          properties: 'High strength-to-weight ratio',
+          notes: 'Expensive material. Lighter than steel but very strong.'
+      },
+
+      // Construction Materials
+      'concrete-normal': {
+          density: 2400,
+          name: 'Normal Concrete',
+          properties: 'High compression, low tension',
+          notes: 'Heavy and brittle. Use spreader bars to prevent cracking.'
+      },
+      'concrete-reinforced': {
+          density: 2500,
+          name: 'Reinforced Concrete',
+          properties: 'Steel reinforced, very strong',
+          notes: 'Heavier due to rebar. Sharp edges possible from exposed steel.'
+      },
+      'concrete-lightweight': {
+          density: 1800,
+          name: 'Lightweight Concrete',
+          properties: 'Insulating, reduced weight',
+          notes: 'More fragile than normal concrete. Handle with care.'
+      },
+      'brick-common': {
+          density: 1800,
+          name: 'Common Clay Brick',
+          properties: 'Porous, moderate strength',
+          notes: 'Can crumble under point loads. Use wide slings or spreaders.'
+      },
+      'brick-engineering': {
+          density: 2200,
+          name: 'Engineering Brick',
+          properties: 'Dense, high strength',
+          notes: 'Heavier and stronger than common brick. Still fragile to impacts.'
+      },
+      'sandstone': {
+          density: 2300,
+          name: 'Sandstone',
+          properties: 'Sedimentary, variable strength',
+          notes: 'Natural stone - strength varies. Check for cracks before lifting.'
+      },
+      'limestone': {
+          density: 2600,
+          name: 'Limestone',
+          properties: 'Sedimentary, moderate strength',
+          notes: 'Can be soft or hard varieties. Dust can be hazardous.'
+      },
+      'granite': {
+          density: 2750,
+          name: 'Granite',
+          properties: 'Very hard, igneous rock',
+          notes: 'Very heavy and hard. Sharp edges possible from cutting.'
+      },
+      'marble': {
+          density: 2700,
+          name: 'Marble',
+          properties: 'Metamorphic, polished surface',
+          notes: 'Heavy and can be slippery. Protect polished surfaces.'
+      },
+
+      // Timber
+      'timber-hardwood': {
+          density: 800,
+          name: 'Hardwood (Average)',
+          properties: 'Dense, strong grain',
+          notes: 'Density varies greatly. Check moisture content affects weight.'
+      },
+      'timber-softwood': {
+          density: 500,
+          name: 'Softwood (Average)',
+          properties: 'Light, good strength-to-weight',
+          notes: 'Much lighter than hardwood. Check for knots and splits.'
+      },
+      'timber-pine': {
+          density: 520,
+          name: 'Pine',
+          properties: 'Softwood, resinous',
+          notes: 'Common construction timber. Can be sticky with resin.'
+      },
+      'timber-oak': {
+          density: 750,
+          name: 'Oak',
+          properties: 'Very strong hardwood',
+          notes: 'Heavy hardwood. Excellent strength but can split along grain.'
+      },
+      'timber-jarrah': {
+          density: 820,
+          name: 'Jarrah',
+          properties: 'Australian hardwood, termite resistant',
+          notes: 'Very dense Australian timber. Much heavier than expected.'
+      },
+      'timber-blackbutt': {
+          density: 900,
+          name: 'Blackbutt',
+          properties: 'Australian hardwood, very strong',
+          notes: 'One of the heaviest Australian timbers. Nearly as heavy as water.'
+      },
+
+      // Liquids
+      'water': {
+          density: 1000,
+          name: 'Water',
+          properties: 'Liquid, incompressible',
+          notes: 'Weight changes with temperature. Use appropriate liquid containers.'
+      },
+      'diesel': {
+          density: 850,
+          name: 'Diesel Fuel',
+          properties: 'Flammable liquid, slippery',
+          notes: 'Fire hazard. Vapors can be dangerous. Use spark-proof equipment.'
+      },
+      'petrol': {
+          density: 750,
+          name: 'Petrol',
+          properties: 'Highly flammable, volatile',
+          notes: 'Extreme fire hazard. Vapors explosive. Special handling required.'
+      },
+      'oil-motor': {
+          density: 900,
+          name: 'Motor Oil',
+          properties: 'Viscous, slippery when spilled',
+          notes: 'Can create slippery surfaces. Environmental hazard if spilled.'
+      },
+      'hydraulic-oil': {
+          density: 870,
+          name: 'Hydraulic Oil',
+          properties: 'High pressure fluid, slippery',
+          notes: 'Under pressure can penetrate skin. Check containers for leaks.'
+      },
+
+      // Aggregates & Bulk
+      'sand-dry': {
+          density: 1600,
+          name: 'Sand (Dry)',
+          properties: 'Granular, free-flowing',
+          notes: 'Weight varies with moisture. Can shift during transport.'
+      },
+      'sand-wet': {
+          density: 2000,
+          name: 'Sand (Wet)',
+          properties: 'Granular, cohesive when wet',
+          notes: 'Much heavier when wet. Can become fluid under vibration.'
+      },
+      'gravel': {
+          density: 1800,
+          name: 'Gravel',
+          properties: 'Loose aggregate, angular',
+          notes: 'Free-flowing material. Sharp edges can damage slings.'
+      },
+      'crushed-rock': {
+          density: 1900,
+          name: 'Crushed Rock',
+          properties: 'Angular aggregate, compact',
+          notes: 'Sharp edges can cut slings. Compacts under weight.'
+      },
+      'soil-clay': {
+          density: 1800,
+          name: 'Clay Soil',
+          properties: 'Cohesive, plastic when wet',
+          notes: 'Weight increases significantly when wet. Can stick to equipment.'
+      },
+      'soil-topsoil': {
+          density: 1400,
+          name: 'Topsoil',
+          properties: 'Organic content, loose',
+          notes: 'Weight varies with moisture and organic content.'
+      },
+      'mulch': {
+          density: 400,
+          name: 'Mulch (Dry)',
+          properties: 'Organic, lightweight, loose',
+          notes: 'Very light but bulky. Weight increases greatly when wet.'
+      },
+
+      // Other Materials
+      'glass': {
+          density: 2500,
+          name: 'Glass',
+          properties: 'Brittle, sharp when broken',
+          notes: 'Very fragile. Use soft slings. Sharp edges dangerous if broken.'
+      },
+      'plastic-pvc': {
+          density: 1400,
+          name: 'PVC Plastic',
+          properties: 'Rigid, chemical resistant',
+          notes: 'Moderate weight. Can become brittle in cold weather.'
+      },
+      'plastic-hdpe': {
+          density: 960,
+          name: 'HDPE Plastic',
+          properties: 'Flexible, chemical resistant',
+          notes: 'Lighter than PVC. Can be slippery when wet.'
+      },
+      'rubber': {
+          density: 1200,
+          name: 'Rubber',
+          properties: 'Elastic, flexible',
+          notes: 'Can stretch during lifting. May require special attachment points.'
+      },
+      'paper': {
+          density: 800,
+          name: 'Paper',
+          properties: 'Fibrous, tears easily',
+          notes: 'Much heavier when wet. Protect from moisture during lifting.'
+      },
+      'cardboard': {
+          density: 700,
+          name: 'Cardboard',
+          properties: 'Corrugated, lightweight',
+          notes: 'Loses strength when wet. Use wide lifting surfaces.'
+      },
+      'ice': {
+          density: 917,
+          name: 'Ice',
+          properties: 'Slippery, melts',
+          notes: 'Slippery surface. Weight decreases as it melts. Cold injury risk.'
+      }
+  };
+
+  // Unit conversion factors to metres
+  const unitConversions = {
+      'm': 1,
+      'cm': 0.01,
+      'mm': 0.001
+  };
+
+  // Set up event listeners
+  setupEventListeners();
+  setupUnitTabs();
+
+  function setupEventListeners() {
+      [widthInput, heightInput, lengthInput].forEach(input => {
+          input.addEventListener('input', debounce(calculateWeight, 200));
+          input.addEventListener('change', calculateWeight);
+      });
+
+      materialSelect.addEventListener('change', () => {
+          calculateWeight();
+          showMaterialInfo();
+      });
+  }
+
+  function setupUnitTabs() {
+      const unitTabs = document.querySelectorAll('.unit-tab');
+      const unitDisplays = document.querySelectorAll('.unit-display');
+
+      unitTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+              // Update active tab
+              unitTabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+
+              // Update current unit
+              currentUnit = tab.dataset.unit;
+
+              // Update display labels
+              unitDisplays.forEach(display => {
+                  display.textContent = currentUnit;
+              });
+
+              // Update input placeholders and steps
+              updateInputsForUnit();
+
+              // Recalculate with new units
+              calculateWeight();
+          });
+      });
+  }
+
+  function updateInputsForUnit() {
+      const inputs = [widthInput, heightInput, lengthInput];
+      const placeholders = {
+          'm': ['1.2', '0.5', '2.0'],
+          'cm': ['120', '50', '200'],
+          'mm': ['1200', '500', '2000']
+      };
+      const steps = {
+          'm': '0.001',
+          'cm': '0.1',
+          'mm': '1'
+      };
+
+      inputs.forEach((input, index) => {
+          input.placeholder = `e.g. ${placeholders[currentUnit][index]}`;
+          input.step = steps[currentUnit];
+      });
+  }
+
+  function calculateWeight() {
+      // Get dimensions in current unit
+      const width = parseFloat(widthInput.value) || 0;
+      const height = parseFloat(heightInput.value) || 0;
+      const length = parseFloat(lengthInput.value) || 0;
+      const materialKey = materialSelect.value;
+
+      // Check if we have valid inputs
+      if (width <= 0 || height <= 0 || length <= 0 || !materialKey) {
+          resetResults();
+          return;
+      }
+
+      // Convert dimensions to metres
+      const conversionFactor = unitConversions[currentUnit];
+      const widthM = width * conversionFactor;
+      const heightM = height * conversionFactor;
+      const lengthM = length * conversionFactor;
+
+      // Calculate volume in cubic metres
+      const volumeM3 = widthM * heightM * lengthM;
+
+      // Get material data
+      const material = materialDatabase[materialKey];
+      if (!material) {
+          resetResults();
+          return;
+      }
+
+      // Calculate weight in kg
+      const weightKg = volumeM3 * material.density;
+      const weightTonnes = weightKg / 1000;
+
+      // Update displays
+      weightResult.textContent = weightTonnes.toFixed(3);
+      document.getElementById('weight-kg').textContent = Math.round(weightKg).toLocaleString();
+      volumeResult.textContent = `${volumeM3.toFixed(4)} m³`;
+      densityDisplay.textContent = `${material.density} kg/m³`;
+
+      // Add animation effect
+      weightResult.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+          weightResult.style.transform = 'scale(1)';
+      }, 200);
+  }
+
+  function showMaterialInfo() {
+      const materialKey = materialSelect.value;
+      if (!materialKey) {
+          materialInfo.style.display = 'none';
+          return;
+      }
+
+      const material = materialDatabase[materialKey];
+      if (!material) return;
+
+      // Update material info panel
+      document.getElementById('material-name').textContent = material.name;
+      document.getElementById('material-density').textContent = `${material.density} kg/m³`;
+      document.getElementById('material-properties').textContent = material.properties;
+      document.getElementById('material-notes').textContent = material.notes;
+
+      // Show the panel with animation
+      materialInfo.style.display = 'block';
+      materialInfo.style.opacity = '0';
+      setTimeout(() => {
+          materialInfo.style.transition = 'opacity 0.3s ease';
+          materialInfo.style.opacity = '1';
+      }, 50);
+  }
+
+  function resetResults() {
+      weightResult.textContent = '0.0';
+      document.getElementById('weight-kg').textContent = '0';
+      volumeResult.textContent = '0.0 m³';
+      densityDisplay.textContent = '--';
+      materialInfo.style.display = 'none';
+  }
+
+  function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+          const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+      };
+  }
+
+  // Add clear functionality
+  function addClearButton() {
+      const calculatorContainer = document.querySelector('.calculator-container');
+      if (!calculatorContainer || calculatorContainer.querySelector('.clear-btn')) return;
+
+      const clearButton = document.createElement('button');
+      clearButton.className = 'clear-btn';
+      clearButton.innerHTML = '<i class="fas fa-eraser"></i> Clear All';
+      
+      clearButton.addEventListener('click', () => {
+          widthInput.value = '';
+          heightInput.value = '';
+          lengthInput.value = '';
+          materialSelect.value = '';
+          resetResults();
+          widthInput.focus();
+      });
+
+      calculatorContainer.appendChild(clearButton);
+  }
+
+  addClearButton();
+}
+
+// Navigation functions
+function goBack() {
+  window.location.href = 'main-menu.html';
+}
+
+function goHome() {
+  window.location.href = 'index.html';
+}

@@ -1,99 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Load Weight Estimator - RYGTEK</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-  <script defer src="script.js"></script>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Public/Rygtek Logo.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Load Weight Estimator - RYGTEK</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
 </head>
-<body class="main-menu-screen">
-  <!-- <iframe src="audio-player.html" style="background: rgba(255, 0, 0, 0.144); width: 130px; height: 80px; border: none; align-items: center; justify-content: center; padding: 0;" id="globalAudioPlayer"></iframe> -->
-    <a href="main-menu.html" class="back-icon">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-  <!-- Hamburger Nav -->
-  <div class="nav-wrapper">
-    <i class="fa-solid fa-bars hamburger-icon" onclick="toggleMenu()"></i>
-  
+<body class="calculator-screen">
+    <!-- Consistent navigation header -->
+    <div class="navigation-header" data-aos="fade-down" data-aos-delay="100">
+        <button class="back-btn" onclick="goBack()">
+            <i class="fas fa-chevron-left"></i>
+            <span>Back</span>
+        </button>
+        
+        <!-- Hamburger menu button -->
+        <button class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Consistent hamburger menu -->
     <nav class="hamburger-menu" id="hamburgerMenu">
-        <ul>
-          <li><a href="main-menu.html">
-            <i class="fa-solid fa-house" style="margin-right: 8px;"></i>Main Menu
-          </a></li>
-          
-          <li><a href="working-load-limit.html">
-            <i class="fa-solid fa-weight-hanging" style="margin-right: 8px;"></i>WLL
-          </a></li>
-          
-          <li><a href="angle-dimensions.html">
-            <i class="fa-solid fa-ruler-combined" style="margin-right: 8px;"></i>Angle
-          </a></li>
-          
-          <li><a href="load-weight.html">
-            <i class="fa-solid fa-boxes-stacked" style="margin-right: 8px;"></i>Load Estimator
-          </a></li>
-          
-          <li><a href="lifting-register.html">
-            <i class="fa-solid fa-clipboard-list" style="margin-right: 8px;"></i>Lifting Register
-          </a></li>
-          
-          <li><a href="safety-alerts.html">
-            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 8px;"></i>Safety Alerts
-          </a></li>
-          
-          <li><a href="shop.html">
-            <i class="fa-solid fa-cart-shopping" style="margin-right: 8px;"></i>Shop
-          </a></li>
-          
-          <li><a href="contact-page.html">
-            <i class="fa-solid fa-envelope" style="margin-right: 8px;"></i>Contact
-          </a></li>
-          
-          <li><a href="crane-signals.html">
-            <i class="fa-solid fa-person-rays" style="margin-right: 8px;"></i>Crane Signals
-          </a></li>
+        <div class="menu-header">
+            <h3>Navigation</h3>
+            <button class="close-menu-btn" onclick="toggleMenu()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="menu-list">
+            <li><a href="main-menu.html"><i class="fas fa-home"></i>Main Menu</a></li>
+            <li><a href="working-load-limit.html"><i class="fas fa-weight-hanging"></i>Working Load Limit</a></li>
+            <li><a href="angle-dimensions.html"><i class="fas fa-ruler-combined"></i>Angle & Dimensions</a></li>
+            <li><a href="load-weight.html" class="active"><i class="fas fa-boxes-stacked"></i>Load Estimator</a></li>
+            <li><a href="lifting-register.html"><i class="fas fa-clipboard-list"></i>Lifting Register</a></li>
+            <li><a href="safety-alerts.html"><i class="fas fa-triangle-exclamation"></i>Safety Alerts</a></li>
+            <li><a href="shop.html"><i class="fas fa-cart-shopping"></i>Shop</a></li>
+            <li><a href="contact-page.html"><i class="fas fa-envelope"></i>Contact</a></li>
+            <li><a href="crane-signals.html"><i class="fas fa-person-rays"></i>Crane Signals</a></li>
         </ul>
-      </nav>
-  </div>
+    </nav>
 
-  <div class="content">
-    <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" />
-    <h2 class="menu-header">Load Weight Estimator</h2>
-    <p class="menu-description">Estimate the weight of your load</p>
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header section -->
+        <div class="header-section" data-aos="fade-up" data-aos-delay="200">
+            <div class="logo-container">
+                <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" onclick="goHome()">
+            </div>
+            <h1 class="page-title">Load Weight Estimator</h1>
+            <p class="page-subtitle">Calculate estimated weight based on material and dimensions</p>
+        </div>
 
-    <div class="menu-item-container">
-      <label for="width">Width (m)</label>
-      <input type="number" id="width" placeholder="e.g. 1.2" class="styled-select" />
+        <!-- Calculator container -->
+        <div class="calculator-container" data-aos="fade-up" data-aos-delay="400">
+            
+            <!-- Unit Selection -->
+            <div class="unit-selector" data-aos="fade-up" data-aos-delay="500">
+                <div class="unit-tabs">
+                    <button class="unit-tab active" data-unit="m">metres</button>
+                    <button class="unit-tab" data-unit="cm">centimetres</button>
+                    <button class="unit-tab" data-unit="mm">millimetres</button>
+                </div>
+            </div>
+
+            <!-- Dimensions Input -->
+            <div class="dimensions-grid" data-aos="fade-up" data-aos-delay="600">
+                
+                <div class="input-group">
+                    <label for="width" class="input-label">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        Width (<span class="unit-display">m</span>)
+                    </label>
+                    <input type="number" 
+                           id="width" 
+                           class="apple-input" 
+                           placeholder="e.g. 1.2" 
+                           step="0.001" 
+                           min="0">
+                    <small class="input-hint">Horizontal dimension</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="height" class="input-label">
+                        <i class="fas fa-arrows-alt-v"></i>
+                        Height (<span class="unit-display">m</span>)
+                    </label>
+                    <input type="number" 
+                           id="height" 
+                           class="apple-input" 
+                           placeholder="e.g. 0.5" 
+                           step="0.001" 
+                           min="0">
+                    <small class="input-hint">Vertical dimension</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="length" class="input-label">
+                        <i class="fas fa-ruler-horizontal"></i>
+                        Length (<span class="unit-display">m</span>)
+                    </label>
+                    <input type="number" 
+                           id="length" 
+                           class="apple-input" 
+                           placeholder="e.g. 2.0" 
+                           step="0.001" 
+                           min="0">
+                    <small class="input-hint">Depth dimension</small>
+                </div>
+
+            </div>
+
+            <!-- Material Selection -->
+            <div class="input-group" data-aos="fade-up" data-aos-delay="700">
+                <label for="material" class="input-label">
+                    <i class="fas fa-cubes"></i>
+                    Material Type
+                </label>
+                <select id="material" class="apple-select">
+                    <option value="">Select Material</option>
+                    
+                    <!-- Metals -->
+                    <optgroup label="Metals">
+                        <option value="steel-mild">Steel (Mild/Carbon)</option>
+                        <option value="steel-stainless">Steel (Stainless 316)</option>
+                        <option value="aluminium">Aluminium</option>
+                        <option value="copper">Copper</option>
+                        <option value="brass">Brass</option>
+                        <option value="bronze">Bronze</option>
+                        <option value="cast-iron">Cast Iron</option>
+                        <option value="lead">Lead</option>
+                        <option value="zinc">Zinc</option>
+                        <option value="titanium">Titanium</option>
+                    </optgroup>
+                    
+                    <!-- Construction Materials -->
+                    <optgroup label="Construction Materials">
+                        <option value="concrete-normal">Concrete (Normal)</option>
+                        <option value="concrete-reinforced">Concrete (Reinforced)</option>
+                        <option value="concrete-lightweight">Concrete (Lightweight)</option>
+                        <option value="brick-common">Brick (Common Clay)</option>
+                        <option value="brick-engineering">Brick (Engineering)</option>
+                        <option value="sandstone">Sandstone</option>
+                        <option value="limestone">Limestone</option>
+                        <option value="granite">Granite</option>
+                        <option value="marble">Marble</option>
+                    </optgroup>
+                    
+                    <!-- Timber -->
+                    <optgroup label="Timber">
+                        <option value="timber-hardwood">Hardwood (Avg)</option>
+                        <option value="timber-softwood">Softwood (Avg)</option>
+                        <option value="timber-pine">Pine</option>
+                        <option value="timber-oak">Oak</option>
+                        <option value="timber-jarrah">Jarrah</option>
+                        <option value="timber-blackbutt">Blackbutt</option>
+                    </optgroup>
+                    
+                    <!-- Liquids -->
+                    <optgroup label="Liquids">
+                        <option value="water">Water</option>
+                        <option value="diesel">Diesel Fuel</option>
+                        <option value="petrol">Petrol</option>
+                        <option value="oil-motor">Motor Oil</option>
+                        <option value="hydraulic-oil">Hydraulic Oil</option>
+                    </optgroup>
+                    
+                    <!-- Aggregates -->
+                    <optgroup label="Aggregates & Bulk">
+                        <option value="sand-dry">Sand (Dry)</option>
+                        <option value="sand-wet">Sand (Wet)</option>
+                        <option value="gravel">Gravel</option>
+                        <option value="crushed-rock">Crushed Rock</option>
+                        <option value="soil-clay">Clay Soil</option>
+                        <option value="soil-topsoil">Topsoil</option>
+                        <option value="mulch">Mulch (Dry)</option>
+                    </optgroup>
+                    
+                    <!-- Other Materials -->
+                    <optgroup label="Other Materials">
+                        <option value="glass">Glass</option>
+                        <option value="plastic-pvc">PVC Plastic</option>
+                        <option value="plastic-hdpe">HDPE Plastic</option>
+                        <option value="rubber">Rubber</option>
+                        <option value="paper">Paper</option>
+                        <option value="cardboard">Cardboard</option>
+                        <option value="ice">Ice</option>
+                    </optgroup>
+                </select>
+                <small class="input-hint">Select the primary material being lifted</small>
+            </div>
+
+            <!-- Results Display -->
+            <div class="weight-result-container" data-aos="fade-up" data-aos-delay="800">
+                <div class="result-header">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Estimated Weight</h3>
+                </div>
+                <div class="weight-display">
+                    <div class="weight-main">
+                        <span id="weight-result" class="weight-value">0.0</span>
+                        <span class="weight-unit">tonnes</span>
+                    </div>
+                    <div class="weight-conversions">
+                        <div class="conversion-item">
+                            <span class="conversion-label">Kilograms:</span>
+                            <span id="weight-kg" class="conversion-value">0</span>
+                        </div>
+                        <div class="conversion-item">
+                            <span class="conversion-label">Volume:</span>
+                            <span id="volume-result" class="conversion-value">0.0 m³</span>
+                        </div>
+                        <div class="conversion-item">
+                            <span class="conversion-label">Density:</span>
+                            <span id="density-display" class="conversion-value">--</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="weight-disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>This is an estimate only. Always verify actual weight before lifting. Add safety margins for dynamic loads and account for rigging hardware weight.</p>
+                </div>
+            </div>
+
+            <!-- Material Information Panel -->
+            <div class="material-info-panel" id="materialInfo" data-aos="fade-up" data-aos-delay="900" style="display: none;">
+                <div class="info-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h4 id="material-name">Material Information</h4>
+                </div>
+                <div class="info-content">
+                    <div class="info-item">
+                        <strong>Density:</strong>
+                        <span id="material-density">--</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Properties:</strong>
+                        <span id="material-properties">--</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Lifting Notes:</strong>
+                        <span id="material-notes">--</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="menu-item-container">
-      <label for="height">Height (m)</label>
-      <input type="number" id="height" placeholder="e.g. 0.5" class="styled-select" />
-    </div>
-
-    <div class="menu-item-container">
-      <label for="length">Length (m)</label>
-      <input type="number" id="length" placeholder="e.g. 2.0" class="styled-select" />
-    </div>
-
-    <div class="menu-item-container">
-      <label for="material">Material</label>
-      <select id="material" class="styled-select">
-        <option value="steel">Steel</option>
-        <option value="aluminium">Aluminium</option>
-        <option value="concrete">Concrete</option>
-      </select>
-    </div>
-
-    <div class="menu-item-container">
-      <h3>Estimated Weight (t):</h3>
-      <p id="weight-result" class="menu-description">0.0</p>
-    </div>
-  </div>
-  
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize animations
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+    </script>
 </body>
 </html>
