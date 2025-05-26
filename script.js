@@ -286,31 +286,31 @@ const configOptions = {
       }
   };
 
-  // Event listeners
+  // Event listeners for the dropdowns
   slingType.addEventListener('change', function() {
-    const selectedType = this.value;
-    console.log('🔧 Sling type selected:', selectedType);
-    
-    // Clear and reset downstream elements
-    config.innerHTML = '<option value="">-- Select Configuration --</option>';
-    size.innerHTML = '<option value="">-- Select Size --</option>';
-    output.textContent = 'Select options above';
-    
-    if (configOptions[selectedType]) {
+    resetDownstream(config, size, output);
+    const type = this.value;
+
+    if (configOptions[type]) {
+        populateDropdown(config, configOptions[type]);
         config.disabled = false;
-        configOptions[selectedType].forEach(option => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            config.appendChild(opt);
-        });
-        console.log('✅ Configuration options populated');
-    } else {
-        config.disabled = true;
-        console.log('❌ No config options for:', selectedType);
     }
-    
-    size.disabled = true;
+});
+
+config.addEventListener('change', function() {
+    resetDownstream(size, output);
+    const type = slingType.value;
+    const typeData = wllData[type];
+
+    if (typeData) {
+        const sizeOptions = Object.keys(typeData);
+        populateDropdown(size, sizeOptions, type === 'round');
+        size.disabled = false;
+    }
+});
+
+size.addEventListener('change', function() {
+    calculateWLL();
 });
 
   // Helper functions
