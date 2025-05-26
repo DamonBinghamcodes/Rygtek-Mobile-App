@@ -1147,6 +1147,31 @@
   font-size: 0.85rem;
 }
 
+/* IOS specific drop down fix */
+/* iOS-specific dropdown fixes */
+@supports (-webkit-touch-callout: none) {
+  .styled-select {
+      -webkit-appearance: menulist;
+      -webkit-border-radius: 8px;
+      background-color: #111 !important;
+      
+      /* Force iOS to recognize the dropdown */
+      height: 44px; /* iOS prefers 44px minimum touch targets */
+      line-height: normal;
+      
+      /* Ensure proper touch handling */
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+  }
+  
+  .styled-select:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      -webkit-appearance: menulist;
+  }
+}
+
 /* ========================================
    ANGLE & DIMENSIONS PAGE STYLES
    ======================================== */
