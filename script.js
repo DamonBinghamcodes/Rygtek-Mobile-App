@@ -1945,7 +1945,7 @@ function goBack() {
 function goHome() {
    window.location.href = 'index.html';
 }
-
+/*
 // Safety Alerts functionality
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('safety-alerts.html')) {
@@ -2387,4 +2387,4 @@ function goBack() {
 
 function goHome() {
   window.location.href = 'index.html';
-} 
+} */
