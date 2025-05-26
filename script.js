@@ -221,38 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     console.log('✅ All WLL elements found');
-
-    // Add this to the DOMContentLoaded event listener for WLL page
-document.addEventListener('DOMContentLoaded', function() {
-    // Force a small delay to ensure iOS Safari recognizes the elements
-    setTimeout(() => {
-        initializeWLLCalculator();
-        
-        // Force iOS to recognize the dropdowns by triggering a reflow
-        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-            const dropdowns = document.querySelectorAll('select');
-            dropdowns.forEach(dropdown => {
-                dropdown.style.display = 'none';
-                dropdown.offsetHeight; // Force reflow
-                dropdown.style.display = 'block';
-            });
-        }
-    }, 100);
-});
-
-function initializeWLLCalculator() {
-    // Your existing WLL code here...
-    const slingType = document.getElementById('sling-type');
-    const config = document.getElementById('configuration');
-    const size = document.getElementById('chain-size');
-    const output = document.getElementById('wll-output');
-
-    // Make sure all dropdowns start in the correct state
-    config.disabled = true;
-    size.disabled = true;
     
-    // Rest of your existing code...
-}
 
 // Configuration options for each sling type
 const configOptions = {

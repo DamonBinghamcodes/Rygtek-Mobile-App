@@ -11,44 +11,94 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="Public/Rygtek Logo.png">
+    <!-- Enhanced font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body class="welcome-screen">
+    <!-- Animated background elements -->
+    <div class="bg-animation">
+        <div class="floating-element" style="--delay: 0s; --duration: 8s;"></div>
+        <div class="floating-element" style="--delay: 2s; --duration: 12s;"></div>
+        <div class="floating-element" style="--delay: 4s; --duration: 10s;"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
     <!-- Main welcome content container -->
     <div class="welcome-container">
-        <!-- Logo with consistent sizing and subtle border -->
+        <!-- Logo with enhanced styling -->
         <div class="logo-container" data-aos="zoom-in" data-aos-delay="200">
+            <div class="logo-glow"></div>
             <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
+            <div class="logo-ring"></div>
         </div>
         
-        <!-- Main tagline with Apple-style typography -->
+        <!-- Main tagline with enhanced typography -->
         <h1 class="tagline" data-aos="fade-up" data-aos-delay="400">
             THE RIGGER IN YOUR POCKET
         </h1>
         
-        <!-- Subtitle with Apple's secondary text style -->
+        <!-- Enhanced subtitle -->
         <p class="subtitle" data-aos="fade-up" data-aos-delay="600">
             Professional rigging calculations and safety tools
+            <span class="subtitle-accent">Precision. Safety. Innovation.</span>
         </p>
         
-        <!-- Apple-style primary button -->
+        <!-- Enhanced primary button with glow effect -->
         <button class="get-started-btn" data-aos="fade-up" data-aos-delay="800">
-            GET STARTED
+            <span class="btn-bg"></span>
+            <span class="btn-content">
+                <!--<i class="fas fa-rocket"></i>-->
+                GET STARTED
+            </span>
+            <div class="btn-glow"></div>
         </button>
         
-        <!-- Social links with Apple-inspired design -->
+        <!-- Feature highlights 
+        <div class="feature-highlights" data-aos="fade-up" data-aos-delay="900">
+            <div class="feature-item">
+                <i class="fas fa-calculator"></i>
+                <span>WLL Calculator</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Safety First</span>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-mobile-alt"></i>
+                <span>Always Ready</span>
+            </div>
+        </div> -->
+        
+        <!-- Enhanced social links -->
         <div class="social-links" data-aos="fade-up" data-aos-delay="1000">
-            <a href="https://www.instagram.com/rygtek/" target="_blank" class="social-link">
+            <a href="https://www.instagram.com/rygtek/" target="_blank" class="social-link instagram">
+                <div class="social-bg"></div>
                 <i class="fab fa-instagram"></i>
+                <span class="social-tooltip">Follow us</span>
             </a>
-            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link">
+            <a href="https://linkedin.com/in/yourprofile" target="_blank" class="social-link linkedin">
+                <div class="social-bg"></div>
                 <i class="fab fa-linkedin"></i>
+                <span class="social-tooltip">Connect</span>
             </a>
         </div>
         
-        <!-- Version number like Apple apps -->
+        <!-- Enhanced version text with build info -->
         <p class="version-text" data-aos="fade-up" data-aos-delay="1200">
-            Version 2.0
+            Version 2.0 
+            <span class="build-info">• Build 2025.01</span>
         </p>
+    </div>
+
+    <!-- Floating particles for extra visual appeal -->
+    <div class="particles">
+        <div class="particle" style="--x: 10%; --y: 20%; --delay: 0s;"></div>
+        <div class="particle" style="--x: 80%; --y: 60%; --delay: 2s;"></div>
+        <div class="particle" style="--x: 30%; --y: 80%; --delay: 4s;"></div>
+        <div class="particle" style="--x: 70%; --y: 30%; --delay: 6s;"></div>
+        <div class="particle" style="--x: 50%; --y: 10%; --delay: 8s;"></div>
     </div>
     
     <!-- Scripts -->
@@ -60,6 +110,33 @@
             duration: 600,
             once: true,
             easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' // Apple's preferred easing
+        });
+
+        // Add interactive hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo-container');
+            const button = document.querySelector('.get-started-btn');
+            
+            // Enhanced logo interaction
+            logo.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+
+            // Parallax effect for floating elements
+            document.addEventListener('mousemove', function(e) {
+                const elements = document.querySelectorAll('.floating-element');
+                const x = (e.clientX / window.innerWidth) * 2 - 1;
+                const y = (e.clientY / window.innerHeight) * 2 - 1;
+
+                elements.forEach((el, index) => {
+                    const speed = 0.02 + (index * 0.01);
+                    el.style.transform = `translate(${x * 20 * speed}px, ${y * 20 * speed}px)`;
+                });
+            });
         });
     </script>
 </body>

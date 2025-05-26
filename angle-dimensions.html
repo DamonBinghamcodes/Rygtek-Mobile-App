@@ -30,7 +30,7 @@
     <nav class="hamburger-menu" id="hamburgerMenu">
         <div class="menu-header">
             <h3>Navigation</h3>
-            <button class="close-menu-btn" onclick="toggleMenu()">
+            <button class="back-btn" onclick="window.location.href='index.html'">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -51,9 +51,12 @@
     <div class="main-content">
         <!-- Header section -->
         <div class="header-section" data-aos="fade-up" data-aos-delay="200">
-            <div class="logo-container">
-                <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo" onclick="goHome()">
-            </div>
+            <!-- Logo with enhanced styling -->
+        <div class="logo-container" data-aos="zoom-in" data-aos-delay="200">
+            <div class="logo-glow"></div>
+            <img src="Public/Rygtek Logo.png" alt="RYGTEK Logo" class="logo">
+            <div class="logo-ring"></div>
+        </div>
             <h1 class="page-title">Angle & Dimensions</h1>
             <p class="page-subtitle">Calculate sling angles and missing triangle dimensions</p>
         </div>
