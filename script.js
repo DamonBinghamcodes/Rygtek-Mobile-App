@@ -1,3 +1,29 @@
+// Initialize page-specific functionality based on current page
+function initializePage() {
+    const path = window.location.pathname;
+    
+    // Initialize functions for specific pages
+    if (path.includes('working-load-limit.html')) {
+        initializeWLLCalculator();
+    } else if (path.includes('angle-dimensions.html')) {
+        initializeAngleCalculator();
+    } else if (path.includes('load-weight.html')) {
+        initializeLoadWeightCalculator();
+    } else if (path.includes('lifting-register.html')) {
+        initializeLiftingRegister();
+    } else if (path.includes('safety-alerts.html')) {
+        initializeSafetyAlerts();
+    }
+}
+
+// Ensure DOM is fully loaded before initializing
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePage);
+} else {
+    // DOM already loaded
+    initializePage();
+}
+
 // Apple-style welcome page interactions
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
@@ -221,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     console.log('✅ All WLL elements found');
-    
 
 // Configuration options for each sling type
 const configOptions = {
