@@ -168,6 +168,10 @@ function goHome() {
 }
 
 function navigateTo(page) {
+    // Add .html if it's missing
+    if (!page.endsWith('.html')) {
+        page += '.html';
+    }
     window.location.href = page;
 }
 
