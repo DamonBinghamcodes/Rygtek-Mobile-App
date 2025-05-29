@@ -168,8 +168,7 @@ function goHome() {
 }
 
 function navigateTo(page) {
-    // Force full page reload with cache-bypass
-    window.location.replace(page + '?t=' + new Date().getTime());
+    window.location.href = page + '?reload=' + new Date().getTime();
 }
 
 // Hamburger menu functionality
