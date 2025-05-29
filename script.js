@@ -26,158 +26,143 @@ if (document.readyState === 'loading') {
 
 // Apple-style welcome page interactions
 document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
-      
-      // Get Started button with Apple-style feedback
-      const getStartedBtn = document.querySelector('.get-started-btn');
-      if (getStartedBtn) {
-          getStartedBtn.addEventListener('click', function () {
-              // Add Apple-style loading state
-              this.style.opacity = '0.7';
-              this.textContent = 'Loading...';
-              
-              // Navigate after brief delay for feedback
-              setTimeout(() => {
-                  window.location.href = 'disclaimer.html';
-              }, 200);
-          });
-      }
-      
-      // Logo interaction
-      const logo = document.querySelector('.logo');
-      if (logo) {
-          logo.addEventListener('click', function() {
-              // Apple-style bounce feedback
-              this.style.transform = 'scale(0.95)';
-              setTimeout(() => {
-                  this.style.transform = 'scale(1)';
-              }, 150);
-          });
-      }
-      
-      // Apple-style reduced motion support
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          // Disable animations for users who prefer reduced motion
-          const style = document.createElement('style');
-          style.textContent = `
-              *, *::before, *::after {
-                  animation-duration: 0.01ms !important;
-                  animation-iteration-count: 1 !important;
-                  transition-duration: 0.01ms !important;
-              }
-          `;
-          document.head.appendChild(style);
-      }
-  }
+    // Welcome page functionality
+    if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+        const getStartedBtn = document.querySelector('.get-started-btn');
+        if (getStartedBtn) {
+            getStartedBtn.addEventListener('click', function () {
+                this.style.opacity = '0.7';
+                this.textContent = 'Loading...';
+                
+                setTimeout(() => {
+                    window.location.href = 'disclaimer.html';
+                }, 200);
+            });
+        }
+        
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            logo.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        }
+        
+        // Apple-style reduced motion support
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const style = document.createElement('style');
+            style.textContent = `
+                *, *::before, *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+    
+    // Initialize hamburger menu for all pages
+    initializeHamburgerMenu();
 });
 
 // Disclaimer page functionality
 document.addEventListener('DOMContentLoaded', function () {
-  // Check if we're on the disclaimer page
-  if (window.location.pathname.includes('disclaimer.html')) {
-      
-      // Logo click functionality
-      const logo = document.querySelector('.logo');
-      if (logo) {
-          logo.addEventListener('click', function() {
-              // Return to welcome page
-              window.location.href = 'index.html';
-          });
-      }
-      
-      // Add loading states to buttons for better UX
-      const agreeBtn = document.querySelector('.agree-btn');
-      const disagreeBtn = document.querySelector('.disagree-btn');
-      
-      if (agreeBtn) {
-          agreeBtn.addEventListener('click', function() {
-              // Add loading state
-              this.style.opacity = '0.7';
-              this.textContent = 'Loading...';
-          });
-      }
-      
-      if (disagreeBtn) {
-          disagreeBtn.addEventListener('click', function() {
-              this.style.opacity = '0.7';
-              this.textContent = 'Going back...';
-          });
-      }
-  }
-});
-
-// Navigation functions for disclaimer page
-function goBack() {
-  // Apple-style smooth transition back to welcome
-  window.location.href = 'index.html';
-}
-
-function proceedToApp() {
-  // Proceed to main menu with smooth transition
-  window.location.href = 'main-menu.html';
-}
-
-// Add keyboard navigation support
-document.addEventListener('keydown', function(event) {
-  if (window.location.pathname.includes('disclaimer.html')) {
-      // ESC key goes back
-      if (event.key === 'Escape') {
-          goBack();
-      }
-      // Enter key agrees (only if agree button is focused)
-      if (event.key === 'Enter' && document.activeElement.classList.contains('agree-btn')) {
-          proceedToApp();
-      }
-  }
+    if (window.location.pathname.includes('disclaimer.html')) {
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            logo.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+        
+        const agreeBtn = document.querySelector('.agree-btn');
+        const disagreeBtn = document.querySelector('.disagree-btn');
+        
+        if (agreeBtn) {
+            agreeBtn.addEventListener('click', function() {
+                this.style.opacity = '0.7';
+                this.textContent = 'Loading...';
+                setTimeout(() => {
+                    proceedToApp();
+                }, 200);
+            });
+        }
+        
+        if (disagreeBtn) {
+            disagreeBtn.addEventListener('click', function() {
+                this.style.opacity = '0.7';
+                this.textContent = 'Going back...';
+                setTimeout(() => {
+                    goBack();
+                }, 200);
+            });
+        }
+    }
 });
 
 // Main Menu functionality
 document.addEventListener('DOMContentLoaded', function () {
-  if (window.location.pathname.includes('main-menu.html')) {
-      
-      // Logo click functionality
-      const logo = document.querySelector('.logo');
-      if (logo) {
-          logo.addEventListener('click', function() {
-              // Apple-style feedback
-              this.style.transform = 'scale(0.95)';
-              setTimeout(() => {
-                  this.style.transform = 'scale(1)';
-              }, 150);
-          });
-      }
-      
-      // Add loading states to feature cards
-      const featureCards = document.querySelectorAll('.feature-card');
-      featureCards.forEach(card => {
-          card.addEventListener('click', function() {
-              // Add loading state
-              this.style.opacity = '0.7';
-              const cardContent = this.querySelector('.card-content h3');
-              const originalText = cardContent.textContent;
-              cardContent.textContent = 'Loading...';
-              
-              // Restore after short delay if navigation fails
-              setTimeout(() => {
-                  this.style.opacity = '1';
-                  cardContent.textContent = originalText;
-              }, 2000);
-          });
-      });
-  }
+    if (window.location.pathname.includes('main-menu.html')) {
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            logo.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+            });
+        }
+        
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.opacity = '0.7';
+                const cardContent = this.querySelector('.card-content h3');
+                const originalText = cardContent.textContent;
+                cardContent.textContent = 'Loading...';
+                
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    cardContent.textContent = originalText;
+                }, 2000);
+            });
+        });
+    }
 });
 
 // Navigation functions
 function goBack() {
-  window.location.href = 'disclaimer.html';
+    const currentPage = window.location.pathname.split('/').pop(); // Gets just the filename
+
+    if (currentPage === 'main-menu.html') {
+        // From main menu → back to disclaimer
+        window.location.href = 'disclaimer.html';
+    } else if (currentPage === 'disclaimer.html') {
+        // From disclaimer → back to welcome screen
+        window.location.href = 'index.html';
+    } else {
+        // Fallback to previous page or welcome screen
+        if (document.referrer && document.referrer.includes(window.location.origin)) {
+            window.history.back();
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+}
+
+function proceedToApp() {
+    window.location.href = 'main-menu.html';
 }
 
 function goHome() {
-  window.location.href = 'index.html';
+    window.location.href = 'main-menu.html';
 }
 
 function navigateTo(page) {
-  window.location.href = page;
+    window.location.href = page;
 }
 
 // Hamburger menu functionality
@@ -191,6 +176,8 @@ function toggleMenu() {
       menu.classList.add('open');
   }
 }
+
+
 
 // Close menu when clicking outside
 document.addEventListener('click', function(event) {
@@ -399,7 +386,22 @@ size.addEventListener('change', function() {
 
 // Navigation functions for WLL page
 function goBack() {
-  window.location.href = 'main-menu.html';
+    const currentPage = window.location.pathname.split('/').pop(); // Gets just the filename
+
+    if (currentPage === 'main-menu.html') {
+        // From main menu → back to disclaimer
+        window.location.href = 'disclaimer.html';
+    } else if (currentPage === 'disclaimer.html') {
+        // From disclaimer → back to welcome screen
+        window.location.href = 'index.html';
+    } else {
+        // Fallback to previous page or welcome screen
+        if (document.referrer && document.referrer.includes(window.location.origin)) {
+            window.history.back();
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
 }
 
 function goHome() {
@@ -1310,7 +1312,22 @@ function initializeLoadWeightCalculator() {
 
 // Navigation functions
 function goBack() {
-  window.location.href = 'main-menu.html';
+    const currentPage = window.location.pathname.split('/').pop(); // Gets just the filename
+
+    if (currentPage === 'main-menu.html') {
+        // From main menu → back to disclaimer
+        window.location.href = 'disclaimer.html';
+    } else if (currentPage === 'disclaimer.html') {
+        // From disclaimer → back to welcome screen
+        window.location.href = 'index.html';
+    } else {
+        // Fallback to previous page or welcome screen
+        if (document.referrer && document.referrer.includes(window.location.origin)) {
+            window.history.back();
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
 }
 
 function goHome() {
@@ -2030,12 +2047,30 @@ function initializeLiftingRegister() {
 
 // Navigation functions
 function goBack() {
-   window.location.href = 'main-menu.html';
+    const currentPage = window.location.pathname.split('/').pop(); // Gets just the filename
+
+    if (currentPage === 'main-menu.html') {
+        // From main menu → back to disclaimer
+        window.location.href = 'disclaimer.html';
+    } else if (currentPage === 'disclaimer.html') {
+        // From disclaimer → back to welcome screen
+        window.location.href = 'index.html';
+    } else {
+        // Fallback to previous page or welcome screen
+        if (document.referrer && document.referrer.includes(window.location.origin)) {
+            window.history.back();
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
 }
 
 function goHome() {
    window.location.href = 'index.html';
 }
+
+/*SAFETY ALERTS JS ---- START*/
+
 /*
 // Safety Alerts functionality
 document.addEventListener('DOMContentLoaded', function () {
@@ -2478,4 +2513,6 @@ function goBack() {
 
 function goHome() {
   window.location.href = 'index.html';
-} */
+} 
+
+/*SAFETY ALERTS SCRIPT ---- END */
