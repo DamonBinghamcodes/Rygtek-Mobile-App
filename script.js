@@ -168,11 +168,8 @@ function goHome() {
 }
 
 function navigateTo(page) {
-    // Add .html if it's missing
-    if (!page.endsWith('.html')) {
-        page += '.html';
-    }
-    window.location.href = page;
+    // Force full page reload with cache-bypass
+    window.location.replace(page + '?t=' + new Date().getTime());
 }
 
 // Hamburger menu functionality
