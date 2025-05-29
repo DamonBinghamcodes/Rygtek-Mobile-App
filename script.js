@@ -127,7 +127,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(() => {
                     this.style.opacity = '1';
                     cardContent.textContent = originalText;
-                }, 2000);
+                
+                    // ✅ New logic: redirect using data-id
+                    const targetPage = this.getAttribute('data-id');
+                    if (targetPage) {
+                        window.location.href = `${targetPage}.html`;
+                    }
+                }, 500);
             });
         });
     }
